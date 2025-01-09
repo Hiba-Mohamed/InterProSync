@@ -1,5 +1,14 @@
 import React, { useState, MouseEvent } from "react";
-import { AppBar, Toolbar, Typography, Button, IconButton, Box, Menu, MenuItem } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Box,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
 
@@ -18,7 +27,8 @@ const Navbar: React.FC = () => {
     <AppBar
       position="static"
       sx={{
-        background: "linear-gradient(to right, #ECF3FA, #183B65)", // Gradient from left to right
+        background:
+          "linear-gradient(to right, #F6F6F6, rgba(141, 173, 210, 0.2))",
         boxShadow: "none", // Optional: Removes default shadow for a clean look
         height: "50px",
         display: "flex",
@@ -84,7 +94,7 @@ const Navbar: React.FC = () => {
         </Box>
 
         {/* Desktop Links */}
-        <Box sx={{ display: { xs: "none", md: "flex" } }}>
+        <Box sx={{ display: { xs: "none", md: "flex" }, color: "black"}}>
           <Button
             color="inherit"
             component={Link}

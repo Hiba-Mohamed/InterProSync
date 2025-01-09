@@ -13,6 +13,7 @@ const Home = () => {
           width: "100%",
           display: "flex",
           flexDirection: "column",
+          marginBottom:"300px"
         }}
       >
         <TopHomePage />

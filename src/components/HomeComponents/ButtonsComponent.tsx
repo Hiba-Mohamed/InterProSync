@@ -18,8 +18,7 @@ const ButtonsComponent = () => {
         sx={{
           fontWeight: 900,
           // background:"#A6C0C6",
-          background:
-            "linear-gradient(to left, rgba(166, 192, 198, 0.7)66%, rgba(24, 59, 101, 0.7)95%)",
+          background: "rgba(245, 250, 255, 0.80)",
           borderRadius: "20px",
           px: { xs: 10, sm: 6 },
           color: "black",
@@ -37,11 +36,10 @@ const ButtonsComponent = () => {
         sx={{
           fontWeight: 900,
           // background:"#183B65",
-          background:
-            "linear-gradient(to left, rgba(24, 59, 101, 0.7)66%, rgba(166, 192, 198, 0.7)95%)",
+          background: "rgba(245, 250, 255, 0.80)",
           borderRadius: "20px",
           px: { xs: 10, sm: 6 },
-          color: "white",
+          color: "black",
           fontSize: { xs: "12px", sm: "12px", md: "18px" },
           maxWidth: { xs: "250px", sm: "auto" },
           textTransform: "none",
