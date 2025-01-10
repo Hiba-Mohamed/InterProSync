@@ -13,11 +13,11 @@ const RoleDisplayComponent = ({
       style={{
         borderLeft: `15px solid ${roleColor}`,
         padding: "10px",
-        marginBottom: "10px",
+        marginBottom: "5px",
         borderRadius: "5px",
         backgroundColor: "#F5FAFF",
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-        maxWidth: "500px",
+        maxWidth: "600px",
       }}
     >
       <Typography
