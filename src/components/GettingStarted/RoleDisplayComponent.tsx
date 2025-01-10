@@ -24,7 +24,7 @@ const RoleDisplayComponent = ({
         sx={{
           fontSize: { xs: "18px", sm: "20px", md: "26px" },
           fontFamily: "Inter, sans-serif",
-          fontWeight: 900,
+          fontWeight: 600,
           color: "transparent",
           background: `${roleColor}`,
           WebkitBackgroundClip: "text",
