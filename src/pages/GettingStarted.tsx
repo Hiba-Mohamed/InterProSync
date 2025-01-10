@@ -5,7 +5,8 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
-import RoleDisplayComponent from "../components/GettingStarted/roleDisplayComponent";
+import RoleDisplayComponent from "../components/GettingStarted/RoleDisplayComponent";
+import ProgressBar from "../components/GettingStarted/ProgressBar";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -68,9 +69,9 @@ const GettingStarted = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: {xs:"", sm:"center"},
+        alignItems:  "center",
         paddingTop: { xs: "40px", sm: "50px", md: "60px" },
-        minHeight:"100vh"
+        minHeight: "100vh",
       }}
     >
       {/* Header */}
@@ -90,80 +91,7 @@ const GettingStarted = () => {
         </Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            component="img"
-            src="images/progressBarComponents/firstBarComponent.png"
-            sx={{ width: { xs: "8px", sm: "10px", md: "12px" } }}
-          />
-          <Box
-            component="img"
-            src="images/progressBarComponents/first-step.png"
-            sx={{ width: "50px", padding: "4px" }}
-            // sx={{ width: { xs: "40px", sm: "40px", md: "40px" } }}
-          />
-          {/* the area between the two circles */}
-          <Box
-            component="img"
-            src="images/progressBarComponents/under-circle.png"
-            sx={{ width: { xs: "8px", sm: "10px", md: "12px" } }}
-          />
-          <Box
-            component="img"
-            src="images/progressBarComponents/between.png"
-            sx={{
-              width: { xs: "8px", sm: "10px", md: "12px" },
-              height: { xs: "500px", sm: "290px", md: "310px" },
-            }}
-          />
-          <Box
-            component="img"
-            src="images/progressBarComponents/above-circle.png"
-            sx={{ width: { xs: "8px", sm: "10px", md: "12px" } }}
-          />
-          {/* ------------------------------------- */}
-          <Box
-            component="img"
-            src="images/progressBarComponents/second-step.png"
-            sx={{ width: "50px", padding: "4px" }}
-          />
-          {/* the area between the two circles */}
-          <Box
-            component="img"
-            src="images/progressBarComponents/under-circle.png"
-            sx={{ width: { xs: "8px", sm: "10px", md: "12px" } }}
-          />
-          <Box
-            component="img"
-            src="images/progressBarComponents/betweenShort.png"
-            sx={{
-              width: { xs: "8px", sm: "10px", md: "12px" },
-              height: { xs: "200px", sm: "120px", md: "140px" },
-            }}
-          />
-          <Box
-            component="img"
-            src="images/progressBarComponents/above-circle.png"
-            sx={{ width: { xs: "8px", sm: "10px", md: "12px" } }}
-          />
-          {/* ------------------------------------- */}
-          <Box
-            component="img"
-            src="images/progressBarComponents/third-step.png"
-            sx={{ width: "50px", padding: "4px" }}
-          />
-          <Box
-            component="img"
-            src="images/progressBarComponents/lastBarComponent.png"
-            sx={{ width: { xs: "8px", sm: "10px", md: "12px" } }}
-          />
-        </Box>
+        <ProgressBar />
 
         {/* Step 1: Select Your Role */}
         <Box>
@@ -206,10 +134,13 @@ const GettingStarted = () => {
           {/* Step 2: Enter Login Info */}
           <Box
             display="flex"
-            alignItems="center"
             marginY={2}
             sx={{
-              paddingLeft: "20px",
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              paddingLeft: {xs:"16px",sm:"20px"},
+              paddingTop:{xs:"30px", sm:"12px"},
+              gap: { xs: 4, sm: 12 },
             }}
           >
             <Typography
@@ -221,6 +152,7 @@ const GettingStarted = () => {
                 background: "#5D7EA4",
                 WebkitBackgroundClip: "text",
                 textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+                textAlign:"start"
               }}
             >
               Enter Login Info
@@ -232,7 +164,7 @@ const GettingStarted = () => {
             gap={2}
             sx={{
               paddingLeft: "20px",
-              paddingBottom: "100px",
+              paddingBottom: {xs:"60px",sm:"100px"},
             }}
           >
             <TextField
@@ -286,7 +218,7 @@ const GettingStarted = () => {
               paddingBottom: "100px",
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
-              gap: 4,
+              gap: "50px",
             }}
           >
             <Button variant="contained" sx={{ backgroundColor: "#8DADD2" }}>

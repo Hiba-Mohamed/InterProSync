@@ -9,15 +9,17 @@ const RoleDisplayComponent = ({
   roleColor: string;
 }) => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         borderLeft: `15px solid ${roleColor}`,
         padding: "10px",
         marginBottom: "5px",
         borderRadius: "5px",
         backgroundColor: "#F5FAFF",
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-        maxWidth: "600px",
+        maxWidth: "1000px",
+        width: { xs: "250px", sm: "255px", md: "400px" },
+        height: { xs: "45px", sm: "50px", md: "55px" },
       }}
     >
       <Typography
@@ -33,7 +35,7 @@ const RoleDisplayComponent = ({
       >
         {roleDescription}
       </Typography>
-    </div>
+    </Box>
   );
 };
 
