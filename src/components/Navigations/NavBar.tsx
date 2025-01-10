@@ -94,7 +94,12 @@ const Navbar: React.FC = () => {
         </Box>
 
         {/* Desktop Links */}
-        <Box sx={{ display: { xs: "none", md: "flex" }, color: "black"}}>
+        <Box
+          sx={{
+            display: { xs: "none", md: "flex" },
+            color: "#183B65",
+          }}
+        >
           <Button
             color="inherit"
             component={Link}
@@ -124,7 +129,7 @@ const Navbar: React.FC = () => {
         {/* Mobile Menu Icon */}
         <Box sx={{ display: { xs: "flex", md: "none" } }}>
           <IconButton edge="start" color="inherit" onClick={handleMenuOpen}>
-            <MenuIcon />
+            <MenuIcon sx={{ color: "#183B65" }} />
           </IconButton>
           {/* Mobile Menu Items */}
           <Menu
@@ -134,8 +139,8 @@ const Navbar: React.FC = () => {
             keepMounted
             sx={{
               "& .MuiPaper-root": {
-                backgroundColor: "#183B65", // Change this to your desired color
-                color: "#FFFFFF", // Set text color
+                backgroundColor: "#FFFFFFF",
+                color: "#183B65",
               },
             }}
           >
