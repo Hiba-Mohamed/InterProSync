@@ -118,27 +118,37 @@ const Location = () => {
                 key={location.hospitalName}
                 onClick={() => handleHospitalSelect(location.hospitalName)}
                 sx={{
-                  backgroundColor:
+                  backgroundColor: "white",
+                  outline:
                     selectedHospital === location.hospitalName
-                      ? "#D3E4FF"
-                      : "#F5FAFF",
+                      ? "4px solid #9CCE84"
+                      : "transparent",
+
                   boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                   height: { xs: "30px", sm: "40px", md: "50px" },
                   width: { xs: "200px", sm: "250px", md: "300px" },
                   borderRadius: "3px",
                   display: "flex",
-                  justifyContent: "center",
                   alignItems: "center",
                   fontFamily: "Inter, sans-serif",
-                  fontWeight: 900,
-                  color: "transparent",
-                  background: "#5D7EA4",
-                  WebkitBackgroundClip: "text",
-                  textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-                  cursor: "pointer",
                 }}
               >
-                <Typography>{location.hospitalName}</Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "18px", sm: "20px", md: "24px" },
+                    fontFamily: "Inter, sans-serif",
+                    fontWeight: 600,
+                    color: "transparent",
+                    background: "#5D7EA4",
+                    WebkitBackgroundClip: "text",
+                    textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+                    paddingTop: "30px",
+                    paddingLeft: "20px",
+                    paddingBottom: "30px",
+                  }}
+                >
+                  {location.hospitalName}
+                </Typography>
               </Box>
             ))}
           </Box>
@@ -173,7 +183,12 @@ const Location = () => {
                     false
                   }
                   onChange={handleSelectAllWards}
-                  color="primary"
+                  sx={{
+                    color: "grey", // Default unchecked color
+                    "&.Mui-checked": {
+                      color: "#9CCE84", // Custom checked color
+                    },
+                  }}
                 />
                 <Typography
                   sx={{ display: "inline-block", marginLeft: "10px" }}
@@ -192,8 +207,9 @@ const Location = () => {
                   paddingTop: "20px",
                   height: { xs: "270px", sm: "170px", md: "190px" }, // Fixed height
                   overflowY: "auto", // Scrollable if content overflows
-                  border: "1px solid #ccc", // Optional: Add a border for clarity
+                  border: "1px solid #ECF3FA", // Optional: Add a border for clarity
                   borderRadius: "8px", // Optional: Rounded corners
+                  backgroundColor: "#ECF3FA",
                 }}
               >
                 {locations
@@ -204,28 +220,42 @@ const Location = () => {
                     <Box
                       key={ward}
                       sx={{
-                        backgroundColor: "#F5FAFF",
+                        backgroundColor: "white",
                         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                         height: { xs: "30px", sm: "40px", md: "50px" },
                         width: { xs: "200px", sm: "250px", md: "300px" },
                         borderRadius: "3px",
                         display: "flex",
-                        // justifyContent: "center",
                         alignItems: "center",
                         fontFamily: "Inter, sans-serif",
-                        fontWeight: 900,
-                        color: "transparent",
-                        background: "#5D7EA4",
-                        WebkitBackgroundClip: "text",
-                        textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
                       }}
                     >
                       <Checkbox
                         checked={selectedWards.includes(ward)}
                         onChange={() => handleWardToggle(ward)}
-                        color="primary"
+                        sx={{
+                          color: "grey", // Default unchecked color
+                          "&.Mui-checked": {
+                            color: "#9CCE84", // Custom checked color
+                          },
+                        }}
                       />
-                      <Typography>{ward}</Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "18px", sm: "20px", md: "24px" },
+                          fontFamily: "Inter, sans-serif",
+                          fontWeight: 600,
+                          color: "transparent",
+                          background: "#5D7EA4",
+                          WebkitBackgroundClip: "text",
+                          textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+                          paddingTop: "40px",
+                          paddingLeft: "20px",
+                          paddingBottom: "30px",
+                        }}
+                      >
+                        {ward}
+                      </Typography>
                     </Box>
                   ))}
               </Box>
@@ -240,7 +270,7 @@ const Location = () => {
             sx={{
               paddingLeft: "20px",
               paddingBottom: "20px",
-              paddingTop:"40px",
+              paddingTop: "40px",
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
               gap: "20px",
