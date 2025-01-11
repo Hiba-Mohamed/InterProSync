@@ -172,7 +172,7 @@ const Location = () => {
               </Typography>
 
               {/* Select All Wards Checkbox */}
-              <Box sx={{ paddingLeft: "20px", paddingBottom: "10px" }}>
+              <Box sx={{ paddingLeft: "10px", paddingBottom: "10px" }}>
                 <Checkbox
                   checked={
                     locations
