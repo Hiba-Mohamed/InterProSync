@@ -8,6 +8,7 @@ import NavBar from "./components/Navigations/NavBar";
 import GettingStarted from "./pages/GettingStarted";
 import Footer from "./components/Footer/Footer";
 import ComingSoon from "./pages/ComingSoon";
+import Location from "./pages/Location";
 
 const theme = createTheme({
   typography: {
@@ -42,6 +43,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/getStarted" element={<GettingStarted />} />
             <Route path="/comingSoon" element={<ComingSoon />} />
+            <Route path="/location" element={<Location />} />
           </Routes>
           <Footer />
         </>
