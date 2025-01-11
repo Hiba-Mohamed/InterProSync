@@ -56,12 +56,12 @@ const GettingStarted = () => {
    };
 
   const roles = [
-    { name: "Medical Doctor", color: "#699DDA" },
-    { name: "Registered Nurse", color: "#72CAA9" },
-    { name: "Physiotherapy", color: "#FFC181" },
-    { name: "Registered Dietitian", color: "#85C4FF" },
-    { name: "Pharmacist", color: "#FF8484" },
-    { name: "Manager", color: "#C27FFF" },
+    { name: "Medical Doctor", color: "#8DADD2" },
+    { name: "Registered Nurse", color: "#A8E6CF" },
+    { name: "Physiotherapy", color: "#FFD8B0" },
+    { name: "Registered Dietitian", color: "#B0D9FF" },
+    { name: "Pharmacist", color: "#FFCBCB" },
+    { name: "Manager", color: "#D4A5FF" },
   ];
 
   return (

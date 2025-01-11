@@ -36,7 +36,7 @@ const RoleDisplayComponent: React.FC<RoleDisplayProps> = ({
           fontFamily: "Inter, sans-serif",
           fontWeight: 600,
           color: "transparent",
-          background: `${roleColor}`,
+          background: `#535D68`,
           WebkitBackgroundClip: "text",
           textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
         }}
