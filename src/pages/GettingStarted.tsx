@@ -49,11 +49,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const GettingStarted = () => {
   const classes = useStyles();
-  const [selectedRole, setSelectedRole] = useState<string>("Registered Nurse");
+   const [selectedRole, setSelectedRole] = useState<string>("");
 
-  const handleRoleChange = (role: string) => {
-    setSelectedRole(role);
-  };
+   const handleRoleChange = (role: string) => {
+     setSelectedRole(role);
+   };
 
   const roles = [
     { name: "Medical Doctor", color: "#699DDA" },
@@ -69,7 +69,7 @@ const GettingStarted = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems:  "center",
+        alignItems: "center",
         paddingTop: { xs: "40px", sm: "50px", md: "60px" },
         minHeight: "100vh",
       }}
@@ -120,13 +120,16 @@ const GettingStarted = () => {
             gap={2}
             sx={{
               paddingLeft: "20px",
-              paddingBottom: "100px",
+              paddingBottom: {xs:"150px", sm:"110px"},
             }}
           >
-            {roles.map((role, index) => (
+            {roles.map((role) => (
               <RoleDisplayComponent
+                key={role.name}
                 roleDescription={role.name}
                 roleColor={role.color}
+                isSelected={selectedRole === role.name}
+                onSelect={handleRoleChange}
               />
             ))}
           </Box>
@@ -138,8 +141,8 @@ const GettingStarted = () => {
             sx={{
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },
-              paddingLeft: {xs:"16px",sm:"20px"},
-              paddingTop:{xs:"30px", sm:"12px"},
+              paddingLeft: { xs: "16px", sm: "20px" },
+              paddingTop: { xs: "30px", sm: "12px" },
               gap: { xs: 4, sm: 12 },
             }}
           >
@@ -152,7 +155,7 @@ const GettingStarted = () => {
                 background: "#5D7EA4",
                 WebkitBackgroundClip: "text",
                 textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-                textAlign:"start"
+                textAlign: "start",
               }}
             >
               Enter Login Info
@@ -164,7 +167,7 @@ const GettingStarted = () => {
             gap={2}
             sx={{
               paddingLeft: "20px",
-              paddingBottom: {xs:"60px",sm:"100px"},
+              paddingBottom: { xs: "80px", sm: "100px" },
             }}
           >
             <TextField

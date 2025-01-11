@@ -1,25 +1,33 @@
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 
-const RoleDisplayComponent = ({
-  roleDescription,
-  roleColor,
-}: {
+interface RoleDisplayProps {
   roleDescription: string;
   roleColor: string;
+  isSelected: boolean;
+  onSelect: (role: string) => void;
+}
+
+const RoleDisplayComponent: React.FC<RoleDisplayProps> = ({
+  roleDescription,
+  roleColor,
+  isSelected,
+  onSelect,
 }) => {
   return (
     <Box
+      onClick={() => onSelect(roleDescription)}
       sx={{
-        borderLeft: `15px solid ${roleColor}`,
-        padding: "10px",
+        borderLeft: `8px solid ${roleColor}`,
+        padding: "8px",
         marginBottom: "5px",
         borderRadius: "5px",
         backgroundColor: "#F5FAFF",
+        outline: isSelected ? "4px solid #9CCE84" : "",
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
         maxWidth: "1000px",
         width: { xs: "250px", sm: "255px", md: "400px" },
-        height: { xs: "45px", sm: "50px", md: "55px" },
+        height: { xs: "40px", sm: "50px", md: "55px" },
       }}
     >
       <Typography

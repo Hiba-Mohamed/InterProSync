@@ -191,7 +191,11 @@ const Location = () => {
                   }}
                 />
                 <Typography
-                  sx={{ display: "inline-block", marginLeft: "10px" }}
+                  sx={{
+                    display: "inline-block",
+                    marginLeft: "10px",
+                    color: "#183B65",
+                  }}
                 >
                   Select All Wards
                 </Typography>
