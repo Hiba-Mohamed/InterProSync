@@ -27,7 +27,7 @@ export const tasks = [
     assigned_to: 4,
     patient_id: 1,
     assignment_dateTime: "2025-01-11T12:00:00Z",
-    status: "undone",
+    status: "complete",
     description: "Update Patient 1's medical records.",
   },
 
@@ -71,7 +71,7 @@ export const tasks = [
     assigned_to: 7,
     patient_id: 3,
     assignment_dateTime: "2025-01-11T10:30:00Z",
-    status: "undone",
+    status: "complete",
     description: "Update medical records for Patient 3.",
   },
   {
@@ -123,7 +123,7 @@ export const tasks = [
     assigned_to: 1,
     patient_id: 4,
     assignment_dateTime: "2025-01-11T11:00:00Z",
-    status: "undone",
+    status: "complete",
     description: "Update medical records for Patient 4.",
   },
 
@@ -167,7 +167,7 @@ export const tasks = [
     assigned_to: 4,
     patient_id: 6,
     assignment_dateTime: "2025-01-11T09:15:00Z",
-    status: "undone",
+    status: "closed",
     description: "Review and update Patient 6's medical records.",
   },
   {
@@ -218,7 +218,7 @@ export const tasks = [
     assigned_to: 2,
     patient_id: 7,
     assignment_dateTime: "2025-01-11T11:30:00Z",
-    status: "undone",
+    status: "complete",
     description: "Update medical records for Patient 7.",
   },
 
@@ -262,7 +262,7 @@ export const tasks = [
     assigned_to: 6,
     patient_id: 9,
     assignment_dateTime: "2025-01-11T09:00:00Z",
-    status: "undone",
+    status: "complete",
     description: "Review medical history and update records for Patient 9.",
   },
   {
@@ -312,7 +312,7 @@ export const tasks = [
     assigned_to: 2,
     patient_id: 10,
     assignment_dateTime: "2025-01-11T11:00:00Z",
-    status: "undone",
+    status: "inprogress",
     description: "Review and update medical records for Patient 10.",
   },
 
@@ -356,7 +356,7 @@ export const tasks = [
     assigned_to: 6,
     patient_id: 12,
     assignment_dateTime: "2025-01-11T08:30:00Z",
-    status: "undone",
+    status: "inprogress",
     description: "Review and update medical records for Patient 12.",
   },
   {
@@ -407,7 +407,7 @@ export const tasks = [
     assigned_to: 2,
     patient_id: 13,
     assignment_dateTime: "2025-01-11T10:30:00Z",
-    status: "undone",
+    status: "inprogress",
     description: "Update medical records and treatment plan for Patient 13.",
   },
 
@@ -453,7 +453,7 @@ export const tasks = [
     assigned_to: 6,
     patient_id: 15,
     assignment_dateTime: "2025-01-11T08:30:00Z",
-    status: "undone",
+    status: "inprogress",
     description:
       "Review medical history and update treatment plan for Patient 15.",
   },
@@ -507,7 +507,7 @@ export const tasks = [
     assigned_to: 2,
     patient_id: 16,
     assignment_dateTime: "2025-01-11T10:45:00Z",
-    status: "undone",
+    status: "inprogress",
     description:
       "Review and update medical history and treatment plan for Patient 16.",
   },
@@ -552,7 +552,7 @@ export const tasks = [
     assigned_to: 5,
     patient_id: 18,
     assignment_dateTime: "2025-01-11T08:30:00Z",
-    status: "undone",
+    status: "complete",
     description:
       "Update and review medical records and treatment history for Patient 18.",
   },
@@ -606,7 +606,7 @@ export const tasks = [
     assigned_to: 2,
     patient_id: 19,
     assignment_dateTime: "2025-01-11T10:45:00Z",
-    status: "undone",
+    status: "inprogress",
     description:
       "Review and update treatment plan and medical history for Patient 19.",
   },
@@ -651,7 +651,7 @@ export const tasks = [
     assigned_to: 5,
     patient_id: 21,
     assignment_dateTime: "2025-01-11T08:45:00Z",
-    status: "undone",
+    status: "inprogress",
     description:
       "Review medical history and update treatment plan for Patient 21.",
   },
