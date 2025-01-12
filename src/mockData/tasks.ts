@@ -17,7 +17,7 @@ export const tasks = [
     assigned_to: 1,
     patient_id: 1,
     assignment_dateTime: "2025-01-11T10:00:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Perform a routine checkup for Patient 1.",
   },
   {
@@ -27,7 +27,7 @@ export const tasks = [
     assigned_to: 4,
     patient_id: 1,
     assignment_dateTime: "2025-01-11T12:00:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Update Patient 1's medical records.",
   },
 
@@ -59,7 +59,7 @@ export const tasks = [
     assigned_to: 2,
     patient_id: 2,
     assignment_dateTime: "2025-01-11T13:00:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Conduct a follow-up consultation for Patient 2.",
   },
 
@@ -71,7 +71,7 @@ export const tasks = [
     assigned_to: 7,
     patient_id: 3,
     assignment_dateTime: "2025-01-11T10:30:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Update medical records for Patient 3.",
   },
   {
@@ -113,7 +113,7 @@ export const tasks = [
     assigned_to: 6,
     patient_id: 4,
     assignment_dateTime: "2025-01-11T09:30:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Conduct a physical therapy session for Patient 4.",
   },
   {
@@ -123,7 +123,7 @@ export const tasks = [
     assigned_to: 1,
     patient_id: 4,
     assignment_dateTime: "2025-01-11T11:00:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Update medical records for Patient 4.",
   },
 
@@ -155,7 +155,7 @@ export const tasks = [
     assigned_to: 3,
     patient_id: 5,
     assignment_dateTime: "2025-01-11T12:30:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Provide nutritional consultation for Patient 5.",
   },
 
@@ -187,7 +187,7 @@ export const tasks = [
     assigned_to: 7,
     patient_id: 6,
     assignment_dateTime: "2025-01-11T13:00:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Assist with mobility exercises for Patient 6.",
   },
   // Tasks for Patient 7
@@ -208,7 +208,7 @@ export const tasks = [
     assigned_to: 6,
     patient_id: 7,
     assignment_dateTime: "2025-01-11T09:45:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Conduct a rehabilitation therapy session for Patient 7.",
   },
   {
@@ -218,7 +218,7 @@ export const tasks = [
     assigned_to: 2,
     patient_id: 7,
     assignment_dateTime: "2025-01-11T11:30:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Update medical records for Patient 7.",
   },
 
@@ -250,7 +250,7 @@ export const tasks = [
     assigned_to: 2,
     patient_id: 8,
     assignment_dateTime: "2025-01-11T12:00:00Z",
-    status: "complete",
+    status: "inprogress",
     description: "Provide a dietary consultation for Patient 8.",
   },
 
