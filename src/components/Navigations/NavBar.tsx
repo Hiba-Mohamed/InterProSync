@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
           <Button
             color="inherit"
             component={Link}
-            to="/comingSoon"
+            to="/getStarted"
             sx={{ whiteSpace: "nowrap", fontWeight: 600 }}
           >
             Get Started
@@ -152,7 +152,7 @@ const Navbar: React.FC = () => {
             </MenuItem>
             <MenuItem
               component={Link}
-              to="/comingSoon"
+              to="/getStarted"
               onClick={handleMenuClose}
             >
               Get Started

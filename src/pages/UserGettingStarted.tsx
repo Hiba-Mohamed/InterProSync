@@ -50,11 +50,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const GettingStarted = () => {
   const classes = useStyles();
-   const [selectedRole, setSelectedRole] = useState<string>("");
+  const [selectedRole, setSelectedRole] = useState<string>("");
 
-   const handleRoleChange = (role: string) => {
-     setSelectedRole(role);
-   };
+  const handleRoleChange = (role: string) => {
+    setSelectedRole(role);
+  };
 
   const roles = [
     { name: "Medical Doctor", color: "#8DADD2" },
@@ -88,8 +88,7 @@ const GettingStarted = () => {
             textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
           }}
         >
-          Getting Started <br />
-          (Guests)
+          Getting Started
         </Typography>
       </Box>
       <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -111,7 +110,7 @@ const GettingStarted = () => {
                 paddingLeft: "20px",
               }}
             >
-              Select Your Role 
+              Select Your Role (Guests only)
             </Typography>
           </Box>
 
@@ -134,7 +133,14 @@ const GettingStarted = () => {
                 onSelect={handleRoleChange}
               />
             ))}
-
+            <TextField
+              className={classes.inputField}
+              label="Username"
+              variant="outlined"
+              sx={{
+                width: { xs: "100%" },
+              }}
+            />
           </Box>
 
           {/* Step 2: Enter Login Info */}
@@ -161,7 +167,7 @@ const GettingStarted = () => {
                 textAlign: "start",
               }}
             >
-              Select a Username
+              Login info (Active users only)
             </Typography>
           </Box>
           <Box
@@ -181,16 +187,24 @@ const GettingStarted = () => {
                 width: { xs: "100%" },
               }}
             />
-
+            <TextField
+              className={classes.inputField}
+              label="Password"
+              type="password"
+              variant="outlined"
+              sx={{
+                width: { xs: "100%" },
+              }}
+            />
           </Box>
 
           {/* Step 3: Login */}
           <Box
             display="flex"
             alignItems="center"
+            marginY={2}
             sx={{
               paddingLeft: "20px",
-              paddingTop:{xs:"90px", sm:"0px" , md:"30px"}
             }}
           >
             <Typography
@@ -221,6 +235,14 @@ const GettingStarted = () => {
           >
             <Button variant="contained" sx={{ backgroundColor: "#8DADD2" }}>
               Guest Login
+            </Button>
+            <Button
+              variant="outlined"
+              component={Link}
+              to="/comingSoon"
+              sx={{ color: "#183B65" }}
+            >
+              User Login
             </Button>
           </Box>
         </Box>
