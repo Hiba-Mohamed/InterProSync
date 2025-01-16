@@ -78,7 +78,6 @@ const GettingStarted = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         paddingTop: { xs: "40px", sm: "50px", md: "60px" },
         minHeight: "100vh",
       }}
@@ -100,7 +99,7 @@ const GettingStarted = () => {
           (Guests)
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", flexDirection: "row", width: "100%" }}>
+      <Box sx={{ display: "flex", flexDirection: "row", width: "100%", justifyContent:"center" }}>
         {/* ProgressBar */}
         <Fade in={showProgressBar} timeout={1000}>
           <div>
