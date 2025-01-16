@@ -80,6 +80,7 @@ const GettingStarted = () => {
         flexDirection: "column",
         paddingTop: { xs: "40px", sm: "50px", md: "60px" },
         minHeight: "100vh",
+        marginBottom:"500px"
       }}
     >
       {/* Header */}

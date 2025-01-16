@@ -11,6 +11,7 @@ import ComingSoon from "./pages/ComingSoon";
 import Location from "./pages/Location";
 import SelectedWardsPatientList from "./pages/SelectedWardsPatientList";
 import WardSelection from "./pages/WardSelection";
+import HospitalsPatientSelection from "./pages/HospitalsPatientSelection";
 
 const theme = createTheme({
   typography: {
@@ -51,6 +52,10 @@ function App() {
               element={<SelectedWardsPatientList />}
             />
             <Route path="/wardSelection" element={<WardSelection />} />
+            <Route
+              path="/HospitalsPatientSelection"
+              element={<HospitalsPatientSelection />}
+            />
           </Routes>
           <Footer />
         </>
