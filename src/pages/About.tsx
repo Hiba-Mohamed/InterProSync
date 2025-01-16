@@ -1,4 +1,5 @@
-import { Box , Typography} from "@mui/material"
+import { Box, Typography, Fade, Grow, Slide } from "@mui/material";
+
 const About = () => {
   const InterProSyncText = () => (
     <>
@@ -6,6 +7,7 @@ const About = () => {
       <span style={{ color: "#399E85", fontWeight: "bold" }}>Sync</span>
     </>
   );
+
   const aboutSectionsArray = [
     {
       title: (
@@ -22,8 +24,7 @@ const About = () => {
         </>
       ),
       color: "#183B65",
-      image:
-        "images/aboutPage/pic2.jpg",
+      image: "images/aboutPage/pic2.jpg",
     },
     {
       title: "Our Mission",
@@ -36,7 +37,7 @@ const About = () => {
         </>
       ),
       color: "#1E5C45",
-       image: "images/aboutPage/pic1.jpg",
+      image: "images/aboutPage/pic1.jpg",
     },
     {
       title: "Key Features",
@@ -51,7 +52,7 @@ const About = () => {
         </>
       ),
       color: "#399E85",
-        image: "images/aboutPage/pic3.jpg",
+      image: "images/aboutPage/pic3.jpg",
     },
     {
       title: (
@@ -69,7 +70,7 @@ const About = () => {
         </>
       ),
       color: "#39949E",
-       image: "images/aboutPage/pic4.jpg",
+      image: "images/aboutPage/pic4.jpg",
     },
     {
       title: "Get Involved",
@@ -81,62 +82,92 @@ const About = () => {
         </>
       ),
       color: "#0E414C",
-      image:
-        "images/aboutPage/pic5.png",
+      image: "images/aboutPage/pic5.png",
     },
   ];
+
   return (
-    <Box sx={{display:"flex", flexDirection:"column", gap:{xs:8, sm: 16, md: 20}, py:{xs:6, md: 22}, px:1, alignItems:"center"}}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: { xs: 8, sm: 16, md: 20 },
+        py: { xs: 6, md: 22 },
+        px: 1,
+        alignItems: "center",
+      }}
+    >
       {aboutSectionsArray.map((element, index) => (
         <Box
           key={index}
           sx={{ display: "flex", flexDirection: "row", gap: { xs: 2 } }}
         >
-          <Box sx={{display:"flex", flexDirection:"column", alignItems:"center", gap:1}}>
-            <Box
-              sx={{
-                backgroundColor: element.color,
-                borderTopLeftRadius:{xs:"4px", md:"10px"},
-                width: { xs: "20px", sm: "25px", md: "50px" },
-                height: { xs: "100px", sm: "80px", md: "150px" },
-              }}
-            ></Box>
-            <Box
-              component="img"
-              src={element.image}
-              sx={{
-                borderRadius:"200px",
-                width: { xs: "80px", sm: "120px", md: "180px" },
-                height: { xs: "80px", sm: "120px", md: "180px" },
-              }}
-            />
+          {/* Animation Container */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <Fade in={true} timeout={1000}>
+              <Box
+                sx={{
+                  backgroundColor: element.color,
+                  borderTopLeftRadius: { xs: "8px", md: "20px" },
+                  width: { xs: "20px", sm: "25px", md: "50px" },
+                  height: { xs: "100px", sm: "80px", md: "150px" },
+                }}
+              ></Box>
+            </Fade>
+            <Grow in={true} timeout={1000}>
+              <Box
+                component="img"
+                src={element.image}
+                sx={{
+                  borderRadius: "200px",
+                  width: { xs: "80px", sm: "120px", md: "180px" },
+                  height: { xs: "80px", sm: "120px", md: "180px" },
+                }}
+              />
+            </Grow>
           </Box>
-          <Box>
-            <Typography
-              sx={{
-                fontSize: { xs: "20px", sm: "30px", md: "40px" },
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 900,
-                color: "transparent",
-                background: element.color,
-                WebkitBackgroundClip: "text",
-              }}
-            >
-              {element.title}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: { xs: "14px", sm: "18px", md: "30px" },
-                width: { xs: "250px", sm: "500px", md: "600px", lg: "1000px" },
-              }}
-            >
-              {element.text}
-            </Typography>
-          </Box>
+
+          {/* Title and Text */}
+          <Slide direction="up" in={true} timeout={1500}>
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: { xs: "20px", sm: "30px", md: "40px" },
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: 900,
+                  color: "transparent",
+                  background: element.color,
+                  WebkitBackgroundClip: "text",
+                }}
+              >
+                {element.title}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "14px", sm: "18px", md: "30px" },
+                  width: {
+                    xs: "250px",
+                    sm: "500px",
+                    md: "600px",
+                    lg: "1000px",
+                  },
+                }}
+              >
+                {element.text}
+              </Typography>
+            </Box>
+          </Slide>
         </Box>
       ))}
     </Box>
   );
-}
+};
 
-export default About
+export default About;
