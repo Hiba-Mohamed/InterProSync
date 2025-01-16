@@ -16,13 +16,13 @@ const ButtonsComponent = () => {
         component={Link}
         to="/about"
         sx={{
-          fontWeight: 900,
+          fontWeight: 700,
           // background:"#A6C0C6",
           background: "rgba(245, 250, 255, 0.80)",
-          borderRadius: "20px",
+          borderRadius: "5px",
           px: { xs: 10, sm: 6 },
           color: "black",
-          fontSize: { xs: "12px", sm: "12px", md: "18px" },
+          fontSize: { xs: "16px", sm: "18px", md: "22px" },
           textTransform: "none",
           boxShadow: 3,
           maxWidth: { xs: "250px", sm: "auto" },
@@ -34,13 +34,13 @@ const ButtonsComponent = () => {
         component={Link}
         to="/getStarted"
         sx={{
-          fontWeight: 900,
+          fontWeight: 700,
           // background:"#183B65",
-          background: "rgba(245, 250, 255, 0.80)",
-          borderRadius: "20px",
+          background: "rgba(21, 67, 113, 0.8)",
+          borderRadius: "5px",
           px: { xs: 10, sm: 6 },
-          color: "black",
-          fontSize: { xs: "12px", sm: "12px", md: "18px" },
+          color: "white",
+          fontSize: { xs: "16px", sm: "18px", md: "22px" },
           maxWidth: { xs: "250px", sm: "auto" },
           textTransform: "none",
           boxShadow: 3,

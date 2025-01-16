@@ -1,7 +1,7 @@
+import { Box, Fade, Slide } from "@mui/material";
 import WelcomeText from "./WelcomeText";
 import ButtonsComponent from "./ButtonsComponent";
 import IconsComponent from "./IconsComponent";
-import { Box } from "@mui/material";
 
 const TopHomePage = () => {
   return (
@@ -14,6 +14,11 @@ const TopHomePage = () => {
         width: "100%",
         display: "flex",
         flexDirection: "column",
+        animation: "fadeIn 2s ease-in-out",
+        "@keyframes fadeIn": {
+          from: { opacity: 0 },
+          to: { opacity: 1 },
+        },
       }}
     >
       <Box
@@ -30,21 +35,25 @@ const TopHomePage = () => {
           justifyContent: "center",
         }}
       >
-        <Box
-          sx={{
-            position: "relative",
-            zIndex: 1,
-            color: "white",
-            px: { sx: 4, sm: 8 },
-            display: "flex",
-            flexDirection: { xs: "column" },
-            gap: { xs: "48px", sm: "48px" },
-          }}
-        >
-          <WelcomeText />
-          <ButtonsComponent />
-        </Box>
-        <IconsComponent />
+        <Slide direction="up" in timeout={1000}>
+          <Box
+            sx={{
+              position: "relative",
+              zIndex: 1,
+              color: "white",
+              px: { sx: 4, sm: 8 },
+              display: "flex",
+              flexDirection: { xs: "column" },
+              gap: { xs: "48px", sm: "48px" },
+            }}
+          >
+            <WelcomeText />
+            <ButtonsComponent />
+          </Box>
+        </Slide>
+        <Fade in timeout={2000}>
+          <IconsComponent />
+        </Fade>
       </Box>
     </Box>
   );

@@ -1,10 +1,10 @@
+import { useState, useEffect } from "react";
+import { Box, Typography, Zoom } from "@mui/material";
 import AutoAwesome from "@mui/icons-material/AutoAwesome";
 import PeopleAltOutlined from "@mui/icons-material/PeopleAltOutlined";
 import QuestionAnswerOutlined from "@mui/icons-material/QuestionAnswerOutlined";
 import SpeedOutlined from "@mui/icons-material/SpeedOutlined";
-import { Box, Typography } from "@mui/material";
 
-// Reusable component for styled "InterProSync" text
 const InterProSyncText = () => (
   <>
     <span style={{ color: "#183B65", fontWeight: "bold" }}>InterPro</span>
@@ -13,6 +13,30 @@ const InterProSyncText = () => (
 );
 
 const FeaturesComponent = () => {
+  const [visibleIndexes, setVisibleIndexes] = useState<number[]>([]);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    const featureElements = document.querySelectorAll(".feature");
+
+    featureElements.forEach((element, index) => {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setVisibleIndexes((prev) => [...new Set([...prev, index])]);
+          }
+        },
+        { threshold: 0.3 } // Trigger when 30% of the element is visible
+      );
+      observer.observe(element);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, []);
+
   const featuresObjectArray = [
     {
       title: "COMMUNICATION",
@@ -61,8 +85,7 @@ const FeaturesComponent = () => {
       text: (
         <>
           We embrace technology to push healthcare forward. <InterProSyncText />{" "}
-          incorporates cutting-edge tools that provide real-time updates and
-          AI-driven insights, helping professionals stay ahead in an
+          incorporates cutting-edge tools that provide real-time updates, helping professionals stay ahead in an
           ever-changing environment.
         </>
       ),
@@ -77,49 +100,79 @@ const FeaturesComponent = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: { xs: 8, md:12, lg:16 },
+        gap: { xs: 8, md: 12, lg: 16 },
         px: 2,
         py: 8,
         alignItems: "center",
       }}
     >
       {featuresObjectArray.map((element, index) => (
-        <Box
+        <Zoom
           key={index}
-          sx={{ display: "flex", flexDirection: "row", gap: { xs: 2 } }}
+          in={visibleIndexes.includes(index)}
+          style={{ transitionDelay: `${index * 400}ms` }}
         >
           <Box
-            component="img"
-            src={element.image}
+            className="feature"
+            component="article"
             sx={{
-              width: { xs: "40px", sm: "55px", md:"80px" },
-              height: { xs: "150px", sm: "180px", md:"250px"},
+              display: "flex",
+              flexDirection: "row",
+              gap: { xs: 2 },
+              p: 2,
+              border: "2px solid transparent",
+              borderRadius: "12px",
+              "&:hover": {
+                border: `2px solid ${element.color}`,
+                transform: "scale(1.05)",
+                transition: "all 0.3s ease-in-out",
+              },
             }}
-          />
-          <Box>
-            <Typography
-              sx={{
-                fontSize: { xs: "20px", sm: "30px", md:"40px" },
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 900,
-                color: "transparent",
-                background: element.color,
-                WebkitBackgroundClip: "text",
-                textShadow: "2px 5px 5px rgba(255, 255, 255, 0.4)",
-              }}
-            >
-              {element.title}
-            </Typography>
-            <Typography
-              sx={{
-                fontSize: { xs: "14px", sm: "18px", md:"30px", },
-                width: { xs: "310px", sm: "450px", md:"700px", lg:"1000px" },
-              }}
-            >
-              {element.text}
-            </Typography>
+          >
+              <Box
+                component="img"
+                src={element.image}
+                alt={`${element.title} illustration`}
+                sx={{
+                  width: { xs: "40px", sm: "55px", md: "80px" },
+                  height: { xs: "150px", sm: "180px", md: "250px" },
+                  objectFit: "contain",
+                }}
+              />
+
+            <Box>
+              <Typography
+                sx={{
+                  fontSize: { xs: "20px", sm: "30px", md: "40px" },
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: 900,
+                  color: "transparent",
+                  background: element.color,
+                  WebkitBackgroundClip: "text",
+                  textShadow: "2px 5px 5px rgba(255, 255, 255, 0.4)",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
+                }}
+              >
+                {element.title}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "14px", sm: "18px", md: "30px" },
+                  width: {
+                    xs: "310px",
+                    sm: "450px",
+                    md: "700px",
+                    lg: "1000px",
+                  },
+                }}
+              >
+                {element.text}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
+        </Zoom>
       ))}
     </Box>
   );

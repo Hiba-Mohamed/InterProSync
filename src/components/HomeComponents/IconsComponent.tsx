@@ -1,12 +1,14 @@
+import React from "react";
 import { Box, Typography } from "@mui/material";
 import AutoAwesome from "@mui/icons-material/AutoAwesome";
 import PeopleAltOutlined from "@mui/icons-material/PeopleAltOutlined";
 import QuestionAnswerOutlined from "@mui/icons-material/QuestionAnswerOutlined";
 import SpeedOutlined from "@mui/icons-material/SpeedOutlined";
 
-const IconsComponent = () => {
+const IconsComponent = React.forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <Box
+      ref={ref}
       sx={{
         display: "flex",
         flexDirection: { xs: "row", lg: "row" },
@@ -81,6 +83,6 @@ const IconsComponent = () => {
       </Box>
     </Box>
   );
-};
+});
 
 export default IconsComponent;

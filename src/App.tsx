@@ -9,6 +9,8 @@ import GettingStarted from "./pages/GettingStarted";
 import Footer from "./components/Footer/Footer";
 import ComingSoon from "./pages/ComingSoon";
 import Location from "./pages/Location";
+import SelectedWardsPatientList from "./pages/SelectedWardsPatientList";
+import WardSelection from "./pages/WardSelection";
 
 const theme = createTheme({
   typography: {
@@ -44,6 +46,11 @@ function App() {
             <Route path="/getStarted" element={<GettingStarted />} />
             <Route path="/comingSoon" element={<ComingSoon />} />
             <Route path="/location" element={<Location />} />
+            <Route
+              path="/SelectedWardsPatientList"
+              element={<SelectedWardsPatientList />}
+            />
+            <Route path="/wardSelection" element={<WardSelection />} />
           </Routes>
           <Footer />
         </>
