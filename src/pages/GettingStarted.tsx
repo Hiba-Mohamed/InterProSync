@@ -7,7 +7,7 @@ import { makeStyles } from "@mui/styles";
 import { Theme } from "@mui/material/styles";
 import RoleDisplayComponent from "../components/GettingStarted/RoleDisplayComponent";
 import ProgressBar from "../components/GettingStarted/ProgressBar";
-import { Link } from "react-router-dom";
+import Fade from "@mui/material/Fade";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -18,6 +18,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     marginBottom: theme.spacing(2),
+    opacity: 0, // Initially invisible
+    animation: `$slideIn 1s forwards`, // Apply the slide-in animation
   },
   stepNumber: {
     marginRight: theme.spacing(1),
@@ -50,11 +52,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const GettingStarted = () => {
   const classes = useStyles();
-   const [selectedRole, setSelectedRole] = useState<string>("");
+  const [selectedRole, setSelectedRole] = useState<string>("");
+  const [showProgressBar, setShowProgressBar] = useState<boolean>(false);
 
-   const handleRoleChange = (role: string) => {
-     setSelectedRole(role);
-   };
+  const handleRoleChange = (role: string) => {
+    setSelectedRole(role);
+  };
 
   const roles = [
     { name: "Medical Doctor", color: "#8DADD2" },
@@ -64,6 +67,11 @@ const GettingStarted = () => {
     { name: "Pharmacist", color: "#FFCBCB" },
     { name: "Manager", color: "#D4A5FF" },
   ];
+
+  // Show the progress bar after 1 second for demo purposes
+  setTimeout(() => {
+    setShowProgressBar(true);
+  }, 200);
 
   return (
     <Box
@@ -92,28 +100,34 @@ const GettingStarted = () => {
           (Guests)
         </Typography>
       </Box>
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
-        <ProgressBar />
-
+      <Box sx={{ display: "flex", flexDirection: "row", width: "100%" }}>
+        {/* ProgressBar */}
+        <Fade in={showProgressBar} timeout={1000}>
+          <div>
+            <ProgressBar />
+          </div>
+        </Fade>
         {/* Step 1: Select Your Role */}
         <Box>
-          <Box display="flex" alignItems="center" marginBottom={2}>
-            <Typography
-              sx={{
-                fontSize: { xs: "18px", sm: "24px", md: "30px" },
-                fontFamily: "Inter, sans-serif",
-                fontWeight: 900,
-                color: "transparent",
-                background: "#5D7EA4",
-                WebkitBackgroundClip: "text",
-                textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-                paddingTop: "40px",
-                paddingLeft: "20px",
-              }}
-            >
-              Select Your Role 
-            </Typography>
-          </Box>
+          <Fade in={showProgressBar} timeout={1000}>
+            <Box display="flex" alignItems="center" marginBottom={2}>
+              <Typography
+                sx={{
+                  fontSize: { xs: "18px", sm: "24px", md: "30px" },
+                  fontFamily: "Inter, sans-serif",
+                  fontWeight: 900,
+                  color: "transparent",
+                  background: "#5D7EA4",
+                  WebkitBackgroundClip: "text",
+                  textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+                  paddingTop: "40px",
+                  paddingLeft: "20px",
+                }}
+              >
+                Select Your Role
+              </Typography>
+            </Box>
+          </Fade>
 
           {/* Roles Grid */}
           <Box
@@ -134,10 +148,10 @@ const GettingStarted = () => {
                 onSelect={handleRoleChange}
               />
             ))}
-
           </Box>
 
           {/* Step 2: Enter Login Info */}
+          <Fade in={showProgressBar} timeout={1000}>
           <Box
             display="flex"
             marginY={2}
@@ -164,6 +178,7 @@ const GettingStarted = () => {
               Select a Username
             </Typography>
           </Box>
+          </Fade>
           <Box
             display="grid"
             gridTemplateColumns={{ xs: "1fr", sm: "1fr 1fr" }}
@@ -181,16 +196,16 @@ const GettingStarted = () => {
                 width: { xs: "100%" },
               }}
             />
-
           </Box>
 
           {/* Step 3: Login */}
+          <Fade in={showProgressBar} timeout={1000}>
           <Box
             display="flex"
             alignItems="center"
             sx={{
               paddingLeft: "20px",
-              paddingTop:{xs:"90px", sm:"0px" , md:"30px"}
+              paddingTop: { xs: "90px", sm: "0px", md: "30px" },
             }}
           >
             <Typography
@@ -207,6 +222,7 @@ const GettingStarted = () => {
               Login
             </Typography>
           </Box>
+          </Fade>
           <Box
             display="flex"
             justifyContent="space-between"
