@@ -57,6 +57,7 @@ const HospitalsPatientSelection: React.FC = () => {
         alignItems: "center",
         paddingTop: { xs: "40px", sm: "50px", md: "60px" },
         minHeight: "100vh",
+        marginBottom:"500px"
       }}
     >
       <Box textAlign="center" marginBottom={4}>
@@ -119,9 +120,10 @@ const HospitalsPatientSelection: React.FC = () => {
                 fontFamily: "Inter, sans-serif",
                 fontWeight: 700,
                 marginBottom: "10px",
-                color: "#183B65",
+                color: "black",
                 textAlign: "center",
-                paddingTop: "10px",
+                paddingTop: "30px",
+                paddingBottom:"20px"
               }}
             >
               {wardName}
