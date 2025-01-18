@@ -4,6 +4,7 @@ export type UserData = {
   chosenWardOrWards: string[];
   chosenPatientList: number[];
   discipline_id: number;
+  currentPatientBeingViewed: number;
 };
 
 export const userData: UserData = {
@@ -12,4 +13,5 @@ export const userData: UserData = {
   chosenWardOrWards: [""], // Start with an empty array of strings
   chosenPatientList: [],
   discipline_id: 0,
+  currentPatientBeingViewed: 0,
 };

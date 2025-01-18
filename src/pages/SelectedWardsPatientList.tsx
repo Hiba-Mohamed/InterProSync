@@ -8,8 +8,11 @@ import { PatientType } from "../mockData/patients";
 import { RoomType } from "../mockData/rooms";
 import { WardType } from "../mockData/wards";
 import { UserData } from "../mockData/userData";
+import { useNavigate } from "react-router";
+
 
 const SelectedWardsPatientList: React.FC = () => {
+  let navigate = useNavigate();
   const [selectedPatients, setSelectedPatients] = useState<number[]>([]);
   const [filteredPatients, setFilteredPatients] = useState<PatientType[]>([]);
   const [groupedPatients, setGroupedPatients] = useState<
@@ -73,9 +76,27 @@ const SelectedWardsPatientList: React.FC = () => {
   };
 
 
-  const handleConfirmUserPatientSelection =()=>{
-    
+const handleConfirmUserPatientSelection = () => {
+  // Get the current userData from localStorage
+  const userDataString = localStorage.getItem("userData");
+  if (userDataString) {
+    const userData: UserData = JSON.parse(userDataString);
+
+    // Update the chosenPatientList with the selected patient IDs
+    const updatedUserData = {
+      ...userData,
+      chosenPatientList: selectedPatients, // Update this array with selected patients
+    };
+
+    // Save the updated userData back to localStorage
+    localStorage.setItem("userData", JSON.stringify(updatedUserData));
+
+    // Optionally, you can log or show a confirmation message
+    console.log("Updated userData:", updatedUserData);
+    navigate("/userPatientList")
   }
+};
+
 
   return (
     <Box
@@ -201,6 +222,7 @@ const SelectedWardsPatientList: React.FC = () => {
       <Button
         variant="contained"
         sx={{ backgroundColor: "#183B65", marginTop: "20px" }}
+        onClick={() => handleConfirmUserPatientSelection()}
       >
         Confirm Patient List
       </Button>
