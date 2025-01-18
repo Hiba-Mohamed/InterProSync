@@ -19,7 +19,9 @@ import { tasks } from "../mockData/tasks";
 import { undoneTasks } from "../mockData/undoneTasks";
 import { userData } from "../mockData/userData";
 import { users } from "../mockData/users";
-import { AiOutlineWarning } from "react-icons/ai";
+import { useNavigate } from "react-router";
+import ErrorMessage from "../components/ErrorMessage";
+
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -64,6 +66,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const GettingStarted = () => {
+  let navigate = useNavigate();
   const classes = useStyles();
   const [selectedRole, setSelectedRole] = useState<string>("");
   const [showProgressBar, setShowProgressBar] = useState<boolean>(false);
@@ -138,6 +141,7 @@ const GettingStarted = () => {
 
       // Optionally, you could redirect to another page or handle further logic
       console.log("Logged in as:", username);
+      navigate("/wardSelection");
     }
 
     }
@@ -336,36 +340,10 @@ const GettingStarted = () => {
           {emptyRoleErrorMessage === "" ? (
             ""
           ) : (
-            <Box
-              sx={{
-                border: "1px solid red", // Red border for the error message
-                padding: "8px",
-                borderRadius: "5px",
-                marginTop: "10px",
-                display: "flex", // Ensures icon and message align side by side
-                alignItems: "center", // Vertically aligns the icon with the text
-              }}
-            >
-              <AiOutlineWarning color="red" style={{ marginRight: "8px", fontSize:"40px" }} />{" "}
-              {/* React icon */}
-              <Typography color="red">{emptyRoleErrorMessage}</Typography>
-            </Box>
+            <ErrorMessage errorMessage={emptyRoleErrorMessage} />
           )}
           {emptyUsernameErrorMessage && (
-            <Box
-              sx={{
-                border: "1px solid red", // Red border for the error message
-                padding: "8px",
-                borderRadius: "5px",
-                marginTop: "10px",
-                display: "flex", // Ensures icon and message align side by side
-                alignItems: "center", // Vertically aligns the icon with the text
-              }}
-            >
-              <AiOutlineWarning color="red" style={{ marginRight: "8px", fontSize:"40px"}} />{" "}
-              {/* React icon */}
-              <Typography color="red">{emptyUsernameErrorMessage}</Typography>
-            </Box>
+            <ErrorMessage errorMessage={emptyUsernameErrorMessage} />
           )}
           <Box
             display="flex"

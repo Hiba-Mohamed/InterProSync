@@ -1,3 +1,9 @@
+export interface WardType {
+  ward_id: string;
+  ward_name: string;
+  hospital_id: number;
+}
+
 export const wards = [
   { ward_id: "H1-W1", ward_name: "Mock Cardiology", hospital_id: 1 },
   { ward_id: "H1-W2", ward_name: "Mock Pediatrics", hospital_id: 1 },

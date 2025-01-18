@@ -1,3 +1,10 @@
+
+export interface RoomType  {
+  room_id: number;
+  room_number: string;
+  ward_id: string;
+};
+
 export const rooms = [
   { room_id: 101, room_number: "A101", ward_id: "H1-W1" },
   { room_id: 102, room_number: "A102", ward_id: "H1-W1" },

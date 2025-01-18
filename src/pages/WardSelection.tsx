@@ -4,11 +4,13 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Grid";
 import { wards } from "../mockData/wards";
-import { userData as initialUserData, UserData } from "../mockData/userData"; // Adjust path as necessary
+import ErrorMessage from "../components/ErrorMessage";
+import { useNavigate } from "react-router";
 
 const WardSelection = () => {
   const [selectedWards, setSelectedWards] = useState<string[]>([]);
-  const [userData, setUserData] = useState<UserData>(initialUserData); // Using useState to manage userData
+  const [emptyWardsErrorMessage, setEmptyWardsErrorMessage] = useState<string>("");
+  let navigate = useNavigate();
 
   const handleSelectAllWards = () => {
     if (selectedWards.length === wards.length) {
@@ -37,48 +39,48 @@ const WardSelection = () => {
     {} as { [key: number]: typeof wards }
   );
 
-  const handleConfirm = () => {
-    // Update the userData object
-    const updatedUserData = {
-      ...userData, // Copy the existing userData
-      chosenWardOrWards: selectedWards,
-      chosenHospitalOrHospitals: Array.from(
-        new Set(
-          selectedWards
-            .map((wardId) => {
-              const ward = wards.find((w) => w.ward_id === wardId);
-              return ward?.hospital_id; // Could be undefined
-            })
-            .filter(
-              (hospitalId): hospitalId is number => hospitalId !== undefined
-            ) // Filter out undefined
-        )
-      ),
-    };
+const handleConfirm = () => {
+  // Check if at least one ward is selected
+  if (selectedWards.length === 0) {
+    setEmptyWardsErrorMessage("Please select at least one ward to proceed.");
+    return; // Prevent further action
+  }
 
-    setUserData(updatedUserData); // Update state
+  // Clear any previous error messages
+  setEmptyWardsErrorMessage("");
 
-    console.log("Updated userData:", updatedUserData);
+  // Fetch existing userData from localStorage
+  const existingUserData = JSON.parse(localStorage.getItem("userData") || "{}");
 
-    // Save the updated userData to a file
-    saveUserDataToFile(updatedUserData);
+  console.log("existingUserData", existingUserData);
+  // Update the userData object
+  const updatedUserData = {
+    ...existingUserData, // Copy the existing userData
+    chosenWardOrWards: selectedWards,
+    chosenHospitalOrHospitals: Array.from(
+      new Set(
+        selectedWards
+          .map((wardId) => {
+            const ward = wards.find((w) => w.ward_id === wardId);
+            return ward?.hospital_id; // Could be undefined
+          })
+          .filter(
+            (hospitalId): hospitalId is number => hospitalId !== undefined
+          ) // Filter out undefined
+      )
+    ),
   };
 
-  const saveUserDataToFile = (userData: UserData) => {
-    // Convert the userData object to a JSON string
-    const dataStr = JSON.stringify(userData);
+  console.log("Updated userData:", updatedUserData);
 
-    // Create a Blob from the string
-    const blob = new Blob([dataStr], { type: "application/json" });
+  // Save the updated userData back to localStorage
+  localStorage.setItem("userData", JSON.stringify(updatedUserData));
+  navigate("/SelectedWardsPatientList");
 
-    // Create a temporary link element
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "userData.json"; // Name of the downloaded file
+};
 
-    // Trigger a click event on the link to start the download
-    link.click();
-  };
+
+
 
   return (
     <Box
@@ -182,6 +184,9 @@ const WardSelection = () => {
           </Box>
         ))}
       </Box>
+      {emptyWardsErrorMessage && (
+        <ErrorMessage errorMessage={emptyWardsErrorMessage} />
+      )}
       <Button
         variant="contained"
         onClick={handleConfirm}
