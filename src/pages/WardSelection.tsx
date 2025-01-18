@@ -4,20 +4,22 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Grid";
 import { wards } from "../mockData/wards";
+import { userData as initialUserData, UserData } from "../mockData/userData"; // Adjust path as necessary
 
 const WardSelection = () => {
-  const [selectedwards, setSelectedwards] = useState<string[]>([]);
+  const [selectedWards, setSelectedWards] = useState<string[]>([]);
+  const [userData, setUserData] = useState<UserData>(initialUserData); // Using useState to manage userData
 
-  const handleSelectAllwards = () => {
-    if (selectedwards.length === wards.length) {
-      setSelectedwards([]);
+  const handleSelectAllWards = () => {
+    if (selectedWards.length === wards.length) {
+      setSelectedWards([]);
     } else {
-      setSelectedwards(wards.map((ward) => ward.ward_id));
+      setSelectedWards(wards.map((ward) => ward.ward_id));
     }
   };
 
-  const handleSelectward = (id: string) => {
-    setSelectedwards((prev) =>
+  const handleSelectWard = (id: string) => {
+    setSelectedWards((prev) =>
       prev.includes(id) ? prev.filter((pid) => pid !== id) : [...prev, id]
     );
   };
@@ -34,6 +36,49 @@ const WardSelection = () => {
     },
     {} as { [key: number]: typeof wards }
   );
+
+  const handleConfirm = () => {
+    // Update the userData object
+    const updatedUserData = {
+      ...userData, // Copy the existing userData
+      chosenWardOrWards: selectedWards,
+      chosenHospitalOrHospitals: Array.from(
+        new Set(
+          selectedWards
+            .map((wardId) => {
+              const ward = wards.find((w) => w.ward_id === wardId);
+              return ward?.hospital_id; // Could be undefined
+            })
+            .filter(
+              (hospitalId): hospitalId is number => hospitalId !== undefined
+            ) // Filter out undefined
+        )
+      ),
+    };
+
+    setUserData(updatedUserData); // Update state
+
+    console.log("Updated userData:", updatedUserData);
+
+    // Save the updated userData to a file
+    saveUserDataToFile(updatedUserData);
+  };
+
+  const saveUserDataToFile = (userData: UserData) => {
+    // Convert the userData object to a JSON string
+    const dataStr = JSON.stringify(userData);
+
+    // Create a Blob from the string
+    const blob = new Blob([dataStr], { type: "application/json" });
+
+    // Create a temporary link element
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "userData.json"; // Name of the downloaded file
+
+    // Trigger a click event on the link to start the download
+    link.click();
+  };
 
   return (
     <Box
@@ -72,7 +117,7 @@ const WardSelection = () => {
       >
         <Button
           variant="outlined"
-          onClick={handleSelectAllwards}
+          onClick={handleSelectAllWards}
           sx={{
             color: "#183B65",
             borderColor: "#183B65",
@@ -83,17 +128,21 @@ const WardSelection = () => {
             },
           }}
         >
-          {selectedwards.length === wards.length
+          {selectedWards.length === wards.length
             ? "Deselect All"
             : "Select All Displayed Wards"}
         </Button>
       </Box>
-      <Box sx={{ width: "100%", marginTop:"40px" }}>
+      <Box sx={{ width: "100%", marginTop: "40px" }}>
         {Object.entries(groupedWards).map(([hospitalId, wards]) => (
           <Box key={hospitalId} sx={{ marginBottom: "100px" }}>
             <Typography
               variant="h6"
-              sx={{ textAlign: "center", marginBottom: "30px" , fontWeight:800}}
+              sx={{
+                textAlign: "center",
+                marginBottom: "30px",
+                fontWeight: 800,
+              }}
             >
               Hospital {hospitalId}
             </Typography>
@@ -108,21 +157,20 @@ const WardSelection = () => {
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
                   <Button
-                    variant="outlined" // Keep this as outlined for the base style
-                    onClick={() => handleSelectward(ward.ward_id)}
+                    variant="outlined"
+                    onClick={() => handleSelectWard(ward.ward_id)}
                     sx={{
                       width: "80%",
                       textAlign: "center",
-                      fontSize:{xs:"18px", md:"22px"},
+                      fontSize: { xs: "18px", md: "22px" },
                       backgroundColor: "#F5FAFF",
-                      color:"#445972",
+                      color: "#445972",
                       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      borderWidth:"4px",
-                      borderColor: selectedwards.includes(ward.ward_id)
+                      borderWidth: "4px",
+                      borderColor: selectedWards.includes(ward.ward_id)
                         ? "#9CCE84"
                         : "transparent",
-                      
-                      textTransform: "none", // Ensure text is not all caps
+                      textTransform: "none",
                       "&:hover": {},
                     }}
                   >
@@ -136,6 +184,7 @@ const WardSelection = () => {
       </Box>
       <Button
         variant="contained"
+        onClick={handleConfirm}
         sx={{ backgroundColor: "#183B65", marginTop: "20px" }}
       >
         Confirm Ward List
