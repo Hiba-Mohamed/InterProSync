@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import Grid2 from "@mui/material/Grid";
 import MyPatientComponentDisplay from "../components/MyPatientComponentDisplay";
 import { PatientType } from "../mockData/patients";
@@ -130,6 +129,113 @@ const UserPatientList: React.FC = () => {
             </Grid2>
           ))}
         </Grid2>
+      </Box>
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: {
+              xs: "column",
+            md: "row",
+              alignItems: "center",
+              gap: 30,
+              justifyContent: "center",
+              paddingBottom: "100px",
+            },
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              width: { xs: "300px" },
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Box
+              sx={{ width: "10px", backgroundColor: "#9CCE84", height: "20px" }}
+            ></Box>
+            <Typography
+              sx={{
+                color: "transparent",
+                background: `#535D68`,
+                WebkitBackgroundClip: "text",
+                textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+                fontWeight: 700,
+              }}
+            >
+              <span style={{ color: "#9CCE84" }}>Green </span>Means no tasks
+              pending
+            </Typography>
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              width: { xs: "300px" },
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Box
+              sx={{ width: "10px", backgroundColor: "#FFD8B0", height: "20px" }}
+            ></Box>
+            <Typography
+              sx={{
+                color: "transparent",
+                background: `#535D68`,
+                WebkitBackgroundClip: "text",
+                textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+                fontWeight: 700,
+              }}
+            >
+              <span style={{ color: "#FFD8B0" }}>Orange </span>Means pending
+              team tasks
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              width: { xs: "300px" },
+              alignItems: "center",
+              gap: 2,
+            }}
+          >
+            <Box
+              sx={{ width: "10px", backgroundColor: "#C45E7D", height: "20px" }}
+            ></Box>
+            <Typography
+              sx={{
+                color: "transparent",
+                background: `#535D68`,
+                WebkitBackgroundClip: "text",
+                textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+                fontWeight: 700,
+              }}
+            >
+              <span style={{ color: "#C45E7D" }}>Red </span>Means pending tasks
+              for you
+            </Typography>
+          </Box>
+        </Box>
+        <Typography
+          sx={{
+            color: "transparent",
+            background: `#535D68`,
+            WebkitBackgroundClip: "text",
+            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+            fontWeight: 700,
+            maxWidth: "800px",
+            padding:"12px"
+          }}
+        >
+          Click on a patient to view their dashboard, where you can see all
+          assigned tasks from other healthcare professionals and assign new
+          tasks to team members like doctors, dietitian, or pharmacists.
+        </Typography>
       </Box>
     </Box>
   );
