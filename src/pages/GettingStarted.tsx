@@ -18,11 +18,9 @@ import { disciplines } from "../mockData/disciplines";
 import { tasks } from "../mockData/tasks";
 import { undoneTasks } from "../mockData/undoneTasks";
 import { userData } from "../mockData/userData";
-import { users } from "../mockData/users";
+import { User, users } from "../mockData/users";
 import { useNavigate } from "react-router";
 import ErrorMessage from "../components/ErrorMessage";
-
-
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -93,62 +91,75 @@ const GettingStarted = () => {
     setUsername(event.target.value);
   };
 
-  
-
   const handleGuestLogin = () => {
-
     if (!selectedRole && username.trim() === "") {
       setEmptyRoleErrorMessage(
-        "You did not select a role. Please Select Your Role !"
+        "You did not select a role. Please Select Your Role!"
       );
       setEmptyUsernameErrorMessage(
-        "Username is empty. Please enter a username to proceed !"
+        "Username is empty. Please enter a username to proceed!"
       );
-      return; // Prevent further action if the role is not selected
-    }
-    else{
-    if (username.trim() === "") {
+      return; // Prevent further action if both role and username are missing
+    } else if (username.trim() === "") {
       setEmptyUsernameErrorMessage(
-        "Username is empty. Please enter a username to proceed !"
+        "Username is empty. Please enter a username to proceed!"
       );
-      setEmptyRoleErrorMessage("")
+      setEmptyRoleErrorMessage("");
       return; // Prevent further action if the username is empty
-    }
-    else{
-    if (!selectedRole) {
+    } else if (!selectedRole) {
       setEmptyRoleErrorMessage(
-        "You did not select a role. Please Select Your Role !"
+        "You did not select a role. Please Select Your Role!"
       );
-      setEmptyUsernameErrorMessage("")
+      setEmptyUsernameErrorMessage("");
       return; // Prevent further action if the role is not selected
     }
-    else{
-       setEmptyRoleErrorMessage("")
-       setEmptyUsernameErrorMessage("")
+
+    setEmptyRoleErrorMessage("");
+    setEmptyUsernameErrorMessage("");
+
+    // Get existing users from localStorage
+    const existingUsers = JSON.parse(localStorage.getItem("users") || "[]");
+
+    // Create an array of existing usernames (case-insensitive)
+    const existingUsernames = existingUsers.map((user:User) =>
+      user.username.toLowerCase()
+    );
+
+    // Check if the username already exists (case-insensitive comparison)
+    if (existingUsernames.includes(username.toLowerCase())) {
+      alert("Username already exists. Please choose a different username.");
+      return; // Prevent adding the duplicate username
+    }
+
     // Find the selected role
     const selectedRoleData = roles.find((role) => role.name === selectedRole);
 
-    // If the role is valid, update userData with the discipline_id
+    // If the role is valid, proceed
     if (selectedRoleData) {
-      const updatedUserData = {
-        ...userData,
-        userName: username,
-        discipline_id: selectedRoleData.discipline_id, // Add discipline_id here
+      // Create a new user object
+      const newUser = {
+        user_id:
+          existingUsers.length > 0
+            ? existingUsers[existingUsers.length - 1].user_id + 1
+            : 1,
+        username: username,
+        discipline_id: selectedRoleData.discipline_id,
       };
 
-      // Store the updated user data in localStorage
-      localStorage.setItem("userData", JSON.stringify(updatedUserData));
+      // Add the new user to the users array
+      existingUsers.push(newUser);
 
-      // Optionally, you could redirect to another page or handle further logic
+      // Update localStorage with the new users array
+      localStorage.setItem("users", JSON.stringify(existingUsers));
+
+      // Store the updated user data separately (optional)
+      localStorage.setItem("userData", JSON.stringify(newUser));
+
+      // Optionally, redirect to another page or handle further logic
       console.log("Logged in as:", username);
       navigate("/wardSelection");
     }
-
-    }
-
-    }
-
-  };}
+  };
 
   useEffect(() => {
     // Check if the user data already exists in localStorage
