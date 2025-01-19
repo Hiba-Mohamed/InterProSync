@@ -9,6 +9,7 @@ import { RoomType } from "../mockData/rooms";
 import { WardType } from "../mockData/wards";
 import { UserData } from "../mockData/userData";
 import { useNavigate } from "react-router";
+import ErrorMessage from "../components/ErrorMessage";
 
 
 const SelectedWardsPatientList: React.FC = () => {
@@ -18,6 +19,7 @@ const SelectedWardsPatientList: React.FC = () => {
   const [groupedPatients, setGroupedPatients] = useState<
     Record<string, PatientType[]>
   >({});
+  const [noWardsSelectedErrorMessage, setNoWardsSelectedErrorMessage] = useState<string>("");
 
   useEffect(() => {
     const userDataString = localStorage.getItem("userData");
@@ -77,7 +79,14 @@ const SelectedWardsPatientList: React.FC = () => {
 
 
 const handleConfirmUserPatientSelection = () => {
-  // Get the current userData from localStorage
+  if (selectedPatients.length === 0) {
+    setNoWardsSelectedErrorMessage("Please select at least one patient to proceed.");
+    return; // Prevent further action
+  }  // Get the current userData from localStorage
+      setNoWardsSelectedErrorMessage(
+        ""
+      );
+
   const userDataString = localStorage.getItem("userData");
   if (userDataString) {
     const userData: UserData = JSON.parse(userDataString);
@@ -219,6 +228,9 @@ const handleConfirmUserPatientSelection = () => {
           </Box>
         ))}
       </Box>
+      {noWardsSelectedErrorMessage && (
+        <ErrorMessage errorMessage={noWardsSelectedErrorMessage} />
+      )}
       <Button
         variant="contained"
         sx={{ backgroundColor: "#183B65", marginTop: "20px" }}

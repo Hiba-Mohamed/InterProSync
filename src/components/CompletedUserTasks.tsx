@@ -24,8 +24,10 @@ const formatDateTime = (dateTime: string): string => {
 
 const CompletedUserTasks = ({
   userCompletedTasks,
+  onUndo,
 }: {
   userCompletedTasks: CompletedTasksDisplayObjectType[];
+  onUndo: Function;
 }) => {
   const [expandedTaskIndex, setExpandedTaskIndex] = useState<number | null>(
     null
@@ -33,6 +35,10 @@ const CompletedUserTasks = ({
   const [users, setUsers] = useState<User[]>([]);
   const [disciplines, setDisciplines] = useState<any[]>([]);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
+  const [incrementingValueWithEveryUndo, setIncrementingValueWithEveryUndo] =
+    useState<number>(0);
+  // State for handling the reason for undoing task completion
+  const [undoReason, setUndoReason] = useState<string>("");
 
   useEffect(() => {
     const storedUsers = localStorage.getItem("users");
@@ -63,9 +69,39 @@ const CompletedUserTasks = ({
   };
 
   const handleUndoTaskCompletion = (task_id: number, reason: string) => {
-    // get the "tasks" item, "completedTasks" item, "undoneTasks" item from local storage
-    // update the task with the same task_id status to "inprogress"
-    // add to the undoneTasks item {undone_id: length+1, task_id: task_id, reason: reason, undone_dateTime: time and date now in this format "2025-01-12T10:30:00Z" }
+    // Get the "tasks" item, "completedTasks" item, "undoneTasks" item from local storage
+    // Update the task with the same task_id status to "inprogress"
+    // Add to the undoneTasks item: {undone_id: length+1, task_id: task_id, reason: reason, undone_dateTime: time and date now}
+    console.log(`Undoing task ${task_id} for reason: ${reason}`);
+
+    const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+    const undoneTasks = JSON.parse(localStorage.getItem("undoneTasks") || "[]");
+
+    // Update task status to "inprogress"
+    const taskIndex = tasks.findIndex((task: any) => task.task_id === task_id);
+    if (taskIndex > -1) {
+      tasks[taskIndex].status = "inprogress";
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    // Add the undone task to the undoneTasks array
+    const newUndoneTask = {
+      undone_id: undoneTasks.length + 1,
+      task_id: task_id,
+      reason: reason,
+      undone_dateTime: new Date().toISOString(),
+    };
+
+    undoneTasks.push(newUndoneTask);
+    localStorage.setItem("undoneTasks", JSON.stringify(undoneTasks));
+
+    // Update the state with the new tasks list
+    // You can use the passed userCompletedTasks prop if it's controlled by a parent component
+    // Otherwise, you can trigger a re-fetch of tasks from localStorage
+    setUndoReason("");
+    const incremented = incrementingValueWithEveryUndo + 1;
+    setIncrementingValueWithEveryUndo(incremented);
+    onUndo();
   };
 
   const handleExpandClick = (index: number) => {
@@ -73,7 +109,7 @@ const CompletedUserTasks = ({
   };
 
   return (
-    <Box>
+    <Box key={incrementingValueWithEveryUndo}>
       <Typography
         variant="h5"
         sx={{
@@ -142,16 +178,20 @@ const CompletedUserTasks = ({
               >
                 <TextField
                   label="Reason"
-                  type="Reason for Undo"
+                  type="text"
                   variant="outlined"
+                  value={undoReason}
+                  onChange={(e) => setUndoReason(e.target.value)} // Update state when the text changes
                   sx={{
                     width: { xs: "100%" },
                   }}
-                />{" "}
+                />
                 <Button
                   variant="outlined"
                   sx={{ color: "#DB944A", borderColor: "#DB944A" }}
-                  onClick={handleUndoTaskCompletion(task.task_id)}
+                  onClick={() =>
+                    handleUndoTaskCompletion(task.task_id, undoReason)
+                  } // Pass the reason here
                 >
                   Undo Completion
                 </Button>

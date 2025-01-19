@@ -12,18 +12,13 @@ import UserPatientActionNavigation from "../components/Navigations/UserPatientAc
 const PatientPendingTasks = () => {
   const { patient_idString } = useParams();
   const [patientData, setPatientData] = useState<PatientType | null>(null);
-  // const [userTasks, setUserTasks] = useState<TaskType[]>([]);
-  // const [teamTasks, setTeamTasks] = useState<TaskType[]>([]);
-  // const [userCompletedTasks, setUserCompletedTasks] = useState<TaskType[]>([]);
-  // const [teamCompletedTasks, setTeamCompletedTasks] = useState<TaskType[]>([]);
   const [userCompletedTasksAdjustArray, setUserCompletedTasksAdjustedArray] =
     useState<CompletedTasksDisplayObjectType[]>([]);
   const [teamCompletedTasksAdjustedArray, setTeamCompletedTasksAdjustedArray] =
     useState<CompletedTasksDisplayObjectType[]>([]);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
   const navigate = useNavigate();
-
-  useEffect(() => {
+  const getNeededArrays = () => {
     const patientsString = localStorage.getItem("patients");
     const tasksString = localStorage.getItem("tasks");
     const completedTasksString = localStorage.getItem("completedTasks");
@@ -63,23 +58,6 @@ const PatientPendingTasks = () => {
           (task) => task.status === "complete"
         );
         console.log(patienttasksCompletedLongerArray);
-
-        // Filter completed tasks by patient_id
-        // const patientCompletedTasks = allCompletedTasks.filter(
-        //   (completedTask) => completedTask.task_id === patient_id
-        // );
-
-        // // Split tasks based on discipline_id (user's discipline vs others)
-        // const userAssignedTasks = patientTasks.filter(
-        //   (task) => task.discipline_id === userDiscipline // Tasks assigned to the user's discipline
-        // );
-
-        // const teamAssignedTasks = patientTasks.filter(
-        //   (task) => task.discipline_id !== userDiscipline // Tasks assigned to other disciplines
-        // );
-
-        // setUserTasks(userAssignedTasks);
-        // setTeamTasks(teamAssignedTasks);
 
         // Split completed tasks based on discipline_id (user's discipline vs others)
         const userCompleted = patienttasksCompletedLongerArray.filter(
@@ -123,7 +101,15 @@ const PatientPendingTasks = () => {
         );
       }
     }
+  };
+
+  useEffect(() => {
+    getNeededArrays();
   }, [patient_idString, userDiscipline]);
+
+  const handleUserTaskUpdate = () => {
+    getNeededArrays();
+  };
 
   if (!patientData) {
     return (
@@ -242,6 +228,7 @@ const PatientPendingTasks = () => {
       >
         <CompletedUserTasks
           userCompletedTasks={userCompletedTasksAdjustArray}
+          onUndo={handleUserTaskUpdate}
         />
         <CompletedTeamTasks
           teamCompletedTasks={teamCompletedTasksAdjustedArray}
