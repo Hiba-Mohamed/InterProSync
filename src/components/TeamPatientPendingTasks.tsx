@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
-import { Box, Typography, Button, Divider } from "@mui/material";
+import { Box, Typography, Button, Divider, Collapse } from "@mui/material";
 
 // Function to format the date to YYYY/MM/DD HH:mm:ss
 const formatDateTime = (dateTime: string): string => {
@@ -83,6 +83,7 @@ const TeamPatientPendingTasks = ({ teamTasks }: { teamTasks: TaskType[] }) => {
               backgroundColor: "#f9f9f9",
               borderRadius: 2,
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+              width: { xs: "330px", sm: "400px" },
             }}
           >
             <Typography>
@@ -96,20 +97,19 @@ const TeamPatientPendingTasks = ({ teamTasks }: { teamTasks: TaskType[] }) => {
               {formatDateTime(task.assignment_dateTime)}
             </Typography>
 
-            {/* Expand/Collapse Button */}
+            {/* Expand/Collapse Content with Smooth Transition */}
+            <Collapse in={expandedTaskIndex === index}>
+              <Divider sx={{ marginY: 2 }} />
+              <Box>
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                  Task Description:
+                </Typography>
+                <Typography sx={{ width: { xs: "300px", sm: "400px" } }}>
+                  {task.description}
+                </Typography>
+              </Box>
+            </Collapse>
 
-            {/* Conditionally render expanded task content */}
-            {expandedTaskIndex === index && (
-              <>
-                <Divider sx={{ marginY: 2 }} />
-                <Box>
-                  <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                    Task Description:
-                  </Typography>
-                  <Typography>{task.description}</Typography>
-                </Box>
-              </>
-            )}
             <Box sx={{ marginTop: 2 }}>
               <Button
                 variant="text"

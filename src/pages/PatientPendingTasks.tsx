@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
 import { PatientType } from "../mockData/patients";
+import { useNavigate } from "react-router-dom";
 
 const PatientPendingTasks = () => {
   const { patient_idString } = useParams();
@@ -12,6 +13,7 @@ const PatientPendingTasks = () => {
   const [userTasks, setUserTasks] = useState<TaskType[]>([]);
   const [teamTasks, setTeamTasks] = useState<TaskType[]>([]);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const patientsString = localStorage.getItem("patients");
@@ -67,7 +69,7 @@ const PatientPendingTasks = () => {
   }
 
   return (
-    <Box sx={{minHeight:"100vh"}}>
+    <Box sx={{ minHeight: "100vh" }}>
       <Box textAlign="center" marginBottom={4} marginTop={8}>
         <Typography
           sx={{
@@ -137,14 +139,26 @@ const PatientPendingTasks = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
-          alignItems: "end",
-          padding: "12px",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          padding: { xs: "12px", sm: "20px" },
         }}
       >
+        {/* navigate to /userPatientList */}
+        <Button
+          variant="text"
+          sx={{ fontWeight: 700, fontSize: { xs: "10px", sm: "12px" } }}
+          onClick={() => navigate("/userPatientList")}
+        >
+          Back To My Patients List
+        </Button>{" "}
         <Button
           variant="contained"
-          sx={{ backgroundColor: "#8DADD2", fontWeight: 800 }}
+          sx={{
+            backgroundColor: "#8DADD2",
+            fontWeight: 800,
+            fontSize: { xs: "10px", sm: "12px" },
+          }}
         >
           Assign A task
         </Button>{" "}
@@ -153,11 +167,11 @@ const PatientPendingTasks = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignContent:"start",
-            justifyItems:"start",
-          alignItems:{xs:"center", md:"start"},
-          gap:16,
-          justifyContent: {xs:"center"},
+          alignContent: "start",
+          justifyItems: "start",
+          alignItems: { xs: "center", md: "start" },
+          gap: 16,
+          justifyContent: { xs: "center" },
         }}
       >
         <UserPatientPendingTasks userTasks={userTasks} />
