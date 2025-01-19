@@ -46,10 +46,10 @@ const UserPatientList: React.FC = () => {
     }
   };
 
-  const handleConfirmUserPatientSelection = () => {
+  const handleConfirmUserPatientSelection = (patientId:number) => {
     // Optionally, handle any confirmation logic here
-    console.log("Selected Patient:", selectedPatient);
-    navigate("/userPatientList");
+    console.log("Selected Patient:", patientId);
+    navigate(`/patientPendingTasks/${patientId}`);
   };
 
   return (
@@ -115,7 +115,9 @@ const UserPatientList: React.FC = () => {
                   marginBottom: "10px",
                   justifyContent: "center",
                 }}
-                onClick={handleConfirmUserPatientSelection}
+                onClick={() =>
+                  handleConfirmUserPatientSelection(patient.patient_id)
+                } // Use an arrow function here
               >
                 <MyPatientComponentDisplay
                   roomNumber={patient.room_id}
@@ -136,7 +138,7 @@ const UserPatientList: React.FC = () => {
             display: "flex",
             flexDirection: {
               xs: "column",
-            md: "row",
+              md: "row",
               alignItems: "center",
               gap: 30,
               justifyContent: "center",
@@ -229,7 +231,7 @@ const UserPatientList: React.FC = () => {
             textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
             fontWeight: 700,
             maxWidth: "800px",
-            padding:"12px"
+            padding: "12px",
           }}
         >
           Click on a patient to view their dashboard, where you can see all

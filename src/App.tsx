@@ -13,6 +13,7 @@ import SelectedWardsPatientList from "./pages/SelectedWardsPatientList";
 import WardSelection from "./pages/WardSelection";
 import HospitalsPatientSelection from "./pages/HospitalsPatientSelection";
 import UserPatientList from "./pages/UserPatientList";
+import PatientPendingTasks from "./pages/PatientPendingTasks";
 
 const theme = createTheme({
   typography: {
@@ -57,9 +58,13 @@ function App() {
               path="/HospitalsPatientSelection"
               element={<HospitalsPatientSelection />}
             />
-            <Route path="/userPatientList" element={<UserPatientList/>}/>
+            <Route path="/userPatientList" element={<UserPatientList />} />
+            <Route
+              path="/patientPendingTasks/:patient_idString"
+              element={<PatientPendingTasks />}
+            />
           </Routes>
-          
+
           <Footer />
         </>
       </Box>
