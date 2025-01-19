@@ -1,0 +1,251 @@
+import { Box, Typography, Button } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { TaskType } from "../mockData/tasks";
+import { PatientType } from "../mockData/patients";
+import { useNavigate } from "react-router-dom";
+import { CompletedTasksDisplayObjectType } from "../mockData/completedTasks";
+import { CompletedTaskType } from "../mockData/completedTasks";
+import CompletedUserTasks from "../components/CompletedUserTasks";
+import CompletedTeamTasks from "../components/CompletedTeamTasks";
+const PatientPendingTasks = () => {
+  const { patient_idString } = useParams();
+  const [patientData, setPatientData] = useState<PatientType | null>(null);
+  // const [userTasks, setUserTasks] = useState<TaskType[]>([]);
+  // const [teamTasks, setTeamTasks] = useState<TaskType[]>([]);
+  // const [userCompletedTasks, setUserCompletedTasks] = useState<TaskType[]>([]);
+  // const [teamCompletedTasks, setTeamCompletedTasks] = useState<TaskType[]>([]);
+  const [userCompletedTasksAdjustArray, setUserCompletedTasksAdjustedArray] =
+    useState<CompletedTasksDisplayObjectType[]>([]);
+  const [teamCompletedTasksAdjustedArray, setTeamCompletedTasksAdjustedArray] =
+    useState<CompletedTasksDisplayObjectType[]>([]);
+  const [userDiscipline, setUserDiscipline] = useState<number>(0);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const patientsString = localStorage.getItem("patients");
+    const tasksString = localStorage.getItem("tasks");
+    const completedTasksString = localStorage.getItem("completedTasks");
+    const userDataString = localStorage.getItem("userData");
+
+    if (
+      patientsString &&
+      tasksString &&
+      completedTasksString &&
+      patient_idString &&
+      userDataString
+    ) {
+      const patient_id = parseInt(patient_idString, 10); // Convert patient_idString to a number
+
+      const patients: PatientType[] = JSON.parse(patientsString);
+      const allTasks: TaskType[] = JSON.parse(tasksString);
+      const allCompletedTasks: CompletedTaskType[] =
+        JSON.parse(completedTasksString);
+      const userData = JSON.parse(userDataString);
+      setUserDiscipline(userData.discipline_id);
+      console.log(allCompletedTasks);
+      // Find the patient with the matching patient_id
+      const selectedPatient = patients.find(
+        (patient) => patient.patient_id === patient_id
+      );
+
+      if (selectedPatient) {
+        setPatientData(selectedPatient);
+
+        // Filter tasks by patient_id
+        const patientTasks = allTasks.filter(
+          (task) => task.patient_id === patient_id
+        );
+        console.log(patientTasks);
+
+        const patienttasksCompletedLongerArray = patientTasks.filter(
+          (task) => task.status === "complete"
+        );
+        console.log(patienttasksCompletedLongerArray);
+
+        // Filter completed tasks by patient_id
+        // const patientCompletedTasks = allCompletedTasks.filter(
+        //   (completedTask) => completedTask.task_id === patient_id
+        // );
+
+        // // Split tasks based on discipline_id (user's discipline vs others)
+        // const userAssignedTasks = patientTasks.filter(
+        //   (task) => task.discipline_id === userDiscipline // Tasks assigned to the user's discipline
+        // );
+
+        // const teamAssignedTasks = patientTasks.filter(
+        //   (task) => task.discipline_id !== userDiscipline // Tasks assigned to other disciplines
+        // );
+
+        // setUserTasks(userAssignedTasks);
+        // setTeamTasks(teamAssignedTasks);
+
+        // Split completed tasks based on discipline_id (user's discipline vs others)
+        const userCompleted = patienttasksCompletedLongerArray.filter(
+          (completedTask) => completedTask.discipline_id === userDiscipline // Tasks assigned to the user
+        );
+        const teamCompleted = patienttasksCompletedLongerArray.filter(
+          (completedTask) => completedTask.discipline_id !== userDiscipline // Tasks assigned to other team
+        );
+
+        // Link the completed task to the main task by task_id and include completion time
+        const getCompletionTime = (task: TaskType): string | null => {
+          const completedTask = allCompletedTasks.find(
+            (completedTask) => completedTask.task_id === task.task_id
+          );
+          return completedTask ? completedTask.completion_datetime : null;
+        };
+        const getaCompletedBy = (task: TaskType): number | null => {
+          const completedTask = allCompletedTasks.find(
+            (completedTask) => completedTask.task_id === task.task_id
+          );
+          return completedTask ? completedTask.completed_by : null;
+        };
+
+        const formatTasksWithCompletionTime = (tasks: TaskType[]): any[] => {
+          return tasks.map((task) => ({
+            ...task,
+            completion_datetime: getCompletionTime(task),
+            completed_by: getaCompletedBy(task),
+          }));
+        };
+
+        // setUserCompletedTasks(userCompleted);
+        // setTeamCompletedTasks(teamCompleted);
+
+        // Adjust the completed tasks to the specific format
+        setUserCompletedTasksAdjustedArray(
+          formatTasksWithCompletionTime(userCompleted)
+        );
+        setTeamCompletedTasksAdjustedArray(
+          formatTasksWithCompletionTime(teamCompleted)
+        );
+      }
+    }
+  }, [patient_idString, userDiscipline]);
+
+  if (!patientData) {
+    return (
+      <Box textAlign="center" marginTop={8}>
+        <Typography>Loading patient data...</Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <Box sx={{ minHeight: "100vh" }}>
+      <Box textAlign="center" marginBottom={4} marginTop={8}>
+        <Typography
+          sx={{
+            fontSize: { xs: "25px", sm: "30px", md: "40px" },
+            fontFamily: "Inter, sans-serif",
+            fontWeight: 600,
+            color: "transparent",
+            background: "#5D7EA4",
+            WebkitBackgroundClip: "text",
+            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+          }}
+        >
+          Patient's Completed Tasks
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: { xs: 4, sm: 16, lg: 24 },
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          sx={{
+            textAlign: "center",
+            marginBottom: 2,
+            fontWeight: 600,
+            color: "transparent",
+            background: `black`,
+            WebkitBackgroundClip: "text",
+            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
+          }}
+        >
+          {patientData.patient_name}
+        </Typography>
+        <Typography
+          sx={{
+            textAlign: "center",
+            marginBottom: 2,
+            fontWeight: 600,
+            color: "transparent",
+            background: `black`,
+            WebkitBackgroundClip: "text",
+            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
+          }}
+        >
+          HN-{patientData.health_number}
+        </Typography>
+        <Typography
+          sx={{
+            textAlign: "center",
+            marginBottom: 2,
+            fontWeight: 600,
+            color: "transparent",
+            background: `black`,
+            WebkitBackgroundClip: "text",
+            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
+          }}
+        >
+          Room-{patientData.room_id}
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          padding: { xs: "12px", sm: "20px" },
+        }}
+      >
+        <Button
+          variant="text"
+          sx={{ fontWeight: 700, fontSize: { xs: "10px", sm: "12px" } }}
+          onClick={() => navigate(`/patientPendingTasks/${patientData.patient_id}`)}
+        >
+          Back To Pending Tasks
+        </Button>{" "}
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#8DADD2",
+            fontWeight: 800,
+            fontSize: { xs: "10px", sm: "12px" },
+          }}
+        >
+          Assign A task
+        </Button>{" "}
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignContent: "start",
+          justifyItems: "start",
+          alignItems: { xs: "center", md: "start" },
+          gap: 16,
+          justifyContent: { xs: "center" },
+        }}
+      >
+        <CompletedUserTasks
+          userCompletedTasks={userCompletedTasksAdjustArray}
+        />
+        <CompletedTeamTasks
+          teamCompletedTasks={teamCompletedTasksAdjustedArray}
+        />
+      </Box>
+    </Box>
+  );
+};
+
+export default PatientPendingTasks;

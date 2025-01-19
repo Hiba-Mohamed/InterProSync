@@ -14,7 +14,7 @@ import WardSelection from "./pages/WardSelection";
 import HospitalsPatientSelection from "./pages/HospitalsPatientSelection";
 import UserPatientList from "./pages/UserPatientList";
 import PatientPendingTasks from "./pages/PatientPendingTasks";
-
+import CompletedPatientTasks from "./pages/CompletedPatientTasks";
 const theme = createTheme({
   typography: {
     fontFamily: '"Inter", sans-serif', // Apply Inter font globally
@@ -62,6 +62,10 @@ function App() {
             <Route
               path="/patientPendingTasks/:patient_idString"
               element={<PatientPendingTasks />}
+            />
+            <Route
+              path="/CompletedPatientTasks/:patient_idString"
+              element={<CompletedPatientTasks />}
             />
           </Routes>
 
