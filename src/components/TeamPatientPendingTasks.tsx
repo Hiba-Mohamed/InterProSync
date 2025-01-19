@@ -58,12 +58,12 @@ const TeamPatientPendingTasks = ({ teamTasks }: { teamTasks: TaskType[] }) => {
       <Typography
         variant="h5"
         sx={{
-          fontWeight: 600,
+          fontWeight: 800,
           color: "transparent",
           background: `#535D68`,
           WebkitBackgroundClip: "text",
           textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-          padding: "12px",
+          paddingY: "24px",
         }}
       >
         Team Tasks
