@@ -43,19 +43,21 @@ const PatientPendingTasks = () => {
         );
         console.log("patientTasks", patientTasks);
 
+        const pendingPatientTasks = patientTasks.filter((task)=>task.status === "inprogress")
+
         // Split tasks based on discipline_id (user's discipline vs others)
-        const userAssignedTasks = patientTasks.filter(
+        const pendingUserAssignedTasks = pendingPatientTasks.filter(
           (task) => task.discipline_id === userDiscipline // Tasks assigned to the user's discipline
         );
-        console.log("userAssignedTasks", userAssignedTasks);
+        console.log("userAssignedTasks", pendingUserAssignedTasks);
 
-        const teamAssignedTasks = patientTasks.filter(
+        const pendingTeamAssignedTasks = pendingPatientTasks.filter(
           (task) => task.discipline_id !== userDiscipline // Tasks assigned to other disciplines
         );
-        console.log("teamAssignedTasks", teamAssignedTasks);
+        console.log("teamAssignedTasks", pendingTeamAssignedTasks);
 
-        setUserTasks(userAssignedTasks);
-        setTeamTasks(teamAssignedTasks);
+        setUserTasks(pendingUserAssignedTasks);
+        setTeamTasks(pendingTeamAssignedTasks);
       }
     }
   }, [patient_idString, userDiscipline]); // Re-run effect if patient_idString or userDiscipline changes
