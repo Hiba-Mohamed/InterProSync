@@ -24,8 +24,8 @@ const PatientSelectionInfoDisplay: React.FC<
 }) => {
   const [userAbbreviation, setUserAbbreviation] = useState<string>("");
   const [backgroundColor, setBackgroundColor] = useState<string>("#9CCE84");
-  const [teamBackgroundColor, setTeamBackgroundColor] = useState<string>("#9CCE84");
-
+  const [teamBackgroundColor, setTeamBackgroundColor] =
+    useState<string>("#9CCE84");
 
   useEffect(() => {
     // Get the userData from localStorage
@@ -60,13 +60,15 @@ const PatientSelectionInfoDisplay: React.FC<
         const taskForPatient = tasks.find(
           (task: any) =>
             task.patient_id === patientId &&
-            task.discipline_id === userData.discipline_id
+            task.discipline_id === userData.discipline_id &&
+            task.status === "inprogress"
         );
         const teamTaskForPatient = tasks.find(
-                  (task: any) =>
-                    task.patient_id === patientId &&
-                    task.discipline_id !== userData.discipline_id
-            );
+          (task: any) =>
+            task.patient_id === patientId &&
+            task.discipline_id !== userData.discipline_id &&
+            task.status === "inprogress"
+        );
 
         // If a matching task is found, set background color to red, else green
         if (taskForPatient) {
@@ -75,13 +77,11 @@ const PatientSelectionInfoDisplay: React.FC<
           setBackgroundColor("#9CCE84"); // Green color if no match
         }
 
-        if (teamTaskForPatient){
-            setTeamBackgroundColor("#FFD8B0");
+        if (teamTaskForPatient) {
+          setTeamBackgroundColor("#FFD8B0");
+        } else {
+          setTeamBackgroundColor("#9CCE84");
         }
-        else{
-            setTeamBackgroundColor("#9CCE84");
-        }
-
       }
     }
   }, [patientId]);
@@ -120,7 +120,12 @@ const PatientSelectionInfoDisplay: React.FC<
       >
         <Typography
           style={{ transform: "rotate(-90deg)" }}
-          sx={{ fontSize: "12px", fontWeight: 900, marginTop: "14px", marginLeft:"5px" }}
+          sx={{
+            fontSize: "12px",
+            fontWeight: 900,
+            marginTop: "14px",
+            marginLeft: "5px",
+          }}
         >
           {userAbbreviation}
         </Typography>
@@ -140,7 +145,12 @@ const PatientSelectionInfoDisplay: React.FC<
       >
         <Typography
           style={{ transform: "rotate(-90deg)" }}
-          sx={{ fontSize: "12px", fontWeight: 900, marginTop: "14px", marginLeft:"0px" }}
+          sx={{
+            fontSize: "12px",
+            fontWeight: 900,
+            marginTop: "14px",
+            marginLeft: "0px",
+          }}
         >
           TEAM
         </Typography>

@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, Button, Divider, Collapse } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Collapse,
+  TextField,
+} from "@mui/material";
 import { User } from "../mockData/users";
 import { CompletedTasksDisplayObjectType } from "../mockData/completedTasks";
 
@@ -53,6 +60,12 @@ const CompletedUserTasks = ({
       (discipline) => discipline.discipline_id === disciplineId
     );
     return discipline ? discipline.discipline_name : "Unknown Discipline";
+  };
+
+  const handleUndoTaskCompletion = (task_id: number, reason: string) => {
+    // get the "tasks" item, "completedTasks" item, "undoneTasks" item from local storage
+    // update the task with the same task_id status to "inprogress"
+    // add to the undoneTasks item {undone_id: length+1, task_id: task_id, reason: reason, undone_dateTime: time and date now in this format "2025-01-12T10:30:00Z" }
   };
 
   const handleExpandClick = (index: number) => {
@@ -127,9 +140,18 @@ const CompletedUserTasks = ({
                   gap: { xs: 2 },
                 }}
               >
+                <TextField
+                  label="Reason"
+                  type="Reason for Undo"
+                  variant="outlined"
+                  sx={{
+                    width: { xs: "100%" },
+                  }}
+                />{" "}
                 <Button
                   variant="outlined"
                   sx={{ color: "#DB944A", borderColor: "#DB944A" }}
+                  onClick={handleUndoTaskCompletion(task.task_id)}
                 >
                   Undo Completion
                 </Button>
