@@ -5,8 +5,8 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
 import { PatientType } from "../mockData/patients";
+import UserPatientActionNavigation from "../components/Navigations/UserPatientActionNavigation";
 import { useNavigate } from "react-router-dom";
-
 const PatientPendingTasks = () => {
   const { patient_idString } = useParams();
   const [patientData, setPatientData] = useState<PatientType | null>(null);
@@ -43,7 +43,9 @@ const PatientPendingTasks = () => {
         );
         console.log("patientTasks", patientTasks);
 
-        const pendingPatientTasks = patientTasks.filter((task)=>task.status === "inprogress")
+        const pendingPatientTasks = patientTasks.filter(
+          (task) => task.status === "inprogress"
+        );
 
         // Split tasks based on discipline_id (user's discipline vs others)
         const pendingUserAssignedTasks = pendingPatientTasks.filter(
@@ -72,7 +74,8 @@ const PatientPendingTasks = () => {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <Box textAlign="center" marginBottom={4} marginTop={8}>
+      <Box textAlign="center" marginBottom={4} marginTop={0}>
+        <UserPatientActionNavigation patientData={patientData} />
         <Typography
           sx={{
             fontSize: { xs: "25px", sm: "30px", md: "40px" },
@@ -138,33 +141,25 @@ const PatientPendingTasks = () => {
           Room-{patientData.room_id}
         </Typography>
       </Box>
-      <Box
+      <Button
+        variant="text"
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          padding: { xs: "12px", sm: "20px" },
+          fontWeight: 700,
+          fontSize: { xs: "10px", sm: "12px", md: "18px" },
+          width: { xs: "30%", sm: "auto" },
+          textAlign: "center",
+          marginBottom: { xs: "12px", sm: "0" },
+          paddingX: { xs: "1px", sm: "18px" },
+          textTransform: "capitalize",
+          color: "#445972",
         }}
+        onClick={() =>
+          navigate(`/SearchPendingTasks/${patientData.patient_id}`)
+        }
       >
-        {/* navigate to /userPatientList */}
-        <Button
-          variant="text"
-          sx={{ fontWeight: 700, fontSize: { xs: "10px", sm: "12px" } }}
-          onClick={() => navigate("/userPatientList")}
-        >
-          Back To My Patients List
-        </Button>{" "}
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#8DADD2",
-            fontWeight: 800,
-            fontSize: { xs: "10px", sm: "12px" },
-          }}
-        >
-          Assign A task
-        </Button>{" "}
-      </Box>
+        Filter By Profession
+      </Button>
+
       <Box
         sx={{
           display: "flex",

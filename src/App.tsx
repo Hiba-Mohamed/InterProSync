@@ -16,6 +16,9 @@ import PatientPendingTasks from "./pages/PatientPendingTasks";
 import CompletedPatientTasks from "./pages/CompletedPatientTasks";
 import SearchCompletedTasks from "./pages/SearchCompletedTasks";
 import SearchPendingTasks from "./pages/SearchPendingTasks";
+import ClosedPatientTasks from "./pages/ClosedPatientTasks";
+import UndonePatientTasks from "./pages/UndonePatientTasks";
+import AssignTaskUnderPatient from "./pages/AssignTaskUnderPatient";
 const theme = createTheme({
   typography: {
     fontFamily: '"Inter", sans-serif', // Apply Inter font globally
@@ -76,8 +79,21 @@ function App() {
               path="/SearchPendingTasks/:patient_idString"
               element={<SearchPendingTasks />}
             />
+            <Route
+              path="/ClosedPatientTasks/:patient_idString"
+              element={<ClosedPatientTasks />}
+            />
+            <Route
+              path="/UndonePatientTasks/:patient_idString"
+              element={<UndonePatientTasks />}
+            />
+            <Route
+              path="/AssignTaskUnderPatient/:patient_idString"
+              element={<AssignTaskUnderPatient />}
+            />
+            
           </Routes>
-          
+
           <Footer />
         </>
       </Box>

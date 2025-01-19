@@ -8,6 +8,7 @@ import { CompletedTasksDisplayObjectType } from "../mockData/completedTasks";
 import { CompletedTaskType } from "../mockData/completedTasks";
 import CompletedUserTasks from "../components/CompletedUserTasks";
 import CompletedTeamTasks from "../components/CompletedTeamTasks";
+import UserPatientActionNavigation from "../components/Navigations/UserPatientActionNavigation";
 const PatientPendingTasks = () => {
   const { patient_idString } = useParams();
   const [patientData, setPatientData] = useState<PatientType | null>(null);
@@ -134,7 +135,9 @@ const PatientPendingTasks = () => {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <Box textAlign="center" marginBottom={4} marginTop={8}>
+      <UserPatientActionNavigation patientData={patientData} />
+
+      <Box textAlign="center" marginBottom={4} marginTop={0}>
         <Typography
           sx={{
             fontSize: { xs: "25px", sm: "30px", md: "40px" },
@@ -200,6 +203,24 @@ const PatientPendingTasks = () => {
           Room-{patientData.room_id}
         </Typography>
       </Box>
+      <Button
+        variant="text"
+        sx={{
+          fontWeight: 700,
+          fontSize: { xs: "10px", sm: "12px", md: "18px" },
+          width: { xs: "30%", sm: "auto" },
+          textAlign: "center",
+          marginBottom: { xs: "12px", sm: "0" },
+          paddingX: { xs: "1px", sm: "18px" },
+          textTransform: "capitalize",
+          color: "#445972",
+        }}
+        onClick={() =>
+          navigate(`/SearchCompletedTasks/${patientData.patient_id}`)
+        }
+      >
+        Filter By Profession
+      </Button>
       <Box
         sx={{
           display: "flex",
@@ -207,25 +228,7 @@ const PatientPendingTasks = () => {
           justifyContent: "space-between",
           padding: { xs: "12px", sm: "20px" },
         }}
-      >
-        <Button
-          variant="text"
-          sx={{ fontWeight: 700, fontSize: { xs: "10px", sm: "12px" } }}
-          onClick={() => navigate(`/patientPendingTasks/${patientData.patient_id}`)}
-        >
-          Back To Pending Tasks
-        </Button>{" "}
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#8DADD2",
-            fontWeight: 800,
-            fontSize: { xs: "10px", sm: "12px" },
-          }}
-        >
-          Assign A task
-        </Button>{" "}
-      </Box>
+      ></Box>
       <Box
         sx={{
           display: "flex",

@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
 import { PatientType } from "../mockData/patients";
 import { User } from "../mockData/users";
+import UserPatientActionNavigation from "../components/Navigations/UserPatientActionNavigation";
 
 const SearchPendingTasks = () => {
   const { patient_idString } = useParams();
@@ -154,6 +155,8 @@ const SearchPendingTasks = () => {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
+      <UserPatientActionNavigation patientData={patientData} />
+
       <Box textAlign="center" marginBottom={4} marginTop={8}>
         <Typography
           sx={{
@@ -250,7 +253,14 @@ const SearchPendingTasks = () => {
         /> */}
       </Box>
 
-      <Box sx={{ mt: 6 , display: "flex", flexDirection:"column", alignItems:"center"}}>
+      <Box
+        sx={{
+          mt: 6,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         {filteredTasks.length !== 0 &&
           filteredTasks.map((task, index) => (
             <Box
@@ -264,13 +274,13 @@ const SearchPendingTasks = () => {
                 width: { xs: "330px", sm: "600px" },
               }}
             >
-              <Typography>
+              <Typography sx={{ color: "text.secondary" }}>
                 Assigned By: {getUsernameById(task.assigned_by)}
               </Typography>
-              <Typography>
+              <Typography sx={{ color: "text.secondary" }}>
                 Assigned To: {getDisciplineById(task.discipline_id)}
               </Typography>
-              <Typography sx={{ color: "text.secondary" }}>
+              <Typography>
                 Assignment Date and Time:{" "}
                 {formatDateTime(task.assignment_dateTime)}
               </Typography>
@@ -331,7 +341,7 @@ const SearchPendingTasks = () => {
             </Box>
           ))}
         {filteredTasks.length === 0 && (
-          <Typography sx={{textAlign:"center"}}>
+          <Typography sx={{ textAlign: "center" }}>
             No Pending Tasks Found for the chosen Discipline
           </Typography>
         )}

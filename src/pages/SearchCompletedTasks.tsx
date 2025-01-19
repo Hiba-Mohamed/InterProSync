@@ -1,35 +1,95 @@
-
-
-import { Box, Typography, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  TextField,
+  MenuItem,
+  Divider,
+  Collapse,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
 import { PatientType } from "../mockData/patients";
+import { User } from "../mockData/users";
 import { useNavigate } from "react-router-dom";
 
 const SearchCompletedTasks = () => {
   const { patient_idString } = useParams();
   const [patientData, setPatientData] = useState<PatientType | null>(null);
-//   const [userTasks, setUserTasks] = useState<TaskType[]>([]);
-//   const [teamTasks, setTeamTasks] = useState<TaskType[]>([]);
+  const [userTasks, setUserTasks] = useState<TaskType[]>([]);
+  const [teamTasks, setTeamTasks] = useState<TaskType[]>([]);
+  const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
   const navigate = useNavigate();
 
+  //   const [searchDate, setSearchDate] = useState<string>("");
+  const [selectedDiscipline, setSelectedDiscipline] = useState<number | "">("");
+
+  const [expandedTaskIndex, setExpandedTaskIndex] = useState<number | null>(
+    null
+  );
+  const [users, setUsers] = useState<User[]>([]);
+  const [disciplines, setDisciplines] = useState<any[]>([]);
+
+  const getUsernameById = (userId: number): string => {
+    const user = users.find((user) => user.user_id === userId);
+    return user ? user.username : "Unknown";
+  };
+
+  const getDisciplineById = (disciplineId: number): string => {
+    const discipline = disciplines.find(
+      (discipline) => discipline.discipline_id === disciplineId
+    );
+    return discipline ? discipline.discipline_name : "Unknown Discipline";
+  };
+
+  const handleExpandClick = (index: number) => {
+    setExpandedTaskIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
+  const formatDateTime = (dateTime: string): string => {
+    const date = new Date(dateTime);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const seconds = date.getSeconds().toString().padStart(2, "0");
+    return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+  };
+
   useEffect(() => {
-    const patientsString = localStorage.getItem("patients");
-    const tasksString = localStorage.getItem("tasks");
+    const storedUsers = localStorage.getItem("users");
+    const storedDisciplines = localStorage.getItem("disciplines");
     const userDataString = localStorage.getItem("userData");
 
+    if (storedUsers) {
+      setUsers(JSON.parse(storedUsers));
+    }
+    if (storedDisciplines) {
+      setDisciplines(JSON.parse(storedDisciplines));
+    }
+    if (userDataString) {
+      const userData = JSON.parse(userDataString);
+      console.log(userData);
+      setUserDiscipline(userData.discipline_id);
+    }
+
+    const patientsString = localStorage.getItem("patients");
+    const tasksString = localStorage.getItem("tasks");
+    const disciplinesString = localStorage.getItem("disciplines");
+
+    if (disciplinesString) {
+      setDisciplines(JSON.parse(disciplinesString));
+    }
+
     if (patientsString && tasksString && patient_idString && userDataString) {
-      const patient_id = parseInt(patient_idString, 10); // Convert patient_idString to a number
+      const patient_id = parseInt(patient_idString, 10);
 
       const patients: PatientType[] = JSON.parse(patientsString);
       const allTasks: TaskType[] = JSON.parse(tasksString);
       const userData = JSON.parse(userDataString);
-      console.log(userData);
-      setUserDiscipline(userData.discipline_id);
 
-      // Find the patient with the matching patient_id
       const selectedPatient = patients.find(
         (patient) => patient.patient_id === patient_id
       );
@@ -37,32 +97,54 @@ const SearchCompletedTasks = () => {
       if (selectedPatient) {
         setPatientData(selectedPatient);
 
-        // Filter tasks by patient_id
         const patientTasks = allTasks.filter(
-          (task) => task.patient_id === patient_id
-        );
-        console.log("patientTasks", patientTasks);
-
-        const completePatientTasks = patientTasks.filter(
-          (task) => task.status === "complete"
+          (task) =>
+            task.patient_id === patient_id && task.status === "complete"
         );
 
-        // Split tasks based on discipline_id (user's discipline vs others)
-        const completeUserAssignedTasks = completePatientTasks.filter(
-          (task) => task.discipline_id === userDiscipline // Tasks assigned to the user's discipline
+        setUserTasks(
+          patientTasks.filter(
+            (task) => task.discipline_id === userData.discipline_id
+          )
         );
-        console.log("userAssignedTasks", completeUserAssignedTasks);
-
-        const completeTeamAssignedTasks = completePatientTasks.filter(
-          (task) => task.discipline_id !== userDiscipline // Tasks assigned to other disciplines
+        setTeamTasks(
+          patientTasks.filter(
+            (task) => task.discipline_id !== userData.discipline_id
+          )
         );
-        console.log("teamAssignedTasks", completeTeamAssignedTasks);
-
-        // setUserTasks(completeUserAssignedTasks);
-        // setTeamTasks(completeTeamAssignedTasks);
+        setFilteredTasks(patientTasks); // Start with all Completed tasks
       }
     }
-  }, [patient_idString, userDiscipline]); // Re-run effect if patient_idString or userDiscipline changes
+  }, [patient_idString]);
+
+  const handleDisciplineChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setSelectedDiscipline(value === "" ? "" : parseInt(value, 10));
+  };
+
+  //   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //     setSearchDate(event.target.value);
+  //   };
+
+  useEffect(() => {
+    let filtered = [...userTasks, ...teamTasks];
+
+    if (selectedDiscipline !== "") {
+      filtered = filtered.filter(
+        (task) => task.discipline_id === selectedDiscipline
+      );
+    }
+
+    // if (searchDate) {
+    //   filtered = filtered.filter((task) =>
+    //     task.assignment_dateTime.startsWith(searchDate)
+    //   );
+    // }
+
+    setFilteredTasks(filtered);
+  }, [selectedDiscipline, userTasks, teamTasks]);
 
   if (!patientData) {
     return (
@@ -89,6 +171,7 @@ const SearchCompletedTasks = () => {
           Search Completed Tasks
         </Typography>
       </Box>
+
       <Box
         sx={{
           display: "flex",
@@ -140,44 +223,128 @@ const SearchCompletedTasks = () => {
           Room-{patientData.room_id}
         </Typography>
       </Box>
+
+      <Box sx={{ display: "flex", gap: 4, justifyContent: "center", mt: 4 }}>
+        <TextField
+          label="Filter by Discipline"
+          select
+          value={selectedDiscipline}
+          onChange={handleDisciplineChange}
+          sx={{ minWidth: 200 }}
+        >
+          <MenuItem value="">All Disciplines</MenuItem>
+          {disciplines.map((discipline) => (
+            <MenuItem
+              key={discipline.discipline_id}
+              value={discipline.discipline_id}
+            >
+              {discipline.discipline_name}
+            </MenuItem>
+          ))}
+        </TextField>
+
+        {/* <TextField
+          label="Filter by Date"
+          type="date"
+          InputLabelProps={{ shrink: true }}
+          value={searchDate}
+          onChange={handleDateChange}
+        /> */}
+      </Box>
+
       <Box
         sx={{
+          mt: 6,
           display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          padding: { xs: "12px", sm: "20px" },
+          flexDirection: "column",
+          alignItems: "center",
         }}
       >
-        {/* navigate to /userPatientList */}
-        <Button
-          variant="text"
-          sx={{ fontWeight: 700, fontSize: { xs: "10px", sm: "12px" } }}
-          onClick={() => navigate("/userPatientList")}
-        >
-          Back To My Patients List
-        </Button>{" "}
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#8DADD2",
-            fontWeight: 800,
-            fontSize: { xs: "10px", sm: "12px" },
-          }}
-        >
-          Assign A task
-        </Button>{" "}
+        {filteredTasks.length !== 0 &&
+          filteredTasks.map((task, index) => (
+            <Box
+              key={index}
+              sx={{
+                padding: 2,
+                marginBottom: 3,
+                backgroundColor: "#f9f9f9",
+                borderRadius: 2,
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                width: { xs: "330px", sm: "600px" },
+              }}
+            >
+              <Typography sx={{ color: "text.secondary" }}>
+                Assigned By: {getUsernameById(task.assigned_by)}
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                Assigned To: {getDisciplineById(task.discipline_id)}
+              </Typography>
+              <Typography>
+                Assignment Date and Time:{" "}
+                {formatDateTime(task.assignment_dateTime)}
+              </Typography>
+
+              {/* Using Collapse for expandable content */}
+              <Collapse in={expandedTaskIndex === index}>
+                <Divider sx={{ marginY: 2 }} />
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                  Task:
+                </Typography>
+                <Typography sx={{ width: { xs: "300px", sm: "500px" } }}>
+                  {task.description}
+                </Typography>
+                {task.discipline_id === userDiscipline && (
+                  <Box
+                    sx={{
+                      marginTop: 2,
+                      display: "flex",
+                      flexDirection: { xs: "column", sm: "row" },
+                      justifyContent: "space-between",
+                      gap: { xs: 2 },
+                    }}
+                  >
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        marginRight: 1,
+                        borderColor: "#C45E7D",
+                        color: "#C45E7D",
+                        "&:hover": {
+                          borderColor: "#C45E7D",
+                          backgroundColor: "rgba(196, 94, 125, 0.1)",
+                        },
+                      }}
+                    >
+                      Delete
+                    </Button>
+                    <Button
+                      variant="contained"
+                      sx={{ backgroundColor: "#749D61" }}
+                    >
+                      Complete
+                    </Button>
+                  </Box>
+                )}
+              </Collapse>
+
+              {/* Expand/Collapse Button */}
+              <Box sx={{ marginTop: 2 }}>
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={() => handleExpandClick(index)}
+                >
+                  {expandedTaskIndex === index ? "Collapse" : "Expand"}
+                </Button>
+              </Box>
+            </Box>
+          ))}
+        {filteredTasks.length === 0 && (
+          <Typography sx={{ textAlign: "center" }}>
+            No Completed Tasks Found for the chosen Discipline
+          </Typography>
+        )}
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignContent: "start",
-          justifyItems: "start",
-          alignItems: { xs: "center", md: "start" },
-          gap: 16,
-          justifyContent: { xs: "center" },
-        }}
-      ></Box>
     </Box>
   );
 };
