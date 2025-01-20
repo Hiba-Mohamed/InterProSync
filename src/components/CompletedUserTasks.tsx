@@ -119,7 +119,10 @@ const CompletedUserTasks = ({
   };
 
   return (
-    <Box key={incrementingValueWithEveryUndo} sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+    <Box
+      key={incrementingValueWithEveryUndo}
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Typography
         variant="h5"
         sx={{
@@ -129,7 +132,7 @@ const CompletedUserTasks = ({
           WebkitBackgroundClip: "text",
           textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
           paddingY: "24px",
-          paddingX:"12px"
+          paddingX: "12px",
         }}
       >
         Completed {getDisciplineById(userDiscipline)} Tasks
@@ -143,36 +146,62 @@ const CompletedUserTasks = ({
           <Box
             key={index}
             sx={{
-              padding: 2,
               marginBottom: 3,
               backgroundColor: "#f9f9f9",
               borderRadius: 2,
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              width: { xs: "330px", sm: "600px" },
+              width: { xs: "330px", sm: "600px", md:"700px" },
             }}
           >
-            <Typography sx={{ color: "text.secondary" }}>
-              Assigned By: {getUsernameById(task.assigned_by)}
-            </Typography>
-            <Typography sx={{ color: "text.secondary" }}>
-              Assigned To: {getDisciplineById(task.discipline_id)}
-            </Typography>
-            <Typography>
-              Assignment Date and Time:{" "}
-              {formatDateTime(task.assignment_dateTime)}
-            </Typography>
-
-            <Typography>
-              Completion date/time and user:
-              <br />
-              {formatDateTime(task.completion_datetime)} |{" "}
-              {getUsernameById(task.completed_by)}
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                justifyContent: { sm: "space-between" },
+                backgroundColor: "#435870",
+                color: "white",
+                borderTopLeftRadius: "5px",
+                borderTopRightRadius: "5px",
+                paddingX: "8px",
+              }}
+            >
+              <Typography>
+                <strong> Assigned By: </strong>
+                {getUsernameById(task.assigned_by)}
+              </Typography>
+              <Typography>
+                <strong> Task_ID: </strong>
+                {task.task_id}
+              </Typography>
+              <Typography>
+                <strong> Assigned To: </strong>
+                {getDisciplineById(task.discipline_id)}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                paddingX: "8px",
+                backgroundColor: "#E0EBF6",
+                color: "black",
+                justifyContent:"space-between",
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+              }}
+            >
+              <Typography>
+                <strong>Assigned on:</strong>
+                {formatDateTime(task.assignment_dateTime)}
+              </Typography>
+              <Typography>
+                <strong>Completed on:</strong>
+                {formatDateTime(task.completion_datetime)} |{" "}
+                {getUsernameById(task.completed_by)}
+              </Typography>
+            </Box>
 
             {/* Using Collapse for expandable content */}
-            <Collapse in={expandedTaskIndex === index}>
-              <Divider sx={{ marginY: 2 }} />
-              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+            <Collapse in={expandedTaskIndex === index} sx={{ padding: "12px" }}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 Task:
               </Typography>
               <Typography sx={{ width: { xs: "300px", sm: "500px" } }}>
@@ -206,7 +235,9 @@ const CompletedUserTasks = ({
                 >
                   Undo Completion
                 </Button>
-                {emptyReasonErrorMessage && (<ErrorMessage errorMessage={emptyReasonErrorMessage}/>)}
+                {emptyReasonErrorMessage && (
+                  <ErrorMessage errorMessage={emptyReasonErrorMessage} />
+                )}
               </Box>
             </Collapse>
 

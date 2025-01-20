@@ -82,37 +82,63 @@ const CompletedTeamTasks = ({
           <Box
             key={index}
             sx={{
-              padding: 2,
               marginBottom: 3,
               backgroundColor: "#f9f9f9",
               borderRadius: 2,
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              width: { xs: "330px", sm: "400px" },
+              width: { xs: "330px", sm: "600px", md: "700px" },
             }}
           >
-            <Typography sx={{ color: "text.secondary" }}>
-              Assigned By: {getUsernameById(task.assigned_by)}
-            </Typography>
-            <Typography sx={{ color: "text.secondary" }}>
-              Assigned To: {getDisciplineById(task.discipline_id)}
-            </Typography>
-            <Typography >
-              Assignment Date and Time:{" "}
-              {formatDateTime(task.assignment_dateTime)}
-            </Typography>
-
-            <Typography>
-              Completion date/time and user:
-              <br />
-              {formatDateTime(task.completion_datetime)} |{" "}
-              {getUsernameById(task.completed_by)}
-            </Typography>
-            {/* Expand/Collapse Content with Smooth Transition */}
-            <Collapse in={expandedTaskIndex === index}>
-              <Divider sx={{ marginY: 2 }} />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                justifyContent: { sm: "space-between" },
+                backgroundColor: "#435870",
+                color: "white",
+                borderTopLeftRadius: "5px",
+                borderTopRightRadius: "5px",
+                paddingX: "8px",
+              }}
+            >
+              <Typography>
+                <strong> Assigned By: </strong>
+                {getUsernameById(task.assigned_by)}
+              </Typography>
+              <Typography>
+                <strong> Task_ID: </strong>
+                {task.task_id}
+              </Typography>
+              <Typography>
+                <strong> Assigned To: </strong>
+                {getDisciplineById(task.discipline_id)}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                paddingX: "8px",
+                backgroundColor: "#E0EBF6",
+                color: "black",
+                justifyContent: "space-between",
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+              }}
+            >
+              <Typography>
+                <strong>Assigned on:</strong>
+                {formatDateTime(task.assignment_dateTime)}
+              </Typography>
+              <Typography>
+                <strong>Completed on:</strong>
+                {formatDateTime(task.completion_datetime)} |{" "}
+                {getUsernameById(task.completed_by)}
+              </Typography>
+            </Box>
+    
+            <Collapse in={expandedTaskIndex === index} sx={{ padding: "12px" }}>
               <Box>
-                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                  Task Description:
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  Task:
                 </Typography>
                 <Typography sx={{ width: { xs: "300px", sm: "400px" } }}>
                   {task.description}

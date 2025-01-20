@@ -218,10 +218,10 @@ const PatientPendingTasks = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignContent: "start",
-          justifyItems: "start",
-          alignItems: { xs: "center", md: "start" },
+          flexDirection: "column",
+          alignContent: "center",
+          justifyItems: "center",
+          alignItems: "center" ,
           gap: 16,
           justifyContent: { xs: "center" },
         }}

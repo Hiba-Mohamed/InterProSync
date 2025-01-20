@@ -131,30 +131,54 @@ const UserPatientPendingTasks = ({
           <Box
             key={index}
             sx={{
-              padding: 2,
               marginBottom: 3,
               backgroundColor: "#f9f9f9",
               borderRadius: 2,
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              width: { xs: "330px", sm: "600px" },
+              width: { xs: "330px", sm: "600px", md: "700px" },
             }}
           >
-            <Typography>
-              Assigned By: {getUsernameById(task.assigned_by)}
-            </Typography>
-            <Typography>
-              Assigned To: {getDisciplineById(task.discipline_id)}
-            </Typography>
-            <Typography sx={{ color: "text.secondary" }}>
-              Assignment Date and Time:{" "}
-              {formatDateTime(task.assignment_dateTime)}
-            </Typography>
-
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                justifyContent: { sm: "space-between" },
+                backgroundColor: "#435870",
+                color: "white",
+                borderTopLeftRadius: "5px",
+                borderTopRightRadius: "5px",
+                paddingX: "8px",
+              }}
+            >
+              <Typography>
+                <strong> Assigned By: </strong>
+                {getUsernameById(task.assigned_by)}
+              </Typography>
+              <Typography>
+                <strong> Task_ID: </strong>
+                {task.task_id}
+              </Typography>
+              <Typography>
+                <strong> Assigned To: </strong>
+                {getDisciplineById(task.discipline_id)}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                paddingX: "8px",
+                backgroundColor: "#E0EBF6",
+                color: "black",
+              }}
+            >
+              <Typography>
+                <strong>Assignment Date and Time:</strong>
+                {formatDateTime(task.assignment_dateTime)}
+              </Typography>
+            </Box>
             {/* Using Collapse for expandable content */}
-            <Collapse in={expandedTaskIndex === index}>
-              <Divider sx={{ marginY: 2 }} />
-              <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                Task:
+            <Collapse in={expandedTaskIndex === index} sx={{ padding: "12px" }}>
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Task description:
               </Typography>
               <Typography sx={{ width: { xs: "300px", sm: "500px" } }}>
                 {task.description}
