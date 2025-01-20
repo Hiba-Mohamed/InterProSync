@@ -19,6 +19,7 @@ import SearchPendingTasks from "./pages/SearchPendingTasks";
 import ClosedPatientTasks from "./pages/ClosedPatientTasks";
 import UndonePatientTasks from "./pages/UndonePatientTasks";
 import AssignTaskUnderPatient from "./pages/AssignTaskUnderPatient";
+import ScrollToTop from "./components/ScrollToTop";
 const theme = createTheme({
   typography: {
     fontFamily: '"Inter", sans-serif', // Apply Inter font globally
@@ -47,6 +48,7 @@ function App() {
         {/* Ensure min height covers full screen */}
         <>
           <NavBar />
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -91,7 +93,6 @@ function App() {
               path="/AssignTaskUnderPatient/:patient_idString"
               element={<AssignTaskUnderPatient />}
             />
-            
           </Routes>
 
           <Footer />

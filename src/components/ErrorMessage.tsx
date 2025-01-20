@@ -7,7 +7,7 @@ const ErrorMessage = ({ errorMessage }: { errorMessage: string }) => {
     <Box
       sx={{
         border: "1px solid red", // Red border for the error message
-        padding: "8px",
+        padding: "2px",
         borderRadius: "5px",
         marginTop: "10px",
         display: "flex", // Ensures icon and message align side by side
