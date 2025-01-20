@@ -8,7 +8,7 @@ import { CompletedTasksDisplayObjectType } from "../mockData/completedTasks";
 import { CompletedTaskType } from "../mockData/completedTasks";
 import CompletedUserTasks from "../components/CompletedUserTasks";
 import CompletedTeamTasks from "../components/CompletedTeamTasks";
-import UserPatientActionNavigation from "../components/Navigations/UserPatientActionNavigation";
+import PatientPagesNavigationLocationTitle from "../components/PatientPagesNavigationLocationTitle";
 const PatientPendingTasks = () => {
   const { patient_idString } = useParams();
   const [patientData, setPatientData] = useState<PatientType | null>(null);
@@ -121,74 +121,10 @@ const PatientPendingTasks = () => {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <UserPatientActionNavigation patientData={patientData} />
-
-      <Box textAlign="center" marginBottom={4} marginTop={0}>
-        <Typography
-          sx={{
-            fontSize: { xs: "25px", sm: "30px", md: "40px" },
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 600,
-            color: "transparent",
-            background: "#5D7EA4",
-            WebkitBackgroundClip: "text",
-            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-          }}
-        >
-          Patient's Completed Tasks
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: { xs: 4, sm: 16, lg: 24 },
-          justifyContent: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            textAlign: "center",
-            marginBottom: 2,
-            fontWeight: 600,
-            color: "transparent",
-            background: `black`,
-            WebkitBackgroundClip: "text",
-            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
-          }}
-        >
-          {patientData.patient_name}
-        </Typography>
-        <Typography
-          sx={{
-            textAlign: "center",
-            marginBottom: 2,
-            fontWeight: 600,
-            color: "transparent",
-            background: `black`,
-            WebkitBackgroundClip: "text",
-            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
-          }}
-        >
-          HN-{patientData.health_number}
-        </Typography>
-        <Typography
-          sx={{
-            textAlign: "center",
-            marginBottom: 2,
-            fontWeight: 600,
-            color: "transparent",
-            background: `black`,
-            WebkitBackgroundClip: "text",
-            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
-          }}
-        >
-          Room-{patientData.room_id}
-        </Typography>
-      </Box>
+      <PatientPagesNavigationLocationTitle
+        title="Completed Tasks"
+        patientData={patientData}
+      />
       <Button
         variant="text"
         sx={{
@@ -221,7 +157,7 @@ const PatientPendingTasks = () => {
           flexDirection: "column",
           alignContent: "center",
           justifyItems: "center",
-          alignItems: "center" ,
+          alignItems: "center",
           gap: 16,
           justifyContent: { xs: "center" },
         }}

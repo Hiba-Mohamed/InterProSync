@@ -102,7 +102,7 @@ const UserPatientActionNavigation = ({
             variant="text"
             sx={{
               fontWeight: 700,
-              fontSize: { xs: "10px", sm: "12px", md: "18px" },
+              fontSize: { xs: "10px", sm: "10px", md: "12px" },
               width: { xs: "30%", sm: "auto" },
               textAlign: "center",
               marginBottom: { xs: "12px", sm: "0" },

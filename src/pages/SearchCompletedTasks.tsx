@@ -13,7 +13,7 @@ import { TaskType } from "../mockData/tasks";
 import { PatientType } from "../mockData/patients";
 import { User } from "../mockData/users";
 import { useNavigate } from "react-router-dom";
-
+import PatientPagesNavigationLocationTitle from "../components/PatientPagesNavigationLocationTitle";
 const SearchCompletedTasks = () => {
   const { patient_idString } = useParams();
   const [patientData, setPatientData] = useState<PatientType | null>(null);
@@ -98,8 +98,7 @@ const SearchCompletedTasks = () => {
         setPatientData(selectedPatient);
 
         const patientTasks = allTasks.filter(
-          (task) =>
-            task.patient_id === patient_id && task.status === "complete"
+          (task) => task.patient_id === patient_id && task.status === "complete"
         );
 
         setUserTasks(
@@ -156,74 +155,10 @@ const SearchCompletedTasks = () => {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <Box textAlign="center" marginBottom={4} marginTop={8}>
-        <Typography
-          sx={{
-            fontSize: { xs: "25px", sm: "30px", md: "40px" },
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 600,
-            color: "transparent",
-            background: "#5D7EA4",
-            WebkitBackgroundClip: "text",
-            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-          }}
-        >
-          Search Completed Tasks
-        </Typography>
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          gap: { xs: 4, sm: 16, lg: 24 },
-          justifyContent: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            textAlign: "center",
-            marginBottom: 2,
-            fontWeight: 600,
-            color: "transparent",
-            background: `black`,
-            WebkitBackgroundClip: "text",
-            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
-          }}
-        >
-          {patientData.patient_name}
-        </Typography>
-        <Typography
-          sx={{
-            textAlign: "center",
-            marginBottom: 2,
-            fontWeight: 600,
-            color: "transparent",
-            background: `black`,
-            WebkitBackgroundClip: "text",
-            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
-          }}
-        >
-          HN-{patientData.health_number}
-        </Typography>
-        <Typography
-          sx={{
-            textAlign: "center",
-            marginBottom: 2,
-            fontWeight: 600,
-            color: "transparent",
-            background: `black`,
-            WebkitBackgroundClip: "text",
-            textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-            fontSize: { xs: "16px", sm: "24px", lg: "30px" },
-          }}
-        >
-          Room-{patientData.room_id}
-        </Typography>
-      </Box>
-
+      <PatientPagesNavigationLocationTitle
+        title="Search Completed Tasks"
+        patientData={patientData}
+      />
       <Box sx={{ display: "flex", gap: 4, justifyContent: "center", mt: 4 }}>
         <TextField
           label="Filter by Discipline"
