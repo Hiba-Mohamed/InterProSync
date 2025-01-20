@@ -110,7 +110,7 @@ const AssignTaskUnderPatient = () => {
 
   return (
     patientData && (
-      <Box sx={{ minHeight: "100vh", padding: 4 }}>
+      <Box sx={{ minHeight: "100vh"}}>
         <PatientPagesNavigationLocationTitle
           title="Assign A Task"
           patientData={patientData}
