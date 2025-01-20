@@ -41,10 +41,10 @@ const UserPatientActionNavigation = ({
       label: "Closed Tasks",
       route: `/ClosedPatientTasks/${patientData.patient_id}`,
     },
-    {
-      label: "Undone Tasks",
-      route: `/UndonePatientTasks/${patientData.patient_id}`,
-    },
+    // {
+    //   label: "Undone Tasks",
+    //   route: `/UndonePatientTasks/${patientData.patient_id}`,
+    // },
   ];
 
   return (

@@ -1,15 +1,9 @@
 import { useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Divider,
-  Collapse,
-  TextField,
-} from "@mui/material";
+import { Box, Typography, Button, Collapse, TextField } from "@mui/material";
 import { User } from "../mockData/users";
 import { CompletedTasksDisplayObjectType } from "../mockData/completedTasks";
 import ErrorMessage from "./ErrorMessage";
+import TasksHeading from "./TasksHeading";
 
 // Function to format the date to YYYY/MM/DD HH:mm:ss
 const formatDateTime = (dateTime: string): string => {
@@ -40,7 +34,8 @@ const CompletedUserTasks = ({
     useState<number>(0);
   // State for handling the reason for undoing task completion
   const [undoReason, setUndoReason] = useState<string>("");
-  const [emptyReasonErrorMessage, setEmptyReasonErrorMessage]=useState<string>("");
+  const [emptyReasonErrorMessage, setEmptyReasonErrorMessage] =
+    useState<string>("");
 
   useEffect(() => {
     const storedUsers = localStorage.getItem("users");
@@ -71,13 +66,13 @@ const CompletedUserTasks = ({
   };
 
   const handleUndoTaskCompletion = (task_id: number, reason: string) => {
-    if (reason.trim()=== ""){
-      setEmptyReasonErrorMessage("Please Type Reason for Undoing Completion of This Task!")
+    if (reason.trim() === "") {
+      setEmptyReasonErrorMessage(
+        "Please Type Reason for Undoing Completion of This Task!"
+      );
       return;
     }
-      setEmptyReasonErrorMessage(
-        ""
-      );
+    setEmptyReasonErrorMessage("");
 
     // Get the "tasks" item, "completedTasks" item, "undoneTasks" item from local storage
     // Update the task with the same task_id status to "inprogress"
@@ -123,20 +118,9 @@ const CompletedUserTasks = ({
       key={incrementingValueWithEveryUndo}
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <Typography
-        variant="h5"
-        sx={{
-          fontWeight: 800,
-          color: "transparent",
-          background: `#535D68`,
-          WebkitBackgroundClip: "text",
-          textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-          paddingY: "24px",
-          paddingX: "12px",
-        }}
-      >
-        Completed {getDisciplineById(userDiscipline)} Tasks
-      </Typography>
+      <TasksHeading
+        heading={`Completed ${getDisciplineById(userDiscipline)} Tasks`}
+      />
       {userCompletedTasks.length === 0 ? (
         <Typography variant="h6" textAlign="center" color="gray">
           No completed tasks for your team.
@@ -150,7 +134,7 @@ const CompletedUserTasks = ({
               backgroundColor: "#f9f9f9",
               borderRadius: 2,
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              width: { xs: "330px", sm: "600px", md:"700px" },
+              width: { xs: "330px", sm: "600px", md: "700px" },
             }}
           >
             <Box
@@ -183,7 +167,7 @@ const CompletedUserTasks = ({
                 paddingX: "8px",
                 backgroundColor: "#E0EBF6",
                 color: "black",
-                justifyContent:"space-between",
+                justifyContent: "space-between",
                 display: "flex",
                 flexDirection: { xs: "column", sm: "row" },
               }}

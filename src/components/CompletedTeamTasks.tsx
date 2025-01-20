@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, Button, Divider, Collapse } from "@mui/material";
+import { Box, Typography, Button,  Collapse } from "@mui/material";
 import { CompletedTasksDisplayObjectType } from "../mockData/completedTasks";
+import TasksHeading from "./TasksHeading";
 
 // Function to format the date to YYYY/MM/DD HH:mm:ss
 const formatDateTime = (dateTime: string): string => {
@@ -58,20 +59,12 @@ const CompletedTeamTasks = ({
   };
 
   return (
-    <Box>
-      <Typography
-        variant="h5"
-        sx={{
-          fontWeight: 800,
-          color: "transparent",
-          background: `#535D68`,
-          WebkitBackgroundClip: "text",
-          textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-          paddingY: "24px",
-        }}
-      >
-        Completed Team Tasks
-      </Typography>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <TasksHeading
+        heading={`Completed Team Tasks`}
+      />
 
       {teamCompletedTasks.length === 0 ? (
         <Typography variant="h6" textAlign="center" color="gray">
@@ -134,7 +127,7 @@ const CompletedTeamTasks = ({
                 {getUsernameById(task.completed_by)}
               </Typography>
             </Box>
-    
+
             <Collapse in={expandedTaskIndex === index} sx={{ padding: "12px" }}>
               <Box>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>

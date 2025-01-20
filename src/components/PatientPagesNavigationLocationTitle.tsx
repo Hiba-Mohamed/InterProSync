@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Typography } from "@mui/material";
 import UserPatientActionNavigation from "./Navigations/UserPatientActionNavigation";
 import { PatientType } from "../mockData/patients";
@@ -38,7 +37,7 @@ const PatientPagesNavigationLocationTitle = ({
         >
           <Typography
             sx={{
-              fontSize: { xs: "25px", sm: "20px", md: "26px" },
+              fontSize: { xs: "25px", sm: "19px", md: "26px" },
               fontFamily: "Inter, sans-serif",
               fontWeight: 600,
               color: "transparent",
@@ -77,7 +76,7 @@ const PatientPagesNavigationLocationTitle = ({
                 background: `white`,
                 WebkitBackgroundClip: "text",
                 textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-                fontSize: { xs: "16px", sm: "13px", lg: "16px" },
+                fontSize: { xs: "16px", sm: "12px", lg: "16px" },
               }}
             >
               {patientData.patient_name} | HN-{patientData.health_number} |

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
-import { Box, Typography, Button, Divider, Collapse } from "@mui/material";
+import { Box, Typography, Button, Collapse } from "@mui/material";
+import TasksHeading from "./TasksHeading";
 
 // Function to format the date to YYYY/MM/DD HH:mm:ss
 const formatDateTime = (dateTime: string): string => {
@@ -54,21 +55,8 @@ const TeamPatientPendingTasks = ({ teamTasks }: { teamTasks: TaskType[] }) => {
   };
 
   return (
-    <Box>
-      <Typography
-        variant="h5"
-        sx={{
-          fontWeight: 800,
-          color: "transparent",
-          background: `#535D68`,
-          WebkitBackgroundClip: "text",
-          textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-          paddingY: "24px",
-        }}
-      >
-        Team Tasks
-      </Typography>
-
+    <Box sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+      <TasksHeading heading={`Team Tasks`} />
       {teamTasks.length === 0 ? (
         <Typography variant="h6" textAlign="center" color="gray">
           No pending tasks for other teams.
@@ -82,7 +70,7 @@ const TeamPatientPendingTasks = ({ teamTasks }: { teamTasks: TaskType[] }) => {
               backgroundColor: "#f9f9f9",
               borderRadius: 2,
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-              width: { xs: "330px", sm: "500px", md:"700px"},
+              width: { xs: "330px", sm: "500px", md: "700px" },
             }}
           >
             <Box
@@ -124,7 +112,7 @@ const TeamPatientPendingTasks = ({ teamTasks }: { teamTasks: TaskType[] }) => {
             </Box>
 
             {/* Expand/Collapse Content with Smooth Transition */}
-            <Collapse in={expandedTaskIndex === index} sx={{padding:"12px"}}>
+            <Collapse in={expandedTaskIndex === index} sx={{ padding: "12px" }}>
               <Box>
                 <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                   Task Description:

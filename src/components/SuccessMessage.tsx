@@ -1,12 +1,12 @@
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import { AiOutlineWarning } from "react-icons/ai";
+import { FaRegCheckCircle } from "react-icons/fa";
 
-const ErrorMessage = ({ errorMessage }: { errorMessage: string }) => {
+const SuccessMessage = ({successMessage}:{successMessage:string}) => {
   return (
     <Box
       sx={{
-        border: "1px solid red", // Red border for the error message
+        border: "1px solid green", // Red border for the error message
         padding: "2px",
         borderRadius: "5px",
         marginTop: "10px",
@@ -14,18 +14,18 @@ const ErrorMessage = ({ errorMessage }: { errorMessage: string }) => {
         alignItems: "center", // Vertically aligns the icon with the text
       }}
     >
-      <AiOutlineWarning
-        color="red"
-        style={{ marginRight: "8px", fontSize: "40px" , padding:2}}
+      <FaRegCheckCircle
+        color="green"
+        style={{ marginRight: "8px", fontSize: "30px", padding:2 }}
       />{" "}
       {/* React icon */}
-      <Typography color="error" variant="body1">
+      <Typography color="success" variant="body1">
         {" "}
         {/* Using MUI's color variant */}
-        {errorMessage}
+        {successMessage}
       </Typography>{" "}
     </Box>
   );
 };
 
-export default ErrorMessage;
+export default SuccessMessage;

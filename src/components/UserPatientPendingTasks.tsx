@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
 import { Box, Typography, Button, Divider, Collapse } from "@mui/material";
 import { User } from "../mockData/users";
-import { UserData } from "../mockData/userData";
-
+import TasksHeading from "./TasksHeading";
 // Function to format the date to YYYY/MM/DD HH:mm:ss
 const formatDateTime = (dateTime: string): string => {
   const date = new Date(dateTime);
@@ -109,19 +108,7 @@ const UserPatientPendingTasks = ({
 
   return (
     <Box>
-      <Typography
-        variant="h5"
-        sx={{
-          fontWeight: 800,
-          color: "transparent",
-          background: `#535D68`,
-          WebkitBackgroundClip: "text",
-          textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-          paddingY: "24px",
-        }}
-      >
-        {getDisciplineById(userDiscipline)} Tasks
-      </Typography>
+      <TasksHeading heading={`${getDisciplineById(userDiscipline)} Tasks`}/>
       {userTasks.length === 0 ? (
         <Typography variant="h6" textAlign="center" color="gray">
           No pending tasks for your team.
