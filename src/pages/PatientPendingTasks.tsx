@@ -90,8 +90,8 @@ const PatientPendingTasks = () => {
       <Button
         variant="text"
         sx={{
-          fontWeight: 700,
-          fontSize: { xs: "10px", sm: "12px", md: "18px" },
+          fontWeight: 400,
+          fontSize: { xs: "12px", sm: "12px", md: "18px" },
           width: { xs: "30%", sm: "auto" },
           textAlign: "center",
           marginBottom: { xs: "12px", sm: "0" },
