@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { User } from "../mockData/users";
 import { CompletedTasksDisplayObjectType } from "../mockData/completedTasks";
+import ErrorMessage from "./ErrorMessage";
 
 // Function to format the date to YYYY/MM/DD HH:mm:ss
 const formatDateTime = (dateTime: string): string => {
@@ -39,6 +40,7 @@ const CompletedUserTasks = ({
     useState<number>(0);
   // State for handling the reason for undoing task completion
   const [undoReason, setUndoReason] = useState<string>("");
+  const [emptyReasonErrorMessage, setEmptyReasonErrorMessage]=useState<string>("");
 
   useEffect(() => {
     const storedUsers = localStorage.getItem("users");
@@ -69,6 +71,14 @@ const CompletedUserTasks = ({
   };
 
   const handleUndoTaskCompletion = (task_id: number, reason: string) => {
+    if (reason.trim()=== ""){
+      setEmptyReasonErrorMessage("Please Type Reason for Undoing Completion of This Task!")
+      return;
+    }
+      setEmptyReasonErrorMessage(
+        ""
+      );
+
     // Get the "tasks" item, "completedTasks" item, "undoneTasks" item from local storage
     // Update the task with the same task_id status to "inprogress"
     // Add to the undoneTasks item: {undone_id: length+1, task_id: task_id, reason: reason, undone_dateTime: time and date now}
@@ -109,7 +119,7 @@ const CompletedUserTasks = ({
   };
 
   return (
-    <Box key={incrementingValueWithEveryUndo}>
+    <Box key={incrementingValueWithEveryUndo} sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
       <Typography
         variant="h5"
         sx={{
@@ -119,6 +129,7 @@ const CompletedUserTasks = ({
           WebkitBackgroundClip: "text",
           textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
           paddingY: "24px",
+          paddingX:"12px"
         }}
       >
         Completed {getDisciplineById(userDiscipline)} Tasks
@@ -195,6 +206,7 @@ const CompletedUserTasks = ({
                 >
                   Undo Completion
                 </Button>
+                {emptyReasonErrorMessage && (<ErrorMessage errorMessage={emptyReasonErrorMessage}/>)}
               </Box>
             </Collapse>
 
