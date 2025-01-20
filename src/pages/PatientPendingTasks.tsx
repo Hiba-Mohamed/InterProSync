@@ -15,54 +15,63 @@ const PatientPendingTasks = () => {
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
   const navigate = useNavigate();
 
+  const getNeededArrays=()=>{
+     const patientsString = localStorage.getItem("patients");
+     const tasksString = localStorage.getItem("tasks");
+     const userDataString = localStorage.getItem("userData");
+
+     if (patientsString && tasksString && patient_idString && userDataString) {
+       const patient_id = parseInt(patient_idString, 10); // Convert patient_idString to a number
+
+       const patients: PatientType[] = JSON.parse(patientsString);
+       const allTasks: TaskType[] = JSON.parse(tasksString);
+       const userData = JSON.parse(userDataString);
+       console.log(userData);
+       setUserDiscipline(userData.discipline_id);
+
+       // Find the patient with the matching patient_id
+       const selectedPatient = patients.find(
+         (patient) => patient.patient_id === patient_id
+       );
+
+       if (selectedPatient) {
+         setPatientData(selectedPatient);
+
+         // Filter tasks by patient_id
+         const patientTasks = allTasks.filter(
+           (task) => task.patient_id === patient_id
+         );
+         console.log("patientTasks", patientTasks);
+
+         const pendingPatientTasks = patientTasks.filter(
+           (task) => task.status === "inprogress"
+         );
+
+         // Split tasks based on discipline_id (user's discipline vs others)
+         const pendingUserAssignedTasks = pendingPatientTasks.filter(
+           (task) => task.discipline_id === userDiscipline // Tasks assigned to the user's discipline
+         );
+         console.log("userAssignedTasks", pendingUserAssignedTasks);
+
+         const pendingTeamAssignedTasks = pendingPatientTasks.filter(
+           (task) => task.discipline_id !== userDiscipline // Tasks assigned to other disciplines
+         );
+         console.log("teamAssignedTasks", pendingTeamAssignedTasks);
+
+         setUserTasks(pendingUserAssignedTasks);
+         setTeamTasks(pendingTeamAssignedTasks);
+       }
+     }
+  }
+
   useEffect(() => {
-    const patientsString = localStorage.getItem("patients");
-    const tasksString = localStorage.getItem("tasks");
-    const userDataString = localStorage.getItem("userData");
-
-    if (patientsString && tasksString && patient_idString && userDataString) {
-      const patient_id = parseInt(patient_idString, 10); // Convert patient_idString to a number
-
-      const patients: PatientType[] = JSON.parse(patientsString);
-      const allTasks: TaskType[] = JSON.parse(tasksString);
-      const userData = JSON.parse(userDataString);
-      console.log(userData);
-      setUserDiscipline(userData.discipline_id);
-
-      // Find the patient with the matching patient_id
-      const selectedPatient = patients.find(
-        (patient) => patient.patient_id === patient_id
-      );
-
-      if (selectedPatient) {
-        setPatientData(selectedPatient);
-
-        // Filter tasks by patient_id
-        const patientTasks = allTasks.filter(
-          (task) => task.patient_id === patient_id
-        );
-        console.log("patientTasks", patientTasks);
-
-        const pendingPatientTasks = patientTasks.filter(
-          (task) => task.status === "inprogress"
-        );
-
-        // Split tasks based on discipline_id (user's discipline vs others)
-        const pendingUserAssignedTasks = pendingPatientTasks.filter(
-          (task) => task.discipline_id === userDiscipline // Tasks assigned to the user's discipline
-        );
-        console.log("userAssignedTasks", pendingUserAssignedTasks);
-
-        const pendingTeamAssignedTasks = pendingPatientTasks.filter(
-          (task) => task.discipline_id !== userDiscipline // Tasks assigned to other disciplines
-        );
-        console.log("teamAssignedTasks", pendingTeamAssignedTasks);
-
-        setUserTasks(pendingUserAssignedTasks);
-        setTeamTasks(pendingTeamAssignedTasks);
-      }
-    }
+   getNeededArrays()
   }, [patient_idString, userDiscipline]); // Re-run effect if patient_idString or userDiscipline changes
+
+
+  const handleCompleteUpdate = () => {
+    getNeededArrays();
+  };
 
   if (!patientData) {
     return (
@@ -171,7 +180,7 @@ const PatientPendingTasks = () => {
           justifyContent: { xs: "center" },
         }}
       >
-        <UserPatientPendingTasks userTasks={userTasks} />
+        <UserPatientPendingTasks userTasks={userTasks} atComplete= {handleCompleteUpdate} />
         <TeamPatientPendingTasks teamTasks={teamTasks} />
       </Box>
     </Box>
