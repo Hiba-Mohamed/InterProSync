@@ -1,3 +1,11 @@
+export interface ClosedTask {
+  closed_id: number;
+  task_id: number;
+  closer_user_id: number;
+  closer_reason: string;
+  closed_datetime: string; // ISO 8601 date-time string
+}
+
 export const closedTasks = [
   {
     closed_id: 1,

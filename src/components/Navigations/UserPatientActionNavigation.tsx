@@ -38,8 +38,12 @@ const UserPatientActionNavigation = ({
       route: `/CompletedPatientTasks/${patientData.patient_id}`,
     },
     {
-      label: "Closed Tasks",
+      label: "Deleted Tasks",
       route: `/ClosedPatientTasks/${patientData.patient_id}`,
+    },
+    {
+      label: "Ward Selection",
+      route: `/wardSelection`,
     },
     // {
     //   label: "Undone Tasks",

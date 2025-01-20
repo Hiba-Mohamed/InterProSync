@@ -16,7 +16,7 @@ const PatientPagesNavigationLocationTitle = ({
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Box textAlign="center" marginBottom={4} marginTop={0}>
+    <Box textAlign="center"  marginTop={0}>
       <UserPatientActionNavigation patientData={patientData} />
       <Box
         sx={{
