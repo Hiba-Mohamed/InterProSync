@@ -1,131 +1,122 @@
-import { PatientType } from "../../mockData/patients"
-import { Box, Button } from "@mui/material";
+import { useState } from "react";
+import { PatientType } from "../../mockData/patients";
+import {
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import { useNavigate } from "react-router-dom";
 
-const UserPatientActionNavigation = ({patientData}:{patientData:PatientType}) => {
-      const navigate = useNavigate();
+const UserPatientActionNavigation = ({
+  patientData,
+}: {
+  patientData: PatientType;
+}) => {
+  const navigate = useNavigate();
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleDrawerToggle = () => setDrawerOpen(!drawerOpen);
+
+  const menuItems = [
+    { label: "My Patients List", route: "/userPatientList" },
+    {
+      label: "Assign Task",
+      route: `/AssignTaskUnderPatient/${patientData.patient_id}`,
+    },
+    {
+      label: "Pending Tasks",
+      route: `/patientPendingTasks/${patientData.patient_id}`,
+    },
+    {
+      label: "Completed Tasks",
+      route: `/CompletedPatientTasks/${patientData.patient_id}`,
+    },
+    {
+      label: "Closed Tasks",
+      route: `/ClosedPatientTasks/${patientData.patient_id}`,
+    },
+    {
+      label: "Undone Tasks",
+      route: `/UndonePatientTasks/${patientData.patient_id}`,
+    },
+  ];
 
   return (
-    <Box textAlign="center" marginBottom={4} marginTop={0}>
+    <Box
+      sx={{
+        textAlign: "center",
+      }}
+    >
+      {/* Hamburger Menu for Mobile */}
       <Box
         sx={{
-          display: "flex",
-          flexWrap: "wrap", // Allow buttons to wrap
-          justifyContent: "space-between", // Center buttons
-          alignItems: "center", // Center the buttons horizontally
-          padding: { xs: "12px", sm: "20px" },
-          gap: { xs: 2, sm: 0 }, // Increase gap between buttons on smaller screens
-          width: { xs: "344px", sm: "760px", md: "1200px", lg: "1280px" },
+          display: { xs: "flex", sm:"none" },
+          justifyContent: "end",
+          alignItems: "center",
         }}
       >
-        <Button
-          variant="text"
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "10px", sm: "12px", md: "18px" },
-            width: { xs: "30%", sm: "auto" }, // 30% width to fit 3 buttons per row on mobile
-            textAlign: "center",
-            marginBottom: { xs: "12px", sm: "0" },
-            padding: { xs: "1px", sm: "10px" },
-            textTransform: "capitalize",
-            color: "#445972",
-          }}
-          onClick={() => navigate("/userPatientList")}
-        >
-          My Patients List
-        </Button>
-        <Button
-          variant="text"
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "10px", sm: "12px", md: "18px" },
-            width: { xs: "30%", sm: "auto" },
-            textAlign: "center",
-            marginBottom: { xs: "12px", sm: "0" },
-            padding: { xs: "1px", sm: "10px" },
-            textTransform: "capitalize",
-            color: "#445972",
-          }}
-          onClick={() =>
-            navigate(`/AssignTaskUnderPatient/${patientData.patient_id}`)
-          }
-        >
-          Assign Task
-        </Button>
-        <Button
-          variant="text"
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "10px", sm: "12px", md: "18px" },
-            width: { xs: "30%", sm: "auto" },
-            textAlign: "center",
-            marginBottom: { xs: "12px", sm: "0" },
-            padding: { xs: "1px", sm: "10px" },
-            textTransform: "capitalize",
-            color: "#445972",
-          }}
-          onClick={() =>
-            navigate(`/patientPendingTasks/${patientData.patient_id}`)
-          }
-        >
-          Pending Tasks
-        </Button>
-        <Button
-          variant="text"
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "10px", sm: "12px", md: "18px" },
-            width: { xs: "30%", sm: "auto" },
-            textAlign: "center",
-            marginBottom: { xs: "12px", sm: "0" },
-            padding: { xs: "1px", sm: "10px" },
-            textTransform: "capitalize",
-            color: "#445972",
-          }}
-          onClick={() =>
-            navigate(`/CompletedPatientTasks/${patientData.patient_id}`)
-          }
-        >
-          Completed Tasks
-        </Button>
-        <Button
-          variant="text"
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "10px", sm: "12px", md: "18px" },
-            width: { xs: "30%", sm: "auto" },
-            textAlign: "center",
-            marginBottom: { xs: "12px", sm: "0" },
-            padding: { xs: "1px", sm: "10px" },
-            textTransform: "capitalize",
-            color: "#445972",
-          }}
-          onClick={() =>
-            navigate(`/ClosedPatientTasks/${patientData.patient_id}`)
-          }
-        >
-          Closed Tasks
-        </Button>
-        <Button
-          variant="text"
-          sx={{
-            fontWeight: 700,
-            fontSize: { xs: "10px", sm: "12px", md: "18px" },
-            width: { xs: "30%", sm: "auto" },
-            textAlign: "center",
-            padding: { xs: "1px", sm: "10px" },
-            textTransform: "capitalize",
-            color: "#445972",
-          }}
-          onClick={() =>
-            navigate(`/UndonePatientTasks/${patientData.patient_id}`)
-          }
-        >
-          Undone Tasks
-        </Button>
+        <IconButton onClick={handleDrawerToggle} color="inherit">
+          <AssignmentIndIcon />
+        </IconButton>
+      </Box>
+
+      {/* Drawer for Mobile */}
+      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
+        <List>
+          {menuItems.map((item, index) => (
+            <ListItem key={index} disablePadding>
+              <ListItemButton
+                onClick={() => {
+                  navigate(item.route);
+                  setDrawerOpen(false); // Close drawer after navigation
+                }}
+              >
+                <ListItemText primary={item.label} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
+
+      {/* Desktop Buttons */}
+      <Box
+        sx={{
+          backgroundColor: "#E1EFFF",
+          display: { xs: "none", sm: "flex" }, // Show buttons only on larger screens
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: { xs: 2, sm: 0 },
+          // width: { xs: "344px", sm: "760px", md: "1200px", lg: "1280px" },
+        }}
+      >
+        {menuItems.map((item, index) => (
+          <Button
+            key={index}
+            variant="text"
+            sx={{
+              fontWeight: 700,
+              fontSize: { xs: "10px", sm: "12px", md: "18px" },
+              width: { xs: "30%", sm: "auto" },
+              textAlign: "center",
+              marginBottom: { xs: "12px", sm: "0" },
+              textTransform: "capitalize",
+              color: "black",
+            }}
+            onClick={() => navigate(item.route)}
+          >
+            {item.label}
+          </Button>
+        ))}
       </Box>
     </Box>
   );
-}
+};
 
-export default UserPatientActionNavigation
+export default UserPatientActionNavigation;
