@@ -40,7 +40,7 @@ const PatientPagesNavigationLocationTitle = ({
               flexDirection: "row",
               gap: { xs: 1, sm: 2, lg: 2 },
               justifyContent: "center",
-              alighnItems:{sm:"center"},
+              alighnItems: { sm: "center" },
               background: {
                 xs: "",
                 sm: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
@@ -77,7 +77,7 @@ const PatientPagesNavigationLocationTitle = ({
           fontFamily: "Inter, sans-serif",
           fontWeight: 600,
           color: "transparent",
-          background: "#399E85",
+          background: "#183B65",
           WebkitBackgroundClip: "text",
           textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
           paddingX: "12px",
