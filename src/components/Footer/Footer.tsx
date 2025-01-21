@@ -33,7 +33,7 @@ const Footer = () => {
           {/* Logo */}
           <Box
             component="img"
-            src="/public/logo.png"
+            src="/images/logo.png"
             alt="Responsive"
             sx={{
               width: { xs: "50px" }, // Image takes full width of its container
