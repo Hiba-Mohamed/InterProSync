@@ -41,15 +41,16 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Ensures global typography */}
-      <Box sx={{ minHeight: "100vh" }}>
-        {" "}
-        {/* Ensure min height covers full screen */}
-        <>
-          <NavBar />
-          <ScrollToTop />
-          <Routes>
+    <Routes>
+      <ThemeProvider theme={theme}>
+        <CssBaseline /> {/* Ensures global typography */}
+        <Box sx={{ minHeight: "100vh" }}>
+          {" "}
+          {/* Ensure min height covers full screen */}
+          <>
+            <NavBar />
+            <ScrollToTop />
+
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/getStarted" element={<GettingStarted />} />
@@ -93,12 +94,12 @@ function App() {
               path="/AssignTaskUnderPatient/:patient_idString"
               element={<AssignTaskUnderPatient />}
             />
-          </Routes>
 
-          <Footer />
-        </>
-      </Box>
-    </ThemeProvider>
+            <Footer />
+          </>
+        </Box>
+      </ThemeProvider>
+    </Routes>
   );
 }
 
