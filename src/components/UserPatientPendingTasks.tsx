@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
-import { Box, Typography, Button, Divider, Collapse } from "@mui/material";
+import { Box, Typography, Button, Collapse, TextField } from "@mui/material";
 import { User } from "../mockData/users";
 import TasksHeading from "./TasksHeading";
+import ErrorMessage from "./ErrorMessage";
+
 // Function to format the date to YYYY/MM/DD HH:mm:ss
 const formatDateTime = (dateTime: string): string => {
   const date = new Date(dateTime);
@@ -28,12 +30,17 @@ const UserPatientPendingTasks = ({
   const [users, setUsers] = useState<User[]>([]);
   const [disciplines, setDisciplines] = useState<any[]>([]);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
-  const [userInfo, setUserInfo] = useState<User>();
+  const [userInfo, setUserInfo] = useState<User | undefined>();
+  const [showDeleteReasonInput, setShowDeleteReasonInput] =
+    useState<boolean>(false);
+  const [targetTaskOfDeletion, setTargetTaskOfDeletion] = useState<number>(0);
+  const [DeletionReason, setDeletionReason] = useState<string>("");
 
   useEffect(() => {
     const storedUsers = localStorage.getItem("users");
     const storedDisciplines = localStorage.getItem("disciplines");
     const userDataString = localStorage.getItem("userData");
+
     if (storedUsers) {
       setUsers(JSON.parse(storedUsers));
     }
@@ -43,8 +50,6 @@ const UserPatientPendingTasks = ({
     if (userDataString) {
       const user = JSON.parse(userDataString);
       setUserDiscipline(user.discipline_id);
-      console.log(user);
-      // setUserUsername(user.username);
       setUserInfo(user);
     }
   }, []);
@@ -65,33 +70,23 @@ const UserPatientPendingTasks = ({
     setExpandedTaskIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  const handelconfirmComplete = (task_id: number) => {
-    // Get the "tasks" item, "completedTasks" item, "undoneTasks" item from local storage
-    // Update the task with the same task_id status to "inprogress"
-    // Add to the undoneTasks item: {undone_id: length+1, task_id: task_id, reason: reason, undone_dateTime: time and date now}
-    console.log(`Completing task ${task_id} `);
-
+  const handleConfirmComplete = (task_id: number) => {
     const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
     const completedTasks = JSON.parse(
       localStorage.getItem("completedTasks") || "[]"
     );
-    console.log(
-      "Initial completed tasks array from local storage",
-      completedTasks
-    );
-    // Update task status to "inprogress"
+
+    // Update task status to "complete"
     const taskIndex = tasks.findIndex((task: any) => task.task_id === task_id);
     if (taskIndex > -1) {
       tasks[taskIndex].status = "complete";
       localStorage.setItem("tasks", JSON.stringify(tasks));
     }
+
     const targetUser = users.find(
       (user) => user.username === userInfo?.username
     );
-    console.log("targetUser: ", targetUser);
     if (targetUser) {
-      console.log(targetUser.user_id);
-      // Add the undone task to the undoneTasks array
       const newCompletedTask = {
         completed_id: completedTasks.length + 1,
         task_id: task_id,
@@ -100,15 +95,56 @@ const UserPatientPendingTasks = ({
       };
 
       completedTasks.push(newCompletedTask);
-      console.log("AFTER PUSHING NEW COMPLETE", completedTasks);
       localStorage.setItem("completedTasks", JSON.stringify(completedTasks));
       atComplete();
     }
   };
 
+  const handleDeleteClick = (task_id: number) => {
+    setShowDeleteReasonInput(true);
+    setTargetTaskOfDeletion(task_id);
+  };
+
+  const handleConfirmDelete = (task_Id: number, reason: string) => {
+    const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+    const closedTasks = JSON.parse(
+      localStorage.getItem("closedTasks") || "[]"
+    );
+
+    // Update task status to "complete"
+    const taskIndex = tasks.findIndex((task: any) => task.task_id === task_Id);
+    if (taskIndex > -1) {
+      tasks[taskIndex].status = "closed";
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    const targetUser = users.find(
+      (user) => user.username === userInfo?.username
+    );
+    if (targetUser) {
+      const newclosedTask = {
+        closed_id: closedTasks.length + 1,
+        task_id: task_Id,
+        closer_user_id: userInfo?.user_id,
+        closer_reason: reason,
+        closed_datetime: new Date().toISOString(),
+      };
+
+      closedTasks.push(newclosedTask);
+      localStorage.setItem("closedTasks", JSON.stringify(closedTasks));
+      atComplete();
+    }
+  };
+
+  const handleCancelDeletion = () => {
+    setDeletionReason("");
+    setTargetTaskOfDeletion(0);
+    setShowDeleteReasonInput(false);
+  };
+
   return (
     <Box>
-      <TasksHeading heading={`${getDisciplineById(userDiscipline)} Tasks`}/>
+      <TasksHeading heading={`${getDisciplineById(userDiscipline)} Tasks`} />
       {userTasks.length === 0 ? (
         <Typography variant="h6" textAlign="center" color="gray">
           No pending tasks for your team.
@@ -162,7 +198,6 @@ const UserPatientPendingTasks = ({
                 {formatDateTime(task.assignment_dateTime)}
               </Typography>
             </Box>
-            {/* Using Collapse for expandable content */}
             <Collapse in={expandedTaskIndex === index} sx={{ padding: "12px" }}>
               <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                 Task description:
@@ -179,31 +214,78 @@ const UserPatientPendingTasks = ({
                   gap: { xs: 2 },
                 }}
               >
-                <Button
-                  variant="outlined"
-                  sx={{
-                    marginRight: 1,
-                    borderColor: "#C45E7D",
-                    color: "#C45E7D",
-                    "&:hover": {
+                {targetTaskOfDeletion !== task.task_id && (
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      marginRight: 1,
                       borderColor: "#C45E7D",
-                      backgroundColor: "rgba(196, 94, 125, 0.1)",
-                    },
-                  }}
-                >
-                  Delete
-                </Button>
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: "#749D61" }}
-                  onClick={() => handelconfirmComplete(task.task_id)}
-                >
-                  Complete
-                </Button>
+                      color: "#C45E7D",
+                      "&:hover": {
+                        borderColor: "#C45E7D",
+                        backgroundColor: "rgba(196, 94, 125, 0.1)",
+                      },
+                    }}
+                    onClick={() => handleDeleteClick(task.task_id)}
+                  >
+                    Delete
+                  </Button>
+                )}
+
+                {targetTaskOfDeletion === task.task_id && (
+                  <Box>
+                    <TextField
+                      label="Reason"
+                      type="text"
+                      variant="outlined"
+                      value={DeletionReason}
+                      onChange={(e) => setDeletionReason(e.target.value)} // Update state when the text changes
+                      sx={{
+                        width: { xs: "100%" },
+                      }}
+                    />
+                    <ErrorMessage errorMessage="Warning: Task deletion is permanent and cannot be undone. Please ensure you are deleting the task for valid reasons such as duplication, incorrect patient, or task error." />{" "}
+                    <Box sx={{ marginTop: 2 }}>
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          marginRight: 1,
+                          borderColor: "#blue",
+                          color: "#blue",
+                          "&:hover": {
+                            borderColor: "#C45E7D",
+                            backgroundColor: "rgba(196, 94, 125, 0.1)",
+                          },
+                        }}
+                        onClick={() => handleCancelDeletion()}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error" // Use the "error" color for a red button
+                        onClick={() =>
+                          handleConfirmDelete(task.task_id, DeletionReason)
+                        } // Pass the reason here
+                        sx={{ width: "100%" }} // Make the button fill the width
+                      >
+                        Confirm Delete
+                      </Button>
+                    </Box>
+                  </Box>
+                )}
+                {targetTaskOfDeletion !== task.task_id && (
+                  <Button
+                    variant="contained"
+                    sx={{ backgroundColor: "#749D61" }}
+                    onClick={() => handleConfirmComplete(task.task_id)}
+                  >
+                    Complete
+                  </Button>
+                )}
               </Box>
             </Collapse>
 
-            {/* Expand/Collapse Button */}
             <Box sx={{ marginTop: 2 }}>
               <Button
                 variant="text"
