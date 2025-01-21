@@ -103,7 +103,7 @@ const UserNavigationUserNameWardLocation = () => {
         {" "}
         <Typography
           sx={{
-            textAlign: "end",
+            textAlign: {xs:"start", sm:"end"},
             fontWeight: 400,
             color: { xs: "white", sm: "white" },
             background: `white`,
