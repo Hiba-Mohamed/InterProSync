@@ -6,6 +6,7 @@ import MyPatientComponentDisplay from "../components/MyPatientComponentDisplay";
 import { PatientType } from "../mockData/patients";
 import { UserData } from "../mockData/userData";
 import { useNavigate } from "react-router";
+import UserNavigationUserNameWardLocation from "../components/Navigations/UserNavigationUserNameWardLocation";
 
 const UserPatientList: React.FC = () => {
   let navigate = useNavigate();
@@ -58,11 +59,12 @@ const UserPatientList: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingTop: { xs: "40px", sm: "50px", md: "60px" },
         minHeight: "100vh",
         marginBottom: "500px",
       }}
     >
+      <UserNavigationUserNameWardLocation />
+
       <Box textAlign="center" marginBottom={4}>
         <Typography
           sx={{
@@ -77,6 +79,96 @@ const UserPatientList: React.FC = () => {
         >
           My Patient List
         </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: {
+            xs: "column",
+            md: "row",
+            alignItems: "center",
+            gap: 30,
+            justifyContent: "center",
+            paddingBottom: "20px",
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: { xs: "300px" },
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Box
+            sx={{ width: "10px", backgroundColor: "#9CCE84", height: "20px" }}
+          ></Box>
+          <Typography
+            sx={{
+              color: "transparent",
+              background: `#535D68`,
+              WebkitBackgroundClip: "text",
+              textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+              fontWeight: 700,
+            }}
+          >
+            <span style={{ color: "#9CCE84" }}>Green </span>Means no tasks
+            pending
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: { xs: "300px" },
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Box
+            sx={{ width: "10px", backgroundColor: "#FFD8B0", height: "20px" }}
+          ></Box>
+          <Typography
+            sx={{
+              color: "transparent",
+              background: `#535D68`,
+              WebkitBackgroundClip: "text",
+              textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+              fontWeight: 700,
+            }}
+          >
+            <span style={{ color: "#FFD8B0" }}>Orange </span>Means pending team
+            tasks
+          </Typography>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: { xs: "300px" },
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Box
+            sx={{ width: "10px", backgroundColor: "#C45E7D", height: "20px" }}
+          ></Box>
+          <Typography
+            sx={{
+              color: "transparent",
+              background: `#535D68`,
+              WebkitBackgroundClip: "text",
+              textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+              fontWeight: 700,
+            }}
+          >
+            <span style={{ color: "#C45E7D" }}>Red </span>Means pending tasks
+            for you
+          </Typography>
+        </Box>
       </Box>
 
       <Box

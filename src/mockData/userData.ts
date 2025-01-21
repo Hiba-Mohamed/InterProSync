@@ -1,5 +1,5 @@
-export type UserData = {
-  userName: string;
+export interface UserData {
+  username: string;
   chosenHospitalOrHospitals: number[]; // Explicitly type as number[]
   chosenWardOrWards: string[];
   chosenPatientList: number[];
@@ -8,7 +8,7 @@ export type UserData = {
 };
 
 export const userData: UserData = {
-  userName: "",
+  username: "",
   chosenHospitalOrHospitals: [], // Start with an empty array of numbers
   chosenWardOrWards: [""], // Start with an empty array of strings
   chosenPatientList: [],

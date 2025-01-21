@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from "react";
+import React, { useState, MouseEvent, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,9 +11,11 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Link } from "react-router-dom";
+import { UserData } from "../../mockData/userData";
 
 const Navbar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [signedIn, setSignedIn] = useState<boolean>(false);
 
   const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -22,6 +24,18 @@ const Navbar: React.FC = () => {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
+    useEffect(() => {
+      const userDataString = localStorage.getItem("userData");
+  
+      if (userDataString) {
+        const userData: UserData = JSON.parse(userDataString);
+        const userExists = userData.username !== ""
+        if (userExists){
+          setSignedIn(true)
+        }
+      }
+    }, []);
 
   return (
     <AppBar
@@ -43,7 +57,7 @@ const Navbar: React.FC = () => {
         }}
       >
         {/* Title / Logo */}
-        <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+        <Box sx={{ display: "flex", alignItems: "center" }}>
           {/* Logo */}
           <img
             src="/public/logo.png" // Replace with the actual path to your logo image
@@ -57,7 +71,6 @@ const Navbar: React.FC = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-start",
-              width: "100%", // Make sure the box takes up the full available width
             }}
           >
             {/* InterproSync with bolder, wider font */}
@@ -68,8 +81,6 @@ const Navbar: React.FC = () => {
               sx={{
                 fontWeight: 800, // Increase font weight for a thicker look
                 fontStretch: "ultra-condensed", // Makes the letters appear fatter horizontally
-                // Increase letter spacing to make it wider
-                width: "100%", // Make sure the text takes full width
                 textAlign: "left",
                 fontSize: { xs: "16px", sm: "20px" },
               }}
@@ -104,7 +115,7 @@ const Navbar: React.FC = () => {
             color="inherit"
             component={Link}
             to="/"
-            sx={{ fontWeight: 600 }}
+            sx={{ fontWeight: 600, textTransform: "capitalize" }}
           >
             Home
           </Button>
@@ -112,7 +123,7 @@ const Navbar: React.FC = () => {
             color="inherit"
             component={Link}
             to="/getStarted"
-            sx={{ whiteSpace: "nowrap", fontWeight: 600 }}
+            sx={{ fontWeight: 600, textTransform: "capitalize" }}
           >
             Get Started
           </Button>
@@ -120,10 +131,20 @@ const Navbar: React.FC = () => {
             color="inherit"
             component={Link}
             to="/about"
-            sx={{ fontWeight: 600 }}
+            sx={{ fontWeight: 600, textTransform: "capitalize" }}
           >
             About
           </Button>
+          {signedIn && (
+            <Button
+              color="inherit"
+              component={Link}
+              to="/wardSelection"
+              sx={{ fontWeight: 600, textTransform: "capitalize" }}
+            >
+              Ward Selection
+            </Button>
+          )}
         </Box>
 
         {/* Mobile Menu Icon */}
@@ -157,6 +178,15 @@ const Navbar: React.FC = () => {
             >
               Get Started
             </MenuItem>
+            {signedIn && (
+              <MenuItem
+                component={Link}
+                to="/wardSelection"
+                onClick={handleMenuClose}
+              >
+                Ward Selection
+              </MenuItem>
+            )}
           </Menu>
         </Box>
       </Toolbar>
