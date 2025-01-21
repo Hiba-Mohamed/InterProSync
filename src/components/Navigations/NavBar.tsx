@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
         <Box sx={{ display: "flex", alignItems: "center" }}>
           {/* Logo */}
           <img
-            src="/images/logo.png" // Replace with the actual path to your logo image
+            src="images/logo.png" // Replace with the actual path to your logo image
             alt="Logo"
             style={{ width: "40px", height: "auto", marginRight: "4px" }}
           />
