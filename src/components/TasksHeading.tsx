@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 const TasksHeading = ({heading}:{heading:string}) => {
   return (
     <Typography
-      variant="h5"
+      variant="h6"
       sx={{
         fontWeight: 800,
         color: "transparent",

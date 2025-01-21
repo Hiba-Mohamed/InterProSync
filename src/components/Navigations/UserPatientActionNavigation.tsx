@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Typography,
 } from "@mui/material";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import { useNavigate } from "react-router-dom";
@@ -66,6 +67,7 @@ const UserPatientActionNavigation = ({
         }}
       >
         <IconButton onClick={handleDrawerToggle} color="inherit">
+          <Typography sx={{fontSize:"12px"}}>Patient Pages</Typography>
           <AssignmentIndIcon />
         </IconButton>
       </Box>

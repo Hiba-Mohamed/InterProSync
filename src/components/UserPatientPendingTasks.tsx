@@ -143,7 +143,7 @@ const UserPatientPendingTasks = ({
   };
 
   return (
-    <Box>
+    <Box sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
       <TasksHeading heading={`${getDisciplineById(userDiscipline)} Tasks`} />
       {userTasks.length === 0 ? (
         <Typography variant="h6" textAlign="center" color="gray">

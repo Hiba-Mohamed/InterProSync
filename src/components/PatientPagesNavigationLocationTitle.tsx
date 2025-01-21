@@ -16,46 +16,31 @@ const PatientPagesNavigationLocationTitle = ({
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <Box textAlign="center"  marginTop={0}>
+    <Box textAlign="center" marginTop={0}>
       <UserPatientActionNavigation patientData={patientData} />
       <Box
         sx={{
           display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           justifyContent: "end",
-          alignItems: { xs: "center", sm: "start" },
+          alignItems: { xs: "center", sm: "end" },
         }}
       >
         <Box
           sx={{
-            width:{sm:"60%"},
             display: "flex",
             flexDirection: { xs: "column", sm: "row" },
             justifyContent: "space-between",
-            alignItems: { xs: "center", sm: "start" },
+            alignItems: { xs: "center", sm: "end" },
           }}
         >
-          <Typography
-            sx={{
-              fontSize: { xs: "25px", sm: "19px", md: "26px" },
-              fontFamily: "Inter, sans-serif",
-              fontWeight: 600,
-              color: "transparent",
-              background: "#399E85",
-              WebkitBackgroundClip: "text",
-              textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-              paddingX: "12px",
-            }}
-          >
-            {title}
-          </Typography>
-
           <Box
             sx={{
               display: "flex",
               flexDirection: "row",
               gap: { xs: 1, sm: 2, lg: 2 },
               justifyContent: "center",
+              alighnItems:{sm:"center"},
               background: {
                 xs: "",
                 sm: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
@@ -86,6 +71,20 @@ const PatientPagesNavigationLocationTitle = ({
           </Box>
         </Box>
       </Box>
+      <Typography
+        sx={{
+          fontSize: { xs: "25px", sm: "30px", md: "32px" },
+          fontFamily: "Inter, sans-serif",
+          fontWeight: 600,
+          color: "transparent",
+          background: "#399E85",
+          WebkitBackgroundClip: "text",
+          textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+          paddingX: "12px",
+        }}
+      >
+        {title}
+      </Typography>
     </Box>
   );
 };

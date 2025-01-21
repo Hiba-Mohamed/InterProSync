@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { useTheme, useMediaQuery } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -48,15 +48,16 @@ const UserNavigationUserNameWardLocation = () => {
   return (
     <Box
       sx={{
-        width: { sm: "100%" },
+        width: "100%",
         display: "flex",
-        flexDirection: {xs:"column", sm:"row"},
+        flexDirection: { xs: "column", sm: "row" },
         justifyContent: "space-between",
         alignItems: { xs: "start", sm: "start" },
         background: {
-          xs: "",
+          xs: "#E1EEFC",
           sm: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
         },
+        marginBottom: "20px",
       }}
     >
       <Box
@@ -71,13 +72,13 @@ const UserNavigationUserNameWardLocation = () => {
       >
         <AccountCircleIcon
           fontSize={"medium"}
-          style={{ color: isSmallScreen ? "black" : "white" }}
+          style={{ color: isSmallScreen ? "#183B65" : "white" }}
         />
         <Typography
           sx={{
             textAlign: "center",
             fontWeight: 400,
-            color: { xs: "black", sm: "white" },
+            color: { xs: "#183B65", sm: "white" },
             background: `white`,
             WebkitBackgroundClip: "text",
             textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
@@ -91,12 +92,11 @@ const UserNavigationUserNameWardLocation = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: { xs: "row-reverse", sm: "row" },
           gap: { xs: 1, sm: 2, lg: 2 },
           justifyContent: "center",
-          alignItems:"center",
-
-          padding: { sm: "8px" },
+          alignItems: "center",
+          padding: { xs: "0px", sm: "8px" },
           borderBottomLeftRadius: { sm: "5px" },
         }}
       >
@@ -105,19 +105,19 @@ const UserNavigationUserNameWardLocation = () => {
           sx={{
             textAlign: "end",
             fontWeight: 400,
-            color: { xs: "black", sm: "white" },
+            color: { xs: "#183B65", sm: "white" },
             background: `white`,
             WebkitBackgroundClip: "text",
             textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
             fontSize: { xs: "10px", sm: "10px", lg: "12px" },
-            width:{xs:"265px", sm:"350px"}
+            width: { xs: "265px", sm: "350px" },
           }}
         >
           {location}
         </Typography>
         <LocationCityIcon
           fontSize={"medium"}
-          style={{ color: isSmallScreen ? "black" : "white" }}
+          style={{ color: isSmallScreen ? "#183B65" : "white" }}
         />
       </Box>
     </Box>
