@@ -8,11 +8,13 @@ import { UserData } from "../mockData/userData";
 import { useNavigate } from "react-router";
 import UserNavigationUserNameWardLocation from "../components/Navigations/UserNavigationUserNameWardLocation";
 import ColorCodeKeyComponent from "../components/ColorCodeKeyComponent";
+import NotSignedInInterface from "../components/NotSignedInInterface";
 
 const UserPatientList: React.FC = () => {
   let navigate = useNavigate();
   const [selectedPatient, setSelectedPatient] = useState<number | null>(null);
   const [patients, setPatients] = useState<PatientType[]>([]);
+  const [signedIn, setSignedIn] = useState<boolean>(false);
 
   useEffect(() => {
     const userDataString = localStorage.getItem("userData");
@@ -27,6 +29,10 @@ const UserPatientList: React.FC = () => {
         userData.chosenPatientList.includes(patient.patient_id)
       );
       setPatients(filteredPatients);
+      const userExists = userData.username !== "";
+      if (userExists) {
+        setSignedIn(true);
+      }
     }
   }, []);
 
@@ -54,7 +60,7 @@ const UserPatientList: React.FC = () => {
     navigate(`/patientPendingTasks/${patientId}`);
   };
 
-  return (
+  return signedIn?(
     <Box
       sx={{
         display: "flex",
@@ -155,7 +161,7 @@ const UserPatientList: React.FC = () => {
         </Typography>
       </Box>
     </Box>
-  );
+  ):(<NotSignedInInterface/>);
 };
 
 export default UserPatientList;

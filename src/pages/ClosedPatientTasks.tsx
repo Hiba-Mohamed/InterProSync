@@ -1,13 +1,11 @@
-import {
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
 import PatientPagesNavigationLocationTitle from "../components/PatientPagesNavigationLocationTitle";
 import { PatientType } from "../mockData/patients";
 import { ClosedTask } from "../mockData/closedTasks";
+import NotSignedInInterface from "../components/NotSignedInInterface";
 
 const ClosedPatientTasks = () => {
   interface ClosedTaskFullInfoType {
@@ -31,7 +29,7 @@ const ClosedPatientTasks = () => {
   >([]); // Fix state type
   const [users, setUsers] = useState<any[]>([]);
   const [disciplines, setDisciplines] = useState<any[]>([]);
-
+  const [signedIn, setSignedIn] = useState<boolean>(false);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
 
   const getNeededArrays = () => {
@@ -62,7 +60,10 @@ const ClosedPatientTasks = () => {
       console.log(allclosedTasks);
       const userData = JSON.parse(userDataString);
       setUserDiscipline(userData.discipline_id);
-
+      const userExists = userData.username !== "";
+      if (userExists) {
+        setSignedIn(true);
+      }
       const selectedPatient = patients.find(
         (patient) => patient.patient_id === patient_id
       );
@@ -78,14 +79,6 @@ const ClosedPatientTasks = () => {
           (task) => task.status === "closed"
         );
         console.log(patientSpecificClosedTasks);
-
-        // Link the closed task to the main task by task_id and include completion time
-        const getCompletionTime = (task: TaskType): string | null => {
-          const closedTask = allclosedTasks.find(
-            (closedTask) => closedTask.task_id === task.task_id
-          );
-          return closedTask ? closedTask.closed_datetime : null;
-        };
         const getClosedBy = (task: TaskType): number | null => {
           const closedTask = allclosedTasks.find(
             (closedTask) => closedTask.task_id === task.task_id
@@ -106,7 +99,6 @@ const ClosedPatientTasks = () => {
           return closedTask ? closedTask.closer_reason : null;
         };
 
-                
         const getClosingDateTime = (task: TaskType): string | null => {
           const closedTask = allclosedTasks.find(
             (closedTask) => closedTask.task_id === task.task_id
@@ -123,7 +115,9 @@ const ClosedPatientTasks = () => {
           }));
         };
 
-        setClosedTaskFullInfoArray(formatTasksWithAllInfo(patientSpecificClosedTasks));
+        setClosedTaskFullInfoArray(
+          formatTasksWithAllInfo(patientSpecificClosedTasks)
+        );
       }
     }
   };
@@ -176,7 +170,7 @@ const ClosedPatientTasks = () => {
   //   );
   // }
 
-  return (
+  return signedIn ?( 
     patientData && (
       <Box sx={{ minHeight: "100vh" }}>
         <PatientPagesNavigationLocationTitle
@@ -274,7 +268,7 @@ const ClosedPatientTasks = () => {
         )}
       </Box>
     )
-  );
+  ):(<NotSignedInInterface />);
 };
 
 export default ClosedPatientTasks;

@@ -12,6 +12,9 @@ import PatientPagesNavigationLocationTitle from "../components/PatientPagesNavig
 import { PatientType } from "../mockData/patients";
 import ErrorMessage from "../components/ErrorMessage";
 import SuccessMessage from "../components/SuccessMessage";
+import { UserData } from "../mockData/userData";
+import { User } from "../mockData/users";
+import NotSignedInInterface from "../components/NotSignedInInterface";
 
 const AssignTaskUnderPatient = () => {
   const { patient_idString } = useParams();
@@ -28,13 +31,26 @@ const AssignTaskUnderPatient = () => {
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const userDataString = localStorage.getItem("userData");
+  const [signedIn, setSignedIn] = useState<boolean>(false);
+  const [userData, setUserData] =useState<UserData>();
+  const [users, setUsers] = useState<User[]>();
 
   useEffect(() => {
+    const userDataString = localStorage.getItem("userData");
     const disciplinesString = localStorage.getItem("disciplines");
     const tasksString = localStorage.getItem("tasks");
-
+    const storedUsers = localStorage.getItem("users");
+    if (storedUsers) {
+      setUsers(JSON.parse(storedUsers));
+    }
+    if (userDataString){
+    const userData =  JSON.parse(userDataString)
+    setUserData(userData)
+          const userExists = userData.username !== "";
+          if (userExists) {
+            setSignedIn(true);
+          }
+    }
     if (disciplinesString) {
       setDisciplines(JSON.parse(disciplinesString));
     }
@@ -57,7 +73,6 @@ const AssignTaskUnderPatient = () => {
 
   const handleAssignTask = () => {
     if (
-      !userDataString ||
       !patient_idString ||
       !selectedDisciplineId ||
       !taskDescription
@@ -68,29 +83,34 @@ const AssignTaskUnderPatient = () => {
     setErrorMessage("");
     setIsSubmitting(true);
 
-    const userData = JSON.parse(userDataString);
-    const newTask: TaskType = {
-      assigned_by: userData.user_id,
-      assignment_dateTime: new Date().toISOString(),
-      description: taskDescription,
-      discipline_id: selectedDisciplineId,
-      patient_id: parseInt(patient_idString, 10),
-      status: "inprogress",
-      task_id: tasks.length + 1,
-    };
+    const getUserIdByUsername = (username:string)=>{
+const user = users?.find((user) => user.username === username);
+    return user ? user.user_id : 0; 
+    }
+    if(userData){
+      const newTask: TaskType = {
+        assigned_by: getUserIdByUsername(userData.username),
+        assignment_dateTime: new Date().toISOString(),
+        description: taskDescription,
+        discipline_id: selectedDisciplineId,
+        patient_id: parseInt(patient_idString, 10),
+        status: "inprogress",
+        task_id: tasks.length + 1,
+      };
 
-    const updatedTasks = [...tasks, newTask];
-    localStorage.setItem("tasks", JSON.stringify(updatedTasks));
-    setTasks(updatedTasks);
-    setSuccessMessage("Task assigned successfully!");
+      const updatedTasks = [...tasks, newTask];
+      localStorage.setItem("tasks", JSON.stringify(updatedTasks));
+      setTasks(updatedTasks);
+      setSuccessMessage("Task assigned successfully!");
 
-    setTimeout(() => {
-      setSuccessMessage("");
-    }, 3000);
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 3000);
 
-    setTaskDescription("");
-    setSelectedDisciplineId("");
-    setIsSubmitting(false);
+      setTaskDescription("");
+      setSelectedDisciplineId("");
+      setIsSubmitting(false);
+    }
   };
 
   if (isLoading) {
@@ -108,7 +128,7 @@ const AssignTaskUnderPatient = () => {
     );
   }
 
-  return (
+  return signedIn? (
     patientData && (
       <Box sx={{ minHeight: "100vh"}}>
         <PatientPagesNavigationLocationTitle
@@ -167,7 +187,7 @@ const AssignTaskUnderPatient = () => {
         </Box>
       </Box>
     )
-  );
+  ):(<NotSignedInInterface />);
 };
 
 export default AssignTaskUnderPatient;

@@ -10,6 +10,7 @@ import { WardType } from "../mockData/wards";
 import { UserData } from "../mockData/userData";
 import { useNavigate } from "react-router";
 import ErrorMessage from "../components/ErrorMessage";
+import NotSignedInInterface from "../components/NotSignedInInterface";
 
 
 const SelectedWardsPatientList: React.FC = () => {
@@ -20,7 +21,7 @@ const SelectedWardsPatientList: React.FC = () => {
     Record<string, PatientType[]>
   >({});
   const [noWardsSelectedErrorMessage, setNoWardsSelectedErrorMessage] = useState<string>("");
-
+    const [signedIn, setSignedIn] = useState<boolean>(false);
   useEffect(() => {
     const userDataString = localStorage.getItem("userData");
     const roomsString = localStorage.getItem("rooms");
@@ -33,7 +34,13 @@ const SelectedWardsPatientList: React.FC = () => {
       const wards: WardType[] = JSON.parse(wardsString);
       const patients: PatientType[]=JSON.parse(patientsString);
       const selectedWards = userData?.chosenWardOrWards || [];
-
+        if (userDataString) {
+          const userData: UserData = JSON.parse(userDataString);
+          const userExists = userData.username !== "";
+          if (userExists) {
+            setSignedIn(true);
+          }
+        }
       const roomMap = new Map(
         rooms.map((room) => [room.room_id, room.ward_id])
       );
@@ -107,7 +114,7 @@ const handleConfirmUserPatientSelection = () => {
 };
 
 
-  return (
+  return signedIn ? (
     <Box
       sx={{
         display: "flex",
@@ -239,7 +246,7 @@ const handleConfirmUserPatientSelection = () => {
         Confirm Patient List
       </Button>
     </Box>
-  );
+  ):(<NotSignedInInterface />);
 };
 
 export default SelectedWardsPatientList;

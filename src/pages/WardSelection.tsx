@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { UserData } from "../mockData/userData";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -6,10 +7,14 @@ import Grid2 from "@mui/material/Grid";
 import { wards } from "../mockData/wards";
 import ErrorMessage from "../components/ErrorMessage";
 import { useNavigate } from "react-router";
+import NotSignedInInterface from "../components/NotSignedInInterface";
 
 const WardSelection = () => {
   const [selectedWards, setSelectedWards] = useState<string[]>([]);
-  const [emptyWardsErrorMessage, setEmptyWardsErrorMessage] = useState<string>("");
+  const [emptyWardsErrorMessage, setEmptyWardsErrorMessage] =
+    useState<string>("");
+  const [signedIn, setSignedIn] = useState<boolean>(false);
+
   let navigate = useNavigate();
 
   const handleSelectAllWards = () => {
@@ -19,6 +24,18 @@ const WardSelection = () => {
       setSelectedWards(wards.map((ward) => ward.ward_id));
     }
   };
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem("userData");
+
+    if (userDataString) {
+      const userData: UserData = JSON.parse(userDataString);
+      const userExists = userData.username !== "";
+      if (userExists) {
+        setSignedIn(true);
+      }
+    }
+  }, []);
 
   const handleSelectWard = (id: string) => {
     setSelectedWards((prev) =>
@@ -39,50 +56,48 @@ const WardSelection = () => {
     {} as { [key: number]: typeof wards }
   );
 
-const handleConfirm = () => {
-  // Check if at least one ward is selected
-  if (selectedWards.length === 0) {
-    setEmptyWardsErrorMessage("Please select at least one ward to proceed.");
-    return; // Prevent further action
-  }
+  const handleConfirm = () => {
+    // Check if at least one ward is selected
+    if (selectedWards.length === 0) {
+      setEmptyWardsErrorMessage("Please select at least one ward to proceed.");
+      return; // Prevent further action
+    }
 
-  // Clear any previous error messages
-  setEmptyWardsErrorMessage("");
+    // Clear any previous error messages
+    setEmptyWardsErrorMessage("");
 
-  // Fetch existing userData from localStorage
-  const existingUserData = JSON.parse(localStorage.getItem("userData") || "{}");
+    // Fetch existing userData from localStorage
+    const existingUserData = JSON.parse(
+      localStorage.getItem("userData") || "{}"
+    );
 
-  console.log("existingUserData", existingUserData);
-  // Update the userData object
-  const updatedUserData = {
-    ...existingUserData, // Copy the existing userData
-    chosenWardOrWards: selectedWards,
-    chosenHospitalOrHospitals: Array.from(
-      new Set(
-        selectedWards
-          .map((wardId) => {
-            const ward = wards.find((w) => w.ward_id === wardId);
-            return ward?.hospital_id; // Could be undefined
-          })
-          .filter(
-            (hospitalId): hospitalId is number => hospitalId !== undefined
-          ) // Filter out undefined
-      )
-    ),
+    console.log("existingUserData", existingUserData);
+    // Update the userData object
+    const updatedUserData = {
+      ...existingUserData, // Copy the existing userData
+      chosenWardOrWards: selectedWards,
+      chosenHospitalOrHospitals: Array.from(
+        new Set(
+          selectedWards
+            .map((wardId) => {
+              const ward = wards.find((w) => w.ward_id === wardId);
+              return ward?.hospital_id; // Could be undefined
+            })
+            .filter(
+              (hospitalId): hospitalId is number => hospitalId !== undefined
+            ) // Filter out undefined
+        )
+      ),
+    };
+
+    console.log("Updated userData:", updatedUserData);
+
+    // Save the updated userData back to localStorage
+    localStorage.setItem("userData", JSON.stringify(updatedUserData));
+    navigate("/SelectedWardsPatientList");
   };
 
-  console.log("Updated userData:", updatedUserData);
-
-  // Save the updated userData back to localStorage
-  localStorage.setItem("userData", JSON.stringify(updatedUserData));
-  navigate("/SelectedWardsPatientList");
-
-};
-
-
-
-
-  return (
+  return signedIn ? (
     <Box
       sx={{
         display: "flex",
@@ -195,6 +210,8 @@ const handleConfirm = () => {
         Confirm Ward List
       </Button>
     </Box>
+  ) : (
+    <NotSignedInInterface />
   );
 };
 

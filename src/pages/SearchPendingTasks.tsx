@@ -13,6 +13,7 @@ import { TaskType } from "../mockData/tasks";
 import { PatientType } from "../mockData/patients";
 import { User } from "../mockData/users";
 import UserPatientActionNavigation from "../components/Navigations/UserPatientActionNavigation";
+import NotSignedInInterface from "../components/NotSignedInInterface";
 
 const SearchPendingTasks = () => {
   const { patient_idString } = useParams();
@@ -30,6 +31,7 @@ const SearchPendingTasks = () => {
   );
   const [users, setUsers] = useState<User[]>([]);
   const [disciplines, setDisciplines] = useState<any[]>([]);
+  const [signedIn, setSignedIn] = useState<boolean>(false);
 
   const getUsernameById = (userId: number): string => {
     const user = users.find((user) => user.user_id === userId);
@@ -112,6 +114,10 @@ const SearchPendingTasks = () => {
           )
         );
         setFilteredTasks(patientTasks); // Start with all pending tasks
+              const userExists = userData.username !== "";
+              if (userExists) {
+                setSignedIn(true);
+              }
       }
     }
   }, [patient_idString]);
@@ -153,7 +159,7 @@ const SearchPendingTasks = () => {
     );
   }
 
-  return (
+  return signedIn? (
     <Box sx={{ minHeight: "100vh" }}>
       <UserPatientActionNavigation patientData={patientData} />
 
@@ -347,7 +353,7 @@ const SearchPendingTasks = () => {
         )}
       </Box>
     </Box>
-  );
+  ):(<NotSignedInInterface />);
 };
 
 export default SearchPendingTasks;

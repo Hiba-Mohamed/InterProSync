@@ -9,6 +9,7 @@ import { CompletedTaskType } from "../mockData/completedTasks";
 import CompletedUserTasks from "../components/CompletedUserTasks";
 import CompletedTeamTasks from "../components/CompletedTeamTasks";
 import PatientPagesNavigationLocationTitle from "../components/PatientPagesNavigationLocationTitle";
+import NotSignedInInterface from "../components/NotSignedInInterface";
 const PatientPendingTasks = () => {
   const { patient_idString } = useParams();
   const [patientData, setPatientData] = useState<PatientType | null>(null);
@@ -17,6 +18,8 @@ const PatientPendingTasks = () => {
   const [teamCompletedTasksAdjustedArray, setTeamCompletedTasksAdjustedArray] =
     useState<CompletedTasksDisplayObjectType[]>([]);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
+  const [signedIn, setSignedIn] = useState<boolean>(false);
+
   const navigate = useNavigate();
   const getNeededArrays = () => {
     const patientsString = localStorage.getItem("patients");
@@ -40,6 +43,10 @@ const PatientPendingTasks = () => {
       const userData = JSON.parse(userDataString);
       setUserDiscipline(userData.discipline_id);
       console.log(allCompletedTasks);
+      const userExists = userData.username !== "";
+      if (userExists) {
+        setSignedIn(true);
+      }
       // Find the patient with the matching patient_id
       const selectedPatient = patients.find(
         (patient) => patient.patient_id === patient_id
@@ -119,7 +126,7 @@ const PatientPendingTasks = () => {
     );
   }
 
-  return (
+  return signedIn ? (
     <Box sx={{ minHeight: "100vh" }}>
       <PatientPagesNavigationLocationTitle
         title="Completed Tasks"
@@ -171,7 +178,7 @@ const PatientPendingTasks = () => {
         />
       </Box>
     </Box>
-  );
+  ):(<NotSignedInInterface />);
 };
 
 export default PatientPendingTasks;

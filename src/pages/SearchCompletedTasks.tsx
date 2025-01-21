@@ -12,8 +12,8 @@ import { useState, useEffect } from "react";
 import { TaskType } from "../mockData/tasks";
 import { PatientType } from "../mockData/patients";
 import { User } from "../mockData/users";
-import { useNavigate } from "react-router-dom";
 import PatientPagesNavigationLocationTitle from "../components/PatientPagesNavigationLocationTitle";
+import NotSignedInInterface from "../components/NotSignedInInterface";
 const SearchCompletedTasks = () => {
   const { patient_idString } = useParams();
   const [patientData, setPatientData] = useState<PatientType | null>(null);
@@ -21,7 +21,6 @@ const SearchCompletedTasks = () => {
   const [teamTasks, setTeamTasks] = useState<TaskType[]>([]);
   const [filteredTasks, setFilteredTasks] = useState<TaskType[]>([]);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
-  const navigate = useNavigate();
 
   //   const [searchDate, setSearchDate] = useState<string>("");
   const [selectedDiscipline, setSelectedDiscipline] = useState<number | "">("");
@@ -31,6 +30,7 @@ const SearchCompletedTasks = () => {
   );
   const [users, setUsers] = useState<User[]>([]);
   const [disciplines, setDisciplines] = useState<any[]>([]);
+  const [signedIn, setSignedIn] = useState<boolean>(false);
 
   const getUsernameById = (userId: number): string => {
     const user = users.find((user) => user.user_id === userId);
@@ -73,6 +73,10 @@ const SearchCompletedTasks = () => {
       const userData = JSON.parse(userDataString);
       console.log(userData);
       setUserDiscipline(userData.discipline_id);
+            const userExists = userData.username !== "";
+            if (userExists) {
+              setSignedIn(true);
+            }
     }
 
     const patientsString = localStorage.getItem("patients");
@@ -153,7 +157,7 @@ const SearchCompletedTasks = () => {
     );
   }
 
-  return (
+  return signedIn? (
     <Box sx={{ minHeight: "100vh" }}>
       <PatientPagesNavigationLocationTitle
         title="Search Completed Tasks"
@@ -281,7 +285,7 @@ const SearchCompletedTasks = () => {
         )}
       </Box>
     </Box>
-  );
+  ):(<NotSignedInInterface />);
 };
 
 export default SearchCompletedTasks;
