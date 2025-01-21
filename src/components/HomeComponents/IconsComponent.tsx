@@ -6,6 +6,8 @@ import QuestionAnswerOutlined from "@mui/icons-material/QuestionAnswerOutlined";
 import SpeedOutlined from "@mui/icons-material/SpeedOutlined";
 
 const IconsComponent = React.forwardRef<HTMLDivElement>((props, ref) => {
+      console.log(props);
+
   return (
     <Box
       ref={ref}

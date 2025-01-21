@@ -2,20 +2,12 @@ import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { makeStyles } from "@mui/styles";
-import { Theme } from "@mui/material/styles";
+
 import ProgressBar from "../components/LocationPage/ProgressBar";
 import Checkbox from "@mui/material/Checkbox";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: theme.spacing(4),
-  },
-}));
 
 const Location = () => {
-  const classes = useStyles();
   const [selectedHospital, setSelectedHospital] = useState("Hospital 1");
   const [selectedWards, setSelectedWards] = useState<string[]>([]);
 

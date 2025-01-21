@@ -1,13 +1,4 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Box,
-  Menu,
-  MenuItem,
-} from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 const Footer = () => {
   return (

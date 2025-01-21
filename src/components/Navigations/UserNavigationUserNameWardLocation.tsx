@@ -1,4 +1,4 @@
-import { Box, Typography, Divider } from "@mui/material";
+import { Box, Typography} from "@mui/material";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import { useTheme, useMediaQuery } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
