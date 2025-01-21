@@ -142,7 +142,7 @@ const UserPatientList: React.FC = () => {
         </Grid2>
       </Box>
       <Box>
-        <ColorCodeKeyComponent />
+        {/* <ColorCodeKeyComponent /> */}
 
         <Typography
           sx={{
