@@ -54,7 +54,7 @@ const UserNavigationUserNameWardLocation = () => {
         justifyContent: "space-between",
         alignItems: { xs: "start", sm: "start" },
         background: {
-          xs: "#E1EEFC",
+          xs: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
           sm: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
         },
         marginBottom: "20px",
@@ -72,13 +72,13 @@ const UserNavigationUserNameWardLocation = () => {
       >
         <AccountCircleIcon
           fontSize={"medium"}
-          style={{ color: isSmallScreen ? "#183B65" : "white" }}
+          style={{ color: isSmallScreen ? "white" : "white",paddingRight:isSmallScreen? "4px":"0px"  }}
         />
         <Typography
           sx={{
             textAlign: "center",
             fontWeight: 400,
-            color: { xs: "#183B65", sm: "white" },
+            color: { xs: "white", sm: "white" },
             background: `white`,
             WebkitBackgroundClip: "text",
             textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
@@ -105,7 +105,7 @@ const UserNavigationUserNameWardLocation = () => {
           sx={{
             textAlign: "end",
             fontWeight: 400,
-            color: { xs: "#183B65", sm: "white" },
+            color: { xs: "white", sm: "white" },
             background: `white`,
             WebkitBackgroundClip: "text",
             textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
@@ -117,7 +117,7 @@ const UserNavigationUserNameWardLocation = () => {
         </Typography>
         <LocationCityIcon
           fontSize={"medium"}
-          style={{ color: isSmallScreen ? "#183B65" : "white" }}
+          style={{ color: isSmallScreen ? "white" : "white", paddingRight:isSmallScreen? "4px":"0px" }}
         />
       </Box>
     </Box>
