@@ -31,11 +31,10 @@ const UserPatientPendingTasks = ({
   const [disciplines, setDisciplines] = useState<any[]>([]);
   const [userDiscipline, setUserDiscipline] = useState<number>(0);
   const [userInfo, setUserInfo] = useState<User | undefined>();
-  const [showDeleteReasonInput, setShowDeleteReasonInput] =
-    useState<boolean>(false);
   const [targetTaskOfDeletion, setTargetTaskOfDeletion] = useState<number>(0);
   const [DeletionReason, setDeletionReason] = useState<string>("");
-
+  const [emptyReasonErrorMessage, setEmptyReasonErrorMessage] =
+    useState<string>("");
   useEffect(() => {
     const storedUsers = localStorage.getItem("users");
     const storedDisciplines = localStorage.getItem("disciplines");
@@ -101,15 +100,19 @@ const UserPatientPendingTasks = ({
   };
 
   const handleDeleteClick = (task_id: number) => {
-    setShowDeleteReasonInput(true);
     setTargetTaskOfDeletion(task_id);
   };
 
   const handleConfirmDelete = (task_Id: number, reason: string) => {
+    if (DeletionReason.trim() === "") {
+      setEmptyReasonErrorMessage(
+        "You have To type the reason for deleting this task"
+      );
+      return;
+    }
+    setEmptyReasonErrorMessage("");
     const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
-    const closedTasks = JSON.parse(
-      localStorage.getItem("closedTasks") || "[]"
-    );
+    const closedTasks = JSON.parse(localStorage.getItem("closedTasks") || "[]");
 
     // Update task status to "complete"
     const taskIndex = tasks.findIndex((task: any) => task.task_id === task_Id);
@@ -139,11 +142,12 @@ const UserPatientPendingTasks = ({
   const handleCancelDeletion = () => {
     setDeletionReason("");
     setTargetTaskOfDeletion(0);
-    setShowDeleteReasonInput(false);
   };
 
   return (
-    <Box sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <TasksHeading heading={`${getDisciplineById(userDiscipline)} Tasks`} />
       {userTasks.length === 0 ? (
         <Typography variant="h6" textAlign="center" color="gray">
@@ -245,9 +249,9 @@ const UserPatientPendingTasks = ({
                       }}
                     />
                     <ErrorMessage errorMessage="Warning: Task deletion is permanent and cannot be undone. Please ensure you are deleting the task for valid reasons such as duplication, incorrect patient, or task error." />{" "}
-                    <Box sx={{ marginTop: 2 }}>
+                    <Box sx={{ marginTop: 2, display:"flex", flexDirection:"column", gap:2 }}>
                       <Button
-                        variant="outlined"
+                        variant="contained"
                         sx={{
                           marginRight: 1,
                           borderColor: "#blue",
@@ -256,13 +260,14 @@ const UserPatientPendingTasks = ({
                             borderColor: "#C45E7D",
                             backgroundColor: "rgba(196, 94, 125, 0.1)",
                           },
+                          width: "100%", // Make the button fill the width
                         }}
                         onClick={() => handleCancelDeletion()}
                       >
                         Cancel
                       </Button>
                       <Button
-                        variant="contained"
+                        variant="outlined"
                         color="error" // Use the "error" color for a red button
                         onClick={() =>
                           handleConfirmDelete(task.task_id, DeletionReason)
@@ -271,6 +276,9 @@ const UserPatientPendingTasks = ({
                       >
                         Confirm Delete
                       </Button>
+                      {emptyReasonErrorMessage && (
+                        <ErrorMessage errorMessage={emptyReasonErrorMessage} />
+                      )}
                     </Box>
                   </Box>
                 )}
