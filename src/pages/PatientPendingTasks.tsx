@@ -29,7 +29,7 @@ const PatientPendingTasks = () => {
       const patients: PatientType[] = JSON.parse(patientsString);
       const allTasks: TaskType[] = JSON.parse(tasksString);
       const userData = JSON.parse(userDataString);
-      console.log(userData);
+      // console.log(userData);
       setUserDiscipline(userData.discipline_id);
 
       // Find the patient with the matching patient_id
@@ -47,7 +47,7 @@ const PatientPendingTasks = () => {
         const patientTasks = allTasks.filter(
           (task) => task.patient_id === patient_id
         );
-        console.log("patientTasks", patientTasks);
+        // console.log("patientTasks", patientTasks);
 
         const pendingPatientTasks = patientTasks.filter(
           (task) => task.status === "inprogress"
@@ -57,12 +57,12 @@ const PatientPendingTasks = () => {
         const pendingUserAssignedTasks = pendingPatientTasks.filter(
           (task) => task.discipline_id === userDiscipline // Tasks assigned to the user's discipline
         );
-        console.log("userAssignedTasks", pendingUserAssignedTasks);
+        // console.log("userAssignedTasks", pendingUserAssignedTasks);
 
         const pendingTeamAssignedTasks = pendingPatientTasks.filter(
           (task) => task.discipline_id !== userDiscipline // Tasks assigned to other disciplines
         );
-        console.log("teamAssignedTasks", pendingTeamAssignedTasks);
+        // console.log("teamAssignedTasks", pendingTeamAssignedTasks);
 
         setUserTasks(pendingUserAssignedTasks);
         setTeamTasks(pendingTeamAssignedTasks);

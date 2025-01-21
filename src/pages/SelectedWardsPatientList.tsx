@@ -108,7 +108,7 @@ const handleConfirmUserPatientSelection = () => {
     localStorage.setItem("userData", JSON.stringify(updatedUserData));
 
     // Optionally, you can log or show a confirmation message
-    console.log("Updated userData:", updatedUserData);
+    // console.log("Updated userData:", updatedUserData);
     navigate("/userPatientList")
   }
 };

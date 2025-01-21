@@ -42,7 +42,7 @@ const PatientPendingTasks = () => {
         JSON.parse(completedTasksString);
       const userData = JSON.parse(userDataString);
       setUserDiscipline(userData.discipline_id);
-      console.log(allCompletedTasks);
+      // console.log(allCompletedTasks);
       const userExists = userData.username !== "";
       if (userExists) {
         setSignedIn(true);
@@ -59,12 +59,12 @@ const PatientPendingTasks = () => {
         const patientTasks = allTasks.filter(
           (task) => task.patient_id === patient_id
         );
-        console.log(patientTasks);
+        // console.log(patientTasks);
 
         const patienttasksCompletedLongerArray = patientTasks.filter(
           (task) => task.status === "complete"
         );
-        console.log(patienttasksCompletedLongerArray);
+        // console.log(patienttasksCompletedLongerArray);
 
         // Split completed tasks based on discipline_id (user's discipline vs others)
         const userCompleted = patienttasksCompletedLongerArray.filter(

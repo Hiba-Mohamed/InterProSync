@@ -64,7 +64,7 @@ const SearchPendingTasks = () => {
     }
     if (userDataString) {
       const userData = JSON.parse(userDataString);
-      console.log(userData);
+      // console.log(userData);
       setUserDiscipline(userData.discipline_id);
     }
 

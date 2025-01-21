@@ -36,10 +36,10 @@ const UserNavigationUserNameWardLocation = () => {
       //   }
       for (let i = 0; i < userData.chosenWardOrWards.length; i++) {
         const wardName = getWardName(userData.chosenWardOrWards[i]);
-        console.log(wardName)
+        // console.log(wardName)
         const newLocationList = locationList + wardName + " | ";
         locationList = newLocationList;
-        console.log(locationList)
+        // console.log(locationList)
       }
       setLocation(locationList)
 

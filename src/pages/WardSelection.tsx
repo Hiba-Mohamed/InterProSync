@@ -71,7 +71,7 @@ const WardSelection = () => {
       localStorage.getItem("userData") || "{}"
     );
 
-    console.log("existingUserData", existingUserData);
+    // console.log("existingUserData", existingUserData);
     // Update the userData object
     const updatedUserData = {
       ...existingUserData, // Copy the existing userData
@@ -90,7 +90,7 @@ const WardSelection = () => {
       ),
     };
 
-    console.log("Updated userData:", updatedUserData);
+    // console.log("Updated userData:", updatedUserData);
 
     // Save the updated userData back to localStorage
     localStorage.setItem("userData", JSON.stringify(updatedUserData));

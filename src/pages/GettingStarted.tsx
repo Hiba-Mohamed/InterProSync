@@ -156,7 +156,7 @@ const GettingStarted = () => {
       localStorage.setItem("userData", JSON.stringify(newUser));
 
       // Optionally, redirect to another page or handle further logic
-      console.log("Logged in as:", username);
+      // console.log("Logged in as:", username);
       navigate("/wardSelection");
     }
   };

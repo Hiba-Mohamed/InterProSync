@@ -57,7 +57,7 @@ const ClosedPatientTasks = () => {
       const patients: PatientType[] = JSON.parse(patientsString);
       const allTasks: TaskType[] = JSON.parse(tasksString);
       const allclosedTasks: ClosedTask[] = JSON.parse(closedTasksString);
-      console.log(allclosedTasks);
+      // console.log(allclosedTasks);
       const userData = JSON.parse(userDataString);
       setUserDiscipline(userData.discipline_id);
       const userExists = userData.username !== "";
@@ -78,7 +78,7 @@ const ClosedPatientTasks = () => {
         const patientSpecificClosedTasks = patientTasks.filter(
           (task) => task.status === "closed"
         );
-        console.log(patientSpecificClosedTasks);
+        // console.log(patientSpecificClosedTasks);
         const getClosedBy = (task: TaskType): number | null => {
           const closedTask = allclosedTasks.find(
             (closedTask) => closedTask.task_id === task.task_id

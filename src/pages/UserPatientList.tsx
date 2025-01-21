@@ -56,7 +56,7 @@ const UserPatientList: React.FC = () => {
 
   const handleConfirmUserPatientSelection = (patientId: number) => {
     // Optionally, handle any confirmation logic here
-    console.log("Selected Patient:", patientId);
+    // console.log("Selected Patient:", patientId);
     navigate(`/patientPendingTasks/${patientId}`);
   };
 

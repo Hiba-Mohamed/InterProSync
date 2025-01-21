@@ -77,7 +77,7 @@ const CompletedUserTasks = ({
     // Get the "tasks" item, "completedTasks" item, "undoneTasks" item from local storage
     // Update the task with the same task_id status to "inprogress"
     // Add to the undoneTasks item: {undone_id: length+1, task_id: task_id, reason: reason, undone_dateTime: time and date now}
-    console.log(`Undoing task ${task_id} for reason: ${reason}`);
+    // console.log(`Undoing task ${task_id} for reason: ${reason}`);
 
     const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
     const undoneTasks = JSON.parse(localStorage.getItem("undoneTasks") || "[]");
