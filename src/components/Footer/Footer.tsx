@@ -99,6 +99,9 @@ const Footer = () => {
           plugin, and images used in this application are sourced from Unsplash.
         </Typography>
         <Typography sx={{ fontSize: { xs: "11px" } }}>
+          <strong>Disclaimer: </strong> Data used for guest login is mock data.
+        </Typography>
+        <Typography sx={{ fontSize: { xs: "11px" } }}>
           <strong>Inquiries: </strong> hiba.mohamed.dev@gmail.com
         </Typography>
       </Box>
