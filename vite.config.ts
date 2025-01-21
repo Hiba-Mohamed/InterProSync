@@ -5,7 +5,4 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/Collab-NAS-Project/",
-  optimizeDeps: {
-    include: ["*.ts", "*.d.ts", "*.tsx", "*.js", "*.jsx"],
-  },
 });
