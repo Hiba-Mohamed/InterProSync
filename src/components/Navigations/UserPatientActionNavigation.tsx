@@ -12,6 +12,12 @@ import {
   Typography,
 } from "@mui/material";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
+import RecentActorsIcon from "@mui/icons-material/RecentActors";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import DeleteIcon from "@mui/icons-material/Delete";
+import WardIcon from "@mui/icons-material/Hotel";
+import AssignmentIcon from "@mui/icons-material/Assignment"; // For Assign Task
 import { useNavigate } from "react-router-dom";
 
 const UserPatientActionNavigation = ({
@@ -25,31 +31,36 @@ const UserPatientActionNavigation = ({
   const handleDrawerToggle = () => setDrawerOpen(!drawerOpen);
 
   const menuItems = [
-    { label: "My Patients List", route: "/userPatientList" },
+    {
+      label: "My Patients List",
+      route: "/userPatientList",
+      icon: <RecentActorsIcon />,
+    },
     {
       label: "Assign Task",
       route: `/AssignTaskUnderPatient/${patientData.patient_id}`,
+      icon: <AssignmentIcon />, // Assignment icon for Assign Task
     },
     {
       label: "Pending Tasks",
       route: `/patientPendingTasks/${patientData.patient_id}`,
+      icon: <AccessTimeFilledIcon />, // Time icon for Pending Tasks
     },
     {
       label: "Completed Tasks",
       route: `/CompletedPatientTasks/${patientData.patient_id}`,
+      icon: <CheckCircleIcon/>,
     },
     {
       label: "Deleted Tasks",
       route: `/ClosedPatientTasks/${patientData.patient_id}`,
+      icon: <DeleteIcon />,
     },
     {
       label: "Ward Selection",
       route: `/wardSelection`,
+      icon: <WardIcon />,
     },
-    // {
-    //   label: "Undone Tasks",
-    //   route: `/UndonePatientTasks/${patientData.patient_id}`,
-    // },
   ];
 
   return (
@@ -61,19 +72,41 @@ const UserPatientActionNavigation = ({
       {/* Hamburger Menu for Mobile */}
       <Box
         sx={{
-          display: { xs: "flex", sm:"none" },
+          display: { xs: "flex", sm: "none" },
           justifyContent: "end",
           alignItems: "center",
         }}
       >
-        <IconButton onClick={handleDrawerToggle}  sx={{ background: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))", borderRadius:"0px", borderBottomLeftRadius:"5px", paddingY:"2px", marginBottom:"6px"}}>
-          <Typography sx={{fontSize:"12px", color:"white"}}>Patient Pages</Typography>
-          <AssignmentIndIcon sx={{color:"white"}} />
+        <IconButton
+          onClick={handleDrawerToggle}
+          sx={{
+            background:
+              "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
+            borderRadius: "0px",
+            borderBottomLeftRadius: "5px",
+            paddingY: "2px",
+            marginBottom: "6px",
+          }}
+        >
+          <Typography sx={{ fontSize: "12px", color: "white" }}>
+            Patient Pages
+          </Typography>
+          <AssignmentIndIcon sx={{ color: "white" }} />
         </IconButton>
       </Box>
 
       {/* Drawer for Mobile */}
-      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={handleDrawerToggle}
+        sx={{
+          "& .MuiPaper-root": {
+            backgroundColor: "transparent",
+            boxShadow: "none", // Remove the paper shadow completely
+          },
+        }}
+      >
         <List>
           {menuItems.map((item, index) => (
             <ListItem key={index} disablePadding>
@@ -82,8 +115,17 @@ const UserPatientActionNavigation = ({
                   navigate(item.route);
                   setDrawerOpen(false); // Close drawer after navigation
                 }}
+                sx={{
+                  backgroundColor: "white",
+                  marginY: "24px",
+                  borderTopRightRadius: "25px",
+                  borderBottomRightRadius: "25px",
+                }}
               >
-                <ListItemText primary={item.label} />
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  {item.icon}
+                  <ListItemText primary={item.label} />
+                </Box>
               </ListItemButton>
             </ListItem>
           ))}
@@ -99,7 +141,6 @@ const UserPatientActionNavigation = ({
           justifyContent: "space-between",
           alignItems: "center",
           gap: { xs: 2, sm: 0 },
-          // width: { xs: "344px", sm: "760px", md: "1200px", lg: "1280px" },
         }}
       >
         {menuItems.map((item, index) => (
