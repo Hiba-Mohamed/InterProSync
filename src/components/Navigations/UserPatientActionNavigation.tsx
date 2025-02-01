@@ -73,24 +73,23 @@ const UserPatientActionNavigation = ({
       <Box
         sx={{
           display: { xs: "flex", sm: "none" },
-          justifyContent: "end",
+          justifyContent: "flex-end",
           alignItems: "center",
         }}
       >
         <IconButton
           onClick={handleDrawerToggle}
           sx={{
-            background:
-              "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
-            borderRadius: "0px",
-            borderBottomLeftRadius: "5px",
-            paddingY: "2px",
-            marginBottom: "6px",
+            borderRadius: "6px",
+            paddingX: "10px", // Balanced padding for a more subtle feel
+            boxShadow: "none", // No shadow for a cleaner look
+            "&:hover": {
+              background:
+                "linear-gradient(to right, rgb(39, 94, 149), rgb(130, 160, 190))", // Slightly muted hover effect
+            },
           }}
         >
-          <Typography sx={{ fontSize: "12px", color: "white" }}>
-            Patient Pages
-          </Typography>
+     
           <AssignmentIndIcon sx={{ color: "white" }} />
         </IconButton>
       </Box>

@@ -17,57 +17,71 @@ const PatientPagesNavigationLocationTitle = ({
 
   return (
     <Box textAlign="center" marginTop={0}>
-      <UserPatientActionNavigation patientData={patientData} />
       <Box
+        marginBottom={4}
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          justifyContent: "end",
-          alignItems: { xs: "center", sm: "end" },
+          flexDirection: { xs: "row-reverse", sm: "column" },
+          justifyContent: { xs: "space-between", sm: "center" },
+          backgroundColor: isSmallScreen ? "#183B65" : "",
         }}
       >
+        <UserPatientActionNavigation patientData={patientData} />
         <Box
           sx={{
             display: "flex",
             flexDirection: { xs: "column", sm: "row" },
-            justifyContent: "space-between",
+            justifyContent: { xs: "center", sm: "end" },
             alignItems: { xs: "center", sm: "end" },
           }}
         >
           <Box
             sx={{
               display: "flex",
-              flexDirection: "row",
-              gap: { xs: 1, sm: 2, lg: 2 },
-              justifyContent: "center",
-              alighnItems: { sm: "center" },
-              background: {
-                xs: "",
-                sm: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
-              },
-              paddingX: { sm: "10px" },
-              borderBottomLeftRadius: { sm: "5px" },
+              flexDirection: { xs: "column", sm: "row" },
+              justifyContent: "space-between",
+              alignItems: { xs: "center", sm: "end" },
             }}
           >
-            <FaBed
-              fontSize={"24px"}
-              style={{ color: isSmallScreen ? "black" : "white" }}
-            />
-            <Typography
+            <Box
               sx={{
-                textAlign: "center",
-                fontWeight: 400,
-                color: { xs: "black", sm: "white" },
-                background: `white`,
-                WebkitBackgroundClip: "text",
-                textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
-                fontSize: { xs: "16px", sm: "12px", lg: "16px" },
+                display: "flex",
+                flexDirection: "row",
+                gap: { xs: 1, sm: 2, lg: 2 },
+                justifyContent: "center",
+                alighnItems: { sm: "center" },
+                background: {
+                  xs: "",
+                  sm: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
+                },
+                paddingX: { sm: "10px" },
+                borderBottomLeftRadius: { sm: "5px" },
               }}
             >
-              {patientData.patient_name} | HN-{patientData.health_number} |
-              Room-
-              {patientData.room_id}
-            </Typography>
+              <FaBed
+                fontSize={"24px"}
+                style={{
+                  color: isSmallScreen ? "black" : "white",
+                  display: isSmallScreen ? "none" : "block",
+                }}
+              />
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontWeight: { xs: 800, sm: 400 },
+                  color: "white",
+                  background: `white`,
+                  WebkitBackgroundClip: "text",
+                  textShadow: "2px 5px 5px rgba(255, 255, 255, 0.3)",
+                  fontSize: { xs: "13px", sm: "12px", lg: "16px" },
+                  paddingLeft: isSmallScreen ? "8px" : "",
+                }}
+              >
+                {patientData.patient_name} | HN-{patientData.health_number} |
+                Room-
+                {patientData.room_id}
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
