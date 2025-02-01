@@ -53,11 +53,9 @@ const UserNavigationUserNameWardLocation = () => {
         flexDirection: { xs: "column", sm: "row" },
         justifyContent: "space-between",
         alignItems: { xs: "start", sm: "start" },
-        background: {
-          xs: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
-          sm: "linear-gradient(to right,rgb(39, 94, 149) ,rgb(146, 170, 195))",
-        },
+        backgroundColor:"#183B65",
         marginBottom: "20px",
+        paddingX:{xs:"4px"}
       }}
     >
       <Box
